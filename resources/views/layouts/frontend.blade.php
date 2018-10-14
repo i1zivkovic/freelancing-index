@@ -13,9 +13,21 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
 
-    {!! Html::style(asset('css/fontawesome.min.css')) !!}
-    {!! Html::style(asset('css/bootstrap.css')) !!}
-    {!! Html::style(asset('css/style.css')) !!}
+
+
+       <!-- Bootstrap CSS -->
+       {!! Html::style(asset('css/bootstrap.min.css')) !!}
+       {!! Html::style(asset('css/line-icons.css')) !!}
+       {!! Html::style(asset('css/owl.carousel.min.css')) !!}
+       {!! Html::style(asset('css/owl.theme.default.css')) !!}
+       {!! Html::style(asset('css/slicknav.min.css')) !!}
+       {!! Html::style(asset('css/animate.css')) !!}
+       {!! Html::style(asset('css/main.css')) !!}
+       {!! Html::style(asset('css/responsive.css')) !!}
+       {!! Html::style(asset('css/fontawesome.min.css')) !!}
+       {!! Html::style(asset('css/style.css')) !!}
+
+
     @yield('css')
     </head>
     <body>
@@ -27,19 +39,27 @@
 
     @include('includes.frontend.sidebar')
 
-
-    @yield('content')
-
+    <div class="mt-100">
+        @yield('content')
+    </div>
 
     @include('includes.frontend.footer')
     </div>
 
 
-    {!! Html::script(asset('js/jquery-3.3.1.min.js')) !!}
-    {!! Html::script(asset('js/tether.min.js')) !!}
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    {!! Html::script(asset('js/jquery-min.js')) !!}
+    {!! Html::script(asset('js/sweetalert2.min.js')) !!}
     {!! Html::script(asset('js/popper.min.js')) !!}
     {!! Html::script(asset('js/bootstrap.min.js')) !!}
-    {!! Html::script(asset('js/sweetalert2.min.js')) !!}
+    {!! Html::script(asset('js/owl.carousel.min.js')) !!}
+    {!! Html::script(asset('js/jquery.slicknav.js')) !!}
+    {!! Html::script(asset('js/jquery.counterup.min.js')) !!}
+    {!! Html::script(asset('js/waypoints.min.js')) !!}
+    {!! Html::script(asset('js/form-validator.min.js')) !!}
+    {!! Html::script(asset('js/contact-form-script.js')) !!}
+    {!! Html::script(asset('js/main.js')) !!}
+
     @yield('js')
     </body>
 </html>

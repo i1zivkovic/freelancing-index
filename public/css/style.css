@@ -1,0 +1,28 @@
+
+/* ------------------------------ HELPERS ---------------------------------- */
+.mt-100{
+    margin-top:100px !important;
+}
+
+/* ------------------------------------------------------------------------------------ */
+
+/* --------------------------- CUSTOM CSS ------------------------------------------- */
+.login-pd{
+    padding-top: 0px;
+    margin-bottom: 40px;
+}
+/* ------------------------------------------------------------------------------------ */
+
+/* ----------------------------- SELECT2 ------------------------------------------- */
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border: unset !important;
+    color: white;
+    background: #26ae61 !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white !important;
+}
+
+/* ------------------------------------------------------------------------------------ */
