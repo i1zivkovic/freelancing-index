@@ -9,667 +9,706 @@
 
 @section('content')
 
-{{-- <ul>
-    @guest
-    <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-    <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-    @else
-    <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" v-pre>
-            {{ Auth::user()->name }} <span class="caret"></span>
-        </a>
 
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a href="/dashboard" class="dropdown-item">{{ __('Dashboard') }}</a>
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
+<div class="">
+    <div class="space-100">
+        <!-- Header Section Start -->
+        <header id="home" class="hero-area">
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-    </li>
-    @endguest
-</ul>
-<p>
-    {{ $user->email }}
-</p>
+                <div class="container">
+                        <div class="row space-100">
+                          <div class="col-lg-12 col-md-12 col-xs-12">
+                            <div class="contents text-center">
+                              <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
+                              <p>Are you a freelancer looking for a full-time job or maybe you want to earn some money by doing some part-time work? <br>Maybe you're a recuriter that needs the right people to a job for you? <br>We got you covered!</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-@foreach($user->userSkills as $skill)
-<p>
 
-    {{ $skill->name }}
+            <!-- Apply Us Section Start -->
+            <div id="apply">
+                <div class="container-fulid">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-xs-12 no-padding">
+                            <div class="recruiter item-box">
+                                <div class="content-inner">
+                                    <h5>I'm</h5>
+                                    <h3>Recruiter</h3>
+                                    <p>Post a job and tell us about your project. We'll quickly match you with <br> the
+                                        right freelancers and you can choose the ones that suit you best.</p>
+                                    <a href="post-a-job" class="btn btn-border-filled">Post a Job</a>
+                                </div>
+                                <div class="img-thumb">
+                                    <i class="lni-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-xs-12 no-padding">
+                            <div class="jobseeker item-box">
+                                <div class="content-inner">
+                                    <h5>I'm</h5>
+                                    <h3>Jobseeker!</h3>
+                                    <p>Search through 60,000+ jobs and apply to ones that suit your needs.<br>
+                                    Click on the button to start searching.</p>
+                                    <a href="browse-jobs" class="btn btn-border-filled">Browse Jobs</a>
+                                </div>
+                                <div class="img-thumb">
+                                    <i class="lni-leaf"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Apply Us Section End -->
+        </header>
+        <!-- Header Section End -->
 
-</p>
-@endforeach
-<p>
-
-    {{ $user->userLocation ? $user->userLocation->city : 'Nema grad'}}
-</p>
-<img src="{{asset('uploads')}}/{{$user->username}}/thumb/{{$user->userProfile->image_url}}" /> --}}
-
-<div class="container">
-    <div class="row space-100">
-        <div class="col-lg-7 col-md-12 col-xs-12 mb-5">
-            <div class="contents">
-                <h2 class="head-title">Find the <br> job that fits your skills or create a job ad yourself.</h2>
-                <p>Search over 60,000+ job ads and find the one that suits your skills and requirements.</p>
-                <div class="job-search-form">
-                    <form>
+        <!-- Browse Catagories Section Start -->
+        <section class="browse-catagories section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Popular job categories</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                        <a href="browse-categories.html" class="img-box">
+                            <div class="img-box-content">
+                                <h4>Healthcare</h4>
+                                <span>3420 Jobs</span>
+                            </div>
+                            <div class="img-box-background">
+                                <img class="img-fluid" src="{{asset('img')}}/catagories/img1.jpg" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-xs-12">
                         <div class="row">
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Job Title or Company Name">
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <div class="form-group">
-                                    <div class="search-category-container">
-                                        <label class="styled-select">
-                                            <select>
-                                                <option value="none">Locations</option>
-                                                <option value="none">New York</option>
-                                                <option value="none">California</option>
-                                                <option value="none">Washington</option>
-                                                <option value="none">Birmingham</option>
-                                                <option value="none">Chicago</option>
-                                                <option value="none">Phoenix</option>
-                                            </select>
-                                        </label>
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <a href="browse-categories.html" class="img-box">
+                                    <div class="img-box-content">
+                                        <h4>Education</h4>
+                                        <span>2379 Jobs</span>
                                     </div>
-                                    <i class="lni-map-marker"></i>
-                                </div>
+                                    <div class="img-box-background">
+                                        <img class="img-fluid" src="{{asset('img')}}/catagories/img2.jpg" alt="">
+                                    </div>
+                                </a>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                <button type="submit" class="button"><i class="lni-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                        <p class="mt-4">... Or create a job ad yourself and hire the person that matches your requirements.</p>
-                        <div class="col-12 text-center">
-                            <a href="job-page.html" class="btn btn-common">Post a Job</a>
-                        </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-md-12 col-xs-12">
-            <div class="intro-img">
-                <img src="{{asset('img')}}/intro.png" alt="">
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Category Section Start -->
-<section class="category section bg-gray">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Browse Categories</h2>
-            <p>Most popular categories of portal, sorted by popularity</p>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-1">
-                        <i class="lni-home"></i>
-                    </div>
-                    <h3>Finance</h3>
-                    <p>(4286 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-2">
-                        <i class="lni-world"></i>
-                    </div>
-                    <h3>Sale/Markting</h3>
-                    <p>(2000 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-3">
-                        <i class="lni-book"></i>
-                    </div>
-                    <h3>Education/Training</h3>
-                    <p>(1450 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-4">
-                        <i class="lni-display"></i>
-                    </div>
-                    <h3>Technologies</h3>
-                    <p>(5100 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-5">
-                        <i class="lni-brush"></i>
-                    </div>
-                    <h3>Art/Design</h3>
-                    <p>(5079 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-6">
-                        <i class="lni-heart"></i>
-                    </div>
-                    <h3>Healthcare</h3>
-                    <p>(3235 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-7">
-                        <i class="lni-funnel"></i>
-                    </div>
-                    <h3>Science</h3>
-                    <p>(1800 jobs)</p>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6 col-xs-12 f-category">
-                <a href="browse-jobs.html">
-                    <div class="icon bg-color-8">
-                        <i class="lni-cup"></i>
-                    </div>
-                    <h3>Food Services</h3>
-                    <p>(4286 jobs)</p>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Category Section End -->
-
-<!-- Featured Section Start -->
-<section id="featured" class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Featured Jobs</h2>
-            <p>Here is a list of most liked job ads.</p>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img1.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Software Engineer</a></h3>
-                        <p class="brand">MizTech</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img2.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Graphic Designer</a></h3>
-                        <p class="brand">Hunter Inc.</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="part-time">Part Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img3.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Managing Director</a></h3>
-                        <p class="brand">MagNews</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img4.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Software Engineer</a></h3>
-                        <p class="brand">AmazeSoft</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img5.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Graphic Designer</a></h3>
-                        <p class="brand">Bingo</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="part-time">Part Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-xs-12">
-                <div class="job-featured">
-                    <div class="icon">
-                        <img src="{{asset('img')}}/features/img6.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Managing Director</a></h3>
-                        <p class="brand">MagNews</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 text-center mt-4">
-                <a href="job-page.html" class="btn btn-common">Browse All Jobs</a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Featured Section End -->
-
-<!-- Browse jobs Section Start -->
-<div id="browse-jobs" class="section bg-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12">
-                <div class="text-wrapper">
-                    <div>
-                        <h3>7,000+ Jobs</h3>
-                        <p>Search all the open positions. Read reviews on over 600,000 companies worldwide. The right
-                            job is out there.</p>
-                        <a class="btn btn-common" href="#">Search jobs</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12">
-                <div class="img-thumb">
-                    <img class="img-fluid" src="{{asset('img')}}/search.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Browse jobs Section End -->
-
-<!-- How It Work Section Start -->
-<section class="how-it-works section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">How It Works?</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="work-process">
-                    <span class="process-icon">
-                        <i class="lni-user"></i>
-                    </span>
-                    <h4>Create an Account</h4>
-                    <p>First step is to create a free account and fill out mandatory info about yourself. After that
-                        you can either apply to a job or post a job ad yourself.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="work-process step-2">
-                    <span class="process-icon">
-                        <i class="lni-search"></i>
-                    </span>
-                    <h4>Search Jobs</h4>
-                    <p>Search for a job and simply apply to it with a press of a button. Fill out necessary information
-                        and the employer will receive your application. Everyime employer changes job status you'll get
-                        notified.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="work-process step-3">
-                    <span class="process-icon">
-                        <i class="lni-cup"></i>
-                    </span>
-                    <h4>Post a Job</h4>
-                    <p>Post a job yourself and wait for application. Choose the right person and get in touch about
-                        details.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- How It Work Section End -->
-
-<!-- Latest Section Start -->
-<section id="latest-jobs" class="section bg-gray">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Latest Jobs</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img1.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">UX Designer</a></h3>
-                        <p class="brand">MizTech</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img2.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">UI Designer</a></h3>
-                        <p class="brand">Hunter Inc.</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="part-time">Part Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img3.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Web Developer</a></h3>
-                        <p class="brand">MagNews</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img4.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">UX Designer</a></h3>
-                        <p class="brand">AmazeSoft</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img5.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Digital Marketer</a></h3>
-                        <p class="brand">Bingo</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="part-time">Part Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
-                <div class="jobs-latest">
-                    <div class="img-thumb">
-                        <img src="{{asset('img')}}/features/img6.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><a href="job-details.html">Web Developer</a></h3>
-                        <p class="brand">MagNews</p>
-                        <div class="tags">
-                            <span><i class="lni-map-marker"></i> New York</span>
-                            <span><i class="lni-user"></i>John Smith</span>
-                        </div>
-                        <span class="full-time">Full Time</span>
-                    </div>
-                    <div class="save-icon">
-                        <a href="#"><i class="lni-heart-filled"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 text-center mt-4">
-                <a href="job-page.html" class="btn btn-common">Browse All Jobs</a>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Latest Section End -->
-
-<!-- Testimonial Section Start -->
-<section id="testimonial" class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Clients Review</h2>
-            <p>Here's what are users have to say about our app.</p>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-                <div id="testimonials" class="touch-slider owl-carousel">
-                    <div class="item">
-                        <div class="testimonial-item">
-                            <div class="author">
-                                <div class="img-thumb">
-                                    <img src="{{asset('img')}}/testimonial/img1.png" alt="">
-                                </div>
-                            </div>
-                            <div class="content-inner">
-                                <p class="description">Aplikacija je jebeno dobra.</p>
-                                <div class="author-info">
-                                    <h2><a href="#">Jessica</a></h2>
-                                    <span>Senior Accountant</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-item">
-                            <div class="author">
-                                <div class="img-thumb">
-                                    <img src="{{asset('img')}}/testimonial/img2.png" alt="">
-                                </div>
-                            </div>
-                            <div class="content-inner">
-                                <p class="description">Jebe mame.</p>
-                                <div class="author-info">
-                                    <h2><a href="#">John Doe</a></h2>
-                                    <span>Project Menager</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimonial-item">
-                            <div class="author">
-                                <div class="img-thumb">
-                                    <img src="{{asset('img')}}/testimonial/img3.png" alt="">
-                                </div>
-                            </div>
-                            <div class="content-inner">
-                                <p class="description">Dost dobro. I rate 9/11.</p>
-                                <div class="author-info">
-                                    <h2><a href="#">Helen</a></h2>
-                                    <span>Engineer</span>
-                                </div>
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <a href="browse-categories.html" class="img-box">
+                                    <div class="img-box-content">
+                                        <h4>Business</h4>
+                                        <span>1560 Jobs</span>
+                                    </div>
+                                    <div class="img-box-background">
+                                        <img class="img-fluid" src="{{asset('img')}}/catagories/img3.jpg" alt="">
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Testimonial Section End -->
-
-<!-- Blog Section -->
-<section id="blog" class="section">
-    <!-- Container Starts -->
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Latest Posts</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                <!-- Blog Item Starts -->
-                <div class="blog-item-wrapper">
-                    <div class="blog-item-img">
-                        <a href="single-post.html">
-                            <img src="{{asset('img')}}/blog/img1.jpg" alt="">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <a href="browse-categories.html" class="img-box">
+                                    <div class="img-box-content">
+                                        <h4>Finance</h4>
+                                        <span>2000 Jobs</span>
+                                    </div>
+                                    <div class="img-box-background">
+                                        <img class="img-fluid" src="{{asset('img')}}/catagories/img4.jpg" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <a href="browse-categories.html" class="img-box">
+                                    <div class="img-box-content">
+                                        <h4>Support</h4>
+                                        <span>3340 Jobs</span>
+                                    </div>
+                                    <div class="img-box-background">
+                                        <img class="img-fluid" src="{{asset('img')}}/catagories/img5.jpg" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                        <a href="browse-categories.html" class="img-box">
+                            <div class="img-box-content">
+                                <h4>Law</h4>
+                                <span>1200 Jobs</span>
+                            </div>
+                            <div class="img-box-background">
+                                <img class="img-fluid" src="{{asset('img')}}/catagories/img6.jpg" alt="">
+                            </div>
                         </a>
                     </div>
-                    <div class="blog-item-text">
-                        <h3><a href="single-post.html">Tips to write an impressive resume online for beginner</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium asperiores ad
-                            vitae.</p>
+                    <div class="col-12 text-center mt-4">
+                        <a href="#" class="btn btn-common">browse more</a>
                     </div>
-                    <a class="readmore" href="#">Read More</a>
                 </div>
-                <!-- Blog Item Wrapper Ends-->
             </div>
+        </section>
+        <!-- Browse Catagories Section End -->
 
-            <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                <!-- Blog Item Starts -->
-                <div class="blog-item-wrapper">
-                    <div class="blog-item-img">
-                        <a href="single-post.html">
-                            <img src="{{asset('img')}}/blog/img2.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="blog-item-text">
-                        <h3><a href="single-post.html">Let's explore 5 cool new features in JobBoard theme</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium asperiores ad
-                            vitae.</p>
-                    </div>
-                    <a class="readmore" href="#">Read More</a>
+        <!-- Featured Section Start -->
+        <section id="featured" class="section bg-cyan">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Jobs</h2>
+                    <p>Here's a list of job that have the most likes</p>
                 </div>
-                <!-- Blog Item Wrapper Ends-->
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                <!-- Blog Item Starts -->
-                <div class="blog-item-wrapper">
-                    <div class="blog-item-img">
-                        <a href="single-post.html">
-                            <img src="{{asset('img')}}/blog/img3.jpg" alt="">
-                        </a>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img1.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Software Engineer</a></h3>
+                                <p class="brand">MizTech</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="full-time">Full Time</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="blog-item-text">
-                        <h3><a href="single-post.html">How to convince recruiters and get your dream job</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium asperiores ad
-                            vitae.</p>
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img2.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Graphic Designer</a></h3>
+                                <p class="brand">Hunter Inc.</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="part-time">Part Time</span>
+                            </div>
+                        </div>
                     </div>
-                    <a class="readmore" href="#">Read More</a>
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img3.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Managing Director</a></h3>
+                                <p class="brand">MagNews</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="full-time">Full Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img4.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Software Engineer</a></h3>
+                                <p class="brand">AmazeSoft</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="full-time">Full Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img5.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Graphic Designer</a></h3>
+                                <p class="brand">Bingo</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="part-time">Part Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <div class="job-featured">
+                            <div class="icon">
+                                <img src="{{asset('img')}}/features/img6.png" alt="">
+                            </div>
+                            <div class="content">
+                                <h3><a href="job-details.html">Managing Director</a></h3>
+                                <p class="brand">MagNews</p>
+                                <div class="tags">
+                                    <span><i class="lni-map-marker"></i> New York</span>
+                                    <span><i class="lni-user"></i>John Smith</span>
+                                </div>
+                                <span class="full-time">Full Time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <a href="job-page.html" class="btn btn-common">Browse All Jobs</a>
+                    </div>
                 </div>
-                <!-- Blog Item Wrapper Ends-->
             </div>
-        </div>
-    </div>
-</section>
-<!-- blog Section End -->
+        </section>
+        <!-- Featured Section End -->
 
-<!-- download Section Start -->
-<section id="download" class="section bg-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-8 col-xs-12">
-                <div class="download-wrapper">
-                    <div>
-                        <div class="download-text">
-                            <h4>App Coming Soon</h4>
-                            <p>We are currently working on both the Android and iOS apps. Both coming soon in eary
-                                2019.</p>
+        <!-- Featured Listings Start -->
+        <section class="featured-lis section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Top Hiring Users and Companies</h2>
+                </div>
+                <div class=" wow fadeIn" data-wow-delay="0.5s">
+                    <div id="new-products" class="owl-carousel">
+                        <div class="item">
+                            <div class="product-item">
+                                <div class="icon-thumb">
+                                    <img src="{{asset('img')}}/product/img1.png" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-title"><a href="#">AmazeTech</a></h3>
+                                    <div class="tags">
+                                        <span><i class="lni-briefcase"></i> Software Company</span>
+                                        <span><i class="lni-map-marker"></i> New York</span>
+                                    </div>
+                                    <a href="#" class="btn btn-common">5 Open Job</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-item">
+                                <div class="icon-thumb">
+                                    <img src="{{asset('img')}}/product/img2.png" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-title"><a href="#">MagNews</a></h3>
+                                    <div class="tags">
+                                        <span><i class="lni-briefcase"></i> Software Company</span>
+                                        <span><i class="lni-map-marker"></i> New York</span>
+                                    </div>
+                                    <a href="#" class="btn btn-common">5 Open Job</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-item">
+                                <div class="icon-thumb">
+                                    <img src="{{asset('img')}}/product/img3.png" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-title"><a href="#">Facebook</a></h3>
+                                    <div class="tags">
+                                        <span><i class="lni-briefcase"></i> Software Company</span>
+                                        <span><i class="lni-map-marker"></i> New York</span>
+                                    </div>
+                                    <a href="#" class="btn btn-common">5 Open Job</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-item">
+                                <div class="icon-thumb">
+                                    <img src="{{asset('img')}}/product/img1.png" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-title"><a href="#">Play Store</a></h3>
+                                    <div class="tags">
+                                        <span><i class="lni-briefcase"></i> Software Company</span>
+                                        <span><i class="lni-map-marker"></i> New York</span>
+                                    </div>
+                                    <a href="#" class="btn btn-common">5 Open Job</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-item">
+                                <div class="icon-thumb">
+                                    <img src="{{asset('img')}}/product/img2.png" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-title"><a href="#">MagNews</a></h3>
+                                    <div class="tags">
+                                        <span><i class="lni-briefcase"></i> Software Company</span>
+                                        <span><i class="lni-map-marker"></i> New York</span>
+                                    </div>
+                                    <a href="#" class="btn btn-common">5 Open Job</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-4 col-xs-12">
-                <div class="download-thumb">
-                    <img class="img-fluid" src="{{asset('img')}}/app.png" alt="">
+        </section>
+        <!-- Featured Listings End -->
+
+        <!-- Listings Section Start -->
+        <section id="job-listings" class="section bg-cyan">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Job Post</h2>
+                    <p>Choose from the latest job posts. It is updated everytime you load a page.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <a class="job-listings" href="job-details.html">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-xs-12">
+                                    <div class="job-company-logo">
+                                        <img src="{{asset('img')}}/features/img1.png" alt="">
+                                    </div>
+                                    <div class="job-details">
+                                        <h3>App Developer</h3>
+                                        <span class="company-neme">
+                                            AmazeSoft
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <div class="location">
+                                        <i class="lni-map-marker"></i> New Yourk, US
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-full-time">20$/h</span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-apply">See more</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="job-listings" href="job-details.html">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-xs-12">
+                                    <div class="job-company-logo">
+                                        <img src="{{asset('img')}}/features/img2.png" alt="">
+                                    </div>
+                                    <div class="job-details">
+                                        <h3>App Developer</h3>
+                                        <span class="company-neme">
+                                            AmazeSoft
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <div class="location">
+                                        <i class="lni-map-marker"></i> New Yourk, US
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-full-time">20$/h</span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-apply">See more</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="job-listings" href="job-details.html">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-xs-12">
+                                    <div class="job-company-logo">
+                                        <img src="{{asset('img')}}/features/img3.png" alt="">
+                                    </div>
+                                    <div class="job-details">
+                                        <h3>App Developer</h3>
+                                        <span class="company-neme">
+                                            AmazeSoft
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <div class="location">
+                                        <i class="lni-map-marker"></i> New Yourk, US
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-full-time">20$/h</span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-apply">See more</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="job-listings" href="job-details.html">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-xs-12">
+                                    <div class="job-company-logo">
+                                        <img src="{{asset('img')}}/features/img4.png" alt="">
+                                    </div>
+                                    <div class="job-details">
+                                        <h3>App Developer</h3>
+                                        <span class="company-neme">
+                                            AmazeSoft
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <div class="location">
+                                        <i class="lni-map-marker"></i> New Yourk, US
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-full-time">20$/h</span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                    <span class="btn-apply">See more</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <a href="#" class="btn btn-common">Load more listing</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Listings Section End -->
+
+        <!-- How It Work Section Start -->
+        <section class="how-it-works section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How It Works?</h2>
+                    <p>Not sure where to start? Let us explain it in the easiest way.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+                        <div class="work-process">
+                            <span class="process-icon">
+                                <i class="lni-user"></i>
+                            </span>
+                            <h4>Create an Account</h4>
+                            <p>First step is to create an account.<br> Fill out necessary info so that
+                            users or companies know a little more about you.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="work-process step-2">
+                            <span class="process-icon">
+                                <i class="lni-search"></i>
+                            </span>
+                            <h4>Search Jobs</h4>
+                            <p>You can search jobs from our database and find the ones that you like.
+                            Simply apply to the job, fill out a form and user/company will receive your application.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="work-process step-3">
+                            <span class="process-icon">
+                                <i class="lni-cup"></i>
+                            </span>
+                            <h4>Post a job ad</h4>
+                            <p>Create an ad for your job.<br>
+                            After that you simply wait for users to apply and choose the right ones.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- How It Work Section End -->
+
+        <!-- Counter Section Start -->
+        <section id="counter" class="section bg-gray">
+            <div class="container">
+                <div class="row">
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-briefcase"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">800</span></h3>
+                                <p>Jobs Posted</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-home"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">80</span></h3>
+                                <p>Companies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-user"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">900</span></h3>
+                                <p>Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-write"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">1200</span></h3>
+                                <p>Applications</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                </div>
+            </div>
+        </section>
+        <!-- Counter Section End -->
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <!-- Container Starts -->
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Latest Posts</h2>
+                    <p>See what our users have been sharing. From posts, pictures or projects. You can like or comment the ones you find interesting.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                        <!-- Blog Item Starts -->
+                        <div class="blog-item-wrapper">
+                            <div class="blog-item-img">
+                                <a href="single-post.html">
+                                    <img src="{{asset('img')}}/blog/img1.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item-text">
+                                <h3><a href="single-post.html">Tips to write an impressive resume online for beginner</a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
+                                    asperiores ad vitae.</p>
+                            </div>
+                            <a class="readmore" href="#">Read More</a>
+                        </div>
+                        <!-- Blog Item Wrapper Ends-->
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                        <!-- Blog Item Starts -->
+                        <div class="blog-item-wrapper">
+                            <div class="blog-item-img">
+                                <a href="single-post.html">
+                                    <img src="{{asset('img')}}/blog/img2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item-text">
+                                <h3><a href="single-post.html">Let's explore 5 cool new features in JobBoard theme</a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
+                                    asperiores ad vitae.</p>
+                            </div>
+                            <a class="readmore" href="#">Read More</a>
+                        </div>
+                        <!-- Blog Item Wrapper Ends-->
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                        <!-- Blog Item Starts -->
+                        <div class="blog-item-wrapper">
+                            <div class="blog-item-img">
+                                <a href="single-post.html">
+                                    <img src="{{asset('img')}}/blog/img3.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-item-text">
+                                <h3><a href="single-post.html">How to convince recruiters and get your dream job</a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
+                                    asperiores ad vitae.</p>
+                            </div>
+                            <a class="readmore" href="#">Read More</a>
+                        </div>
+                        <!-- Blog Item Wrapper Ends-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- blog Section End -->
+
+        <!-- download Section Start -->
+        <section id="download" class="section bg-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-8 col-xs-12">
+                        <div class="download-wrapper">
+                            <div>
+                                <div class="download-text">
+                                    <h4>Mobile apps coming soon!</h4>
+                                    <p>We're currently developing Android, iOS and Winows Phone applications.<br> Be sure to subscribe to our newsletter you that you know when they go live.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4 col-xs-12">
+                        <div class="download-thumb">
+                            <img class="img-fluid" src="{{asset('img')}}/app.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subcribe Section Start -->
+        <div id="subscribe" class="section bg-cyan">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12">
+                        <div class="img-sub">
+                            <img class="img-fluid" src="{{asset('img')}}/sub.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12">
+                        <div class="subscribe-form">
+                            <div class="form-wrapper">
+                                <div class="sub-title">
+                                    <h3>Subscribe Our Newsletter</h3>
+                                    <p>By subscribing you are keeping up with the latest job posts, users posts and all the news we think you'll find interesting.</p>
+                                </div>
+                                <form>
+                                    <div class="row">
+                                        <div class="col-12 form-line">
+                                            <div class="form-group form-search">
+                                                <input type="email" class="form-control" name="email" placeholder="Enter Your Email">
+                                                <button type="submit" class="btn btn-common btn-search">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- download Section Start -->
 
 
+        @include('includes.frontend.loaderAndArrow')
 
+        @stop
 
-<!-- Go To Top Link -->
-<a href="#" class="back-to-top">
-    <i class="lni-arrow-up"></i>
-</a>
-
-
-<!-- Preloader -->
-<div id="preloader">
-    <div class="loader" id="loader-1"></div>
-</div>
-<!-- End Preloader -->
-
-@stop
-
-@section('js')
-{{-- --}}
-@stop
+        @section('js')
+        {{-- --}}
+        @stop

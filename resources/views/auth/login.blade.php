@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 
+@section('title', 'Login')
+@section('description', "")
+
 @section('content')
 
       <!-- Content section Start -->

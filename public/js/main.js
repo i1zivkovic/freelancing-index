@@ -21,7 +21,7 @@ JS INDEX
   "use strict";
 
     var $main_window = $(window);
-    
+
     /*====================================
     preloader js
     ======================================*/
@@ -61,18 +61,18 @@ JS INDEX
         openedSymbol:'<i class="lni-chevron-down"><i/>',
         brand:'<a href="index.html"><img src="'+logo_path+'" class="img-responsive" alt="logo"></a>'
     });
-      
+
     /*====================================
     sticky menu js
     ======================================*/
-    $main_window.on('scroll', function () {  
+  /*   $main_window.on('scroll', function () {
       var scroll = $(window).scrollTop();
       if (scroll >= 100) {
           $(".scrolling-navbar").addClass("top-nav-collapse");
       } else {
           $(".scrolling-navbar").removeClass("top-nav-collapse");
       }
-    });
+    }); */
 
     /*=======================================
     counter
@@ -86,7 +86,7 @@ JS INDEX
 
 
     /*====================================
-    Testimonials Carousel 
+    Testimonials Carousel
     ======================================*/
     var testiOwl = $("#testimonials");
     testiOwl.owlCarousel({

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Profile;
 use Auth;
 
 class UserController extends Controller
@@ -14,6 +15,7 @@ class UserController extends Controller
         $user = User::
         with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
         ->findOrFail(Auth::id());
-        return view('frontend.profile', compact('user'));
+        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail(Auth::id());
+        return view('frontend.profile', compact('user','profile'));
     }
 }
