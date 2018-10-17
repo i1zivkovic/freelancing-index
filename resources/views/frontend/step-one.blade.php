@@ -17,6 +17,7 @@
             <div class="col-lg-9 col-md-12 col-xs-12">
               <div class="post-job box">
                 {!! Form::open(['method' => 'POST', 'route' => ['frontend.postStepOne'], 'autocomplete' => 'on', 'files' => true, 'enctype' => 'multipart/form-data', 'id' => 'postForm', 'class' => 'form-ad']) !!}
+                @csrf
                   <h3>Basic information</h3>
                   <div class="form-group">
                     <label class="control-label">Gender</label>

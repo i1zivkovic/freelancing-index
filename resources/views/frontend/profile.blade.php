@@ -70,13 +70,13 @@
                                         <a href="{{$user->userSocial->instagram}}" class="instagram" target="_blank"
                                             title="Instagram"><i class="lni-instagram-filled"></i></a>
                                         @endif
-                                        @if($user->userSocial->google)
-                                        <a href="{{$user->userSocial->google}}" class="google" target="_blank" title="Google+"><i
-                                                class="lni-google-filled"></i></a>
+                                        @if($user->userSocial->google_plus)
+                                        <a href="{{$user->userSocial->google_plus}}" class="google" target="_blank" title="Google+"><i
+                                                class="lni-google-plus"></i></a>
                                         @endif
                                         @if($user->userSocial->linkedin)
                                         <a href="{{$user->userSocial->linkedin}}" class="linkedin" target="_blank"
-                                            title="LinkedIn"><i class="lni-linkedin-filled"></i></a>
+                                            title="LinkedIn"><i class="lni-linkedin"></i></a>
                                         @endif
                                         @if($user->userSocial->github)
                                         <a href="{{$user->userSocial->github}}" class="github" target="_blank" title="GitHub"><i

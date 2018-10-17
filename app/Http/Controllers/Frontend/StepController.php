@@ -42,7 +42,7 @@ class StepController extends Controller
         $skills = $r->tag_list;
 
         if(empty($skills))
-            return redirect(route('frontend.getProfile'));
+            return redirect(route('frontend.user.show',Auth::user()->slug));
 
         $now = Carbon::now();
         $user_id = Auth::id();
@@ -58,7 +58,7 @@ class StepController extends Controller
 
         UserSkill::insert($arr);
 
-        return redirect(route('frontend.getProfile'));
+        return redirect(route('frontend.user.show',Auth::user()->slug));
     }
 
     public function uploadImage($file, $folder){

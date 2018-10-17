@@ -32,18 +32,24 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //
 
     //AJAX
-    Route::get('skills/find', 'AjaxController@find');
+    Route::get('skills/find', 'AjaxController@findSkill');
     //
 
 
     //PROFILE
-    Route::get('profile', 'UserController@getProfile')->name('getProfile');
+    Route::get('profile/{slug}', 'UserController@show')->name('user.show');
     //
 
 
     //POSTS
-    Route::get('posts', 'PostController@index')->name('posts');
+    Route::resource('posts', 'PostController');
+
+    //COMMENTS
+    Route::resource('comments', 'CommentController');
     //
+
+
+    Route::post('contact', 'ContactController@sendMail')->name('sendMail');
 });
 
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth']], function () {

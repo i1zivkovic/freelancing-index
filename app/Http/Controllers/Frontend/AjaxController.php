@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Skill;
+use App\PostComment;
 
 class AjaxController extends Controller
 {
@@ -11,7 +12,7 @@ class AjaxController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function find(Request $request)
+    public function findSkill(Request $request)
     {
         $term = trim($request->q);
 
@@ -29,4 +30,5 @@ class AjaxController extends Controller
 
         return \Response::json($formatted_skills);
     }
+
 }

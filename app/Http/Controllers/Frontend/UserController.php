@@ -10,12 +10,12 @@ use Auth;
 
 class UserController extends Controller
 {
-    //
-    public function getProfile(){
+    public function show($slug){
         $user = User::
-        with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
-        ->findOrFail(Auth::id());
-        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail(Auth::id());
+        where('slug', $slug)
+        ->with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
+        ->firstOrFail();
+        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
         return view('frontend.profile', compact('user','profile'));
     }
 }

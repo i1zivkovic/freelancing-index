@@ -4,34 +4,21 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 
 use Auth;
-
-use App\Post;
+use App\PostComment;
+use Validator;
 
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
-
-      /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $posts = Post::
-        withCount('postComments','postLikes')
-        ->with([
-            'user',
-        ]) -> paginate(5);
-
-        $recentPosts = Post::with([
-            'user' => function($query){
-                $query->select('id','username', 'slug');
-            }
-        ])->orderBy('created_at','DESC')->take(3)->select('id','title','created_at','user_id','slug')->get();
-
-        return view('frontend.posts', compact('posts','recentPosts'));
+        //
     }
 
     /**
@@ -41,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('frontend.post_create');
+        //
     }
 
     /**
@@ -53,7 +40,26 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        $rules = [
+            'comment' => 'required|max:1000',
+            'post_id' => 'required|exists:posts,id',
+        ];
 
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        /* dd($request); */
+        $comment = new PostComment;
+        $comment->comment = $request->comment;
+        $comment->user_id = Auth::id();
+        $comment->post_id = $request->post_id;
+
+        $comment->save();
+
+        return redirect()->to('posts/'.$request->post_slug);
     }
 
     /**
@@ -62,22 +68,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-
-        $post = Post::
-        where('slug',$slug)
-        ->withCount('postLikes')
-        ->with([
-            'user',
-            'postComments' => function($query) {
-                $query -> join('users', 'post_comments.user_id', 'users.id');
-                $query -> join('profiles', 'users.id', 'profiles.user_id');
-                $query -> select('post_comments.*', 'users.username', 'users.slug', 'profiles.first_name', 'profiles.last_name')->orderBy('created_at','ASC');
-            }
-        ]) -> firstOrFail();
-
-        return view('frontend.post_details', compact('post'));
+        //
     }
 
     /**
@@ -88,7 +81,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -111,9 +104,23 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $userId = Auth::id();
+
+        if( PostComment::where([['user_id', $userId], ['id', $id]])->exists() )
+        {
+        PostComment::findOrFail($id)->delete();
+        return [
+        'status' => 1
+        ];
+        }
+        else {
+            return [
+                'status' => 0,
+                'bla' => 1
+            ];
+        }
+
 
     }
-
-
 }

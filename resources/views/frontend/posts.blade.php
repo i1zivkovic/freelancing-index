@@ -23,6 +23,7 @@
                     <h5 class="widget-title">Search This Site</h5>
                     <div class="widget-search widget-box">
                       <form action="#">
+                            @csrf
                         <input class="form-control search" type="search" placeholder="Enter your keyword" />
                         <button class="search-btn" type="submit"><i class="lni-search"></i></button>
                       </form>
@@ -30,7 +31,7 @@
                   </div>
 
                   <!-- Categories Widget -->
-                  <div class="widget ">
+                 {{--  <div class="widget ">
                     <h5 class="widget-title">Categories</h5>
                     <div class="widget-categories widget-box">
                       <ul class="cat-list">
@@ -57,40 +58,29 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <!-- Popular Posts widget -->
                   <div class="widget">
                     <h5 class="widget-title">Recent Post</h5>
                     <div class="widget-popular-posts widget-box">
                       <ul class="posts-list">
+                          @forEach($recentPosts as $recentPost)
                         <li>
                           <div class="widget-content">
-                            <a href="#">Tips to write an impressive resume online for beginner</a>
-                            <span><i class="lni-calendar"></i> 25 March, 2020</span>
+                          <a href="{{route('frontend.posts.show',['slug' => $recentPost->slug])}}">{{$recentPost->title}}</a>
+                            <span><i class="lni-calendar"></i> {{$recentPost->created_at->format('d/m/Y H:i:s')}}</span>
+                            <span><i class="lni-user"></i> {{$recentPost->user->username}}</span>
                           </div>
                           <div class="clearfix"></div>
                         </li>
-                        <li>
-                          <div class="widget-content">
-                            <a href="#">The sceret to pitching for new business</a>
-                            <span><i class="lni-calendar"></i> 25 March, 2020</span>
-                          </div>
-                          <div class="clearfix"></div>
-                        </li>
-                        <li>
-                          <div class="widget-content">
-                            <a href="#">7 things you should never say to your boss</a>
-                            <span><i class="lni-calendar"></i> 25 March, 2020</span>
-                          </div>
-                          <div class="clearfix"></div>
-                        </li>
+                        @endforeach
                       </ul>
                     </div>
                   </div>
 
                   <!-- Tag Media -->
-                  <div class="widget">
+                  {{-- <div class="widget">
                     <h5 class="widget-title">Tags</h5>
                     <div class="tag widget-box">
                       <a href="#"> Jobpress</a>
@@ -102,10 +92,10 @@
                       <a href="#"> Salary</a>
                       <a href="#"> Employer</a>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <!-- Archives Widget -->
-                  <div class="widget">
+                {{--   <div class="widget">
                     <h5 class="widget-title">Archives</h5>
                     <div class="widget-archives widget-box">
                       <ul class="cat-list">
@@ -132,12 +122,13 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> --}}
                 </aside>
                 <!--End sidebar-->
                 <!-- Start Blog Posts -->
                 <div class="col-lg-8 col-md-12 col-xs-12">
                   <!-- Start Post -->
+                  @foreach($posts as $post)
                   <div class="blog-post">
                     <!-- Post thumb -->
                     <div class="post-thumb">
@@ -149,74 +140,26 @@
 
                     <!-- Post Content -->
                     <div class="post-content">
-                      <h3 class="post-title"><a href="#">Let's explore 5 cool new features in JobBoard theme</a></h3>
+                    <h3 class="post-title">{{$post->title}}</h3>
                       <div class="meta">
-                        <span class="meta-part"><a href="#"><i class="lni-user"></i> By Admin</a></span>
-                        <span class="meta-part"><i class="lni-calendar"></i><a href="#"> 20.02.2020</a></span>
-                        <span class="meta-part"><a href="#"><i class="lni-comments-alt"></i> 5Comments</a></span>
+                        <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $post->user->slug])}}"><i class="lni-user"></i> By {{$post->user->username}}</a></span>
+                        <span class="meta-part"><i class="lni-calendar"></i> {{$post->created_at->format('d/m/Y H:i:s')}}</span>
+                        <span class="meta-part"><i class="lni-heart-filled"></i>  {{$post->post_likes_count}} Likes</span>
+                        <span class="meta-part"><i class="lni-comments-alt"></i> {{$post->post_comments_count}} Comments</span>
                       </div>
-                      <p>Fusce fermentum ipsum mauris, rutrum ultrices ligula sodales et. Maecenas pellentesque aliquet arcu, vel elementum magna facilisis vitae. Nam in cursus lorem. Donec ac tellus nisl. Sed volutpat quis orci nec placerat. Fusec ex magna, congue sed vulpu-tate rhoncus, laoreet nec sapien.</p>
-                      <a href="#" class="btn btn-common">Read More</a>
+                      <p>{{$post->description}}</p>
+                      <a href="{{route('frontend.posts.show',['slug' => $post->slug])}}" class="btn btn-common">Read More</a>
                     </div>
                     <!-- Post Content -->
 
                   </div>
+                  @endforeach
                   <!-- End Post -->
 
-                  <!-- Start Post -->
-                  <div class="blog-post">
-                    <!-- Post thumb -->
-                    <div class="post-thumb">
-                      <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog2.jpg" alt=""></a>
-                      <div class="hover-wrap">
-                      </div>
-                    </div>
-                    <!-- End Post post-thumb -->
 
-                    <!-- Post Content -->
-                    <div class="post-content">
-                      <h3 class="post-title"><a href="#">Employer branding: Get behind the wheel!</a></h3>
-                      <div class="meta">
-                        <span class="meta-part"><a href="#"><i class="lni-user"></i> By Admin</a></span>
-                        <span class="meta-part"><i class="lni-calendar"></i><a href="#"> 20.02.2020</a></span>
-                        <span class="meta-part"><a href="#"><i class="lni-comments-alt"></i> 5Comments</a></span>
-                      </div>
-                      <p>Fusce fermentum ipsum mauris, rutrum ultrices ligula sodales et. Maecenas pellentesque aliquet arcu, vel elementum magna facilisis vitae. Nam in cursus lorem. Donec ac tellus nisl. Sed volutpat quis orci nec placerat. Fusec ex magna, congue sed vulpu-tate rhoncus, laoreet nec sapien.</p>
-                      <a href="#" class="btn btn-common">Read More</a>
-                    </div>
-                    <!-- Post Content -->
-
-                  </div>
-                  <!-- End Post -->
-
-                  <!-- Start Post -->
-                  <div class="blog-post">
-                    <!-- Post thumb -->
-                    <div class="post-thumb">
-                      <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog3.jpg" alt=""></a>
-                      <div class="hover-wrap">
-                      </div>
-                    </div>
-                    <!-- End Post post-thumb -->
-
-                    <!-- Post Content -->
-                    <div class="post-content">
-                      <h3 class="post-title"><a href="#">How to convince recruiters and get your dream job</a></h3>
-                      <div class="meta">
-                        <span class="meta-part"><a href="#"><i class="lni-user"></i> By Admin</a></span>
-                        <span class="meta-part"><i class="lni-calendar"></i><a href="#"> 20.02.2020</a></span>
-                        <span class="meta-part"><a href="#"><i class="lni-comments-alt"></i> 5Comments</a></span>
-                      </div>
-                      <p>Fusce fermentum ipsum mauris, rutrum ultrices ligula sodales et. Maecenas pellentesque aliquet arcu, vel elementum magna facilisis vitae. Nam in cursus lorem. Donec ac tellus nisl. Sed volutpat quis orci nec placerat. Fusec ex magna, congue sed vulpu-tate rhoncus, laoreet nec sapien.</p>
-                      <a href="#" class="btn btn-common">Read More</a>
-                    </div>
-                    <!-- Post Content -->
-
-                  </div>
-                  <!-- End Post -->
 
                   <!-- Start Pagination -->
-                  <ul class="pagination">
+                {{--   <ul class="pagination">
                     <li class="active"><a href="#" class="btn-prev" ><i class="lni-angle-left"></i> prev</a></li>
                     <li><a href="#">1</a></li>
                     <li><a href="#">2</a></li>
@@ -224,8 +167,11 @@
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li class="active"><a href="#" class="btn-next">Next <i class="lni-angle-right"></i></a></li>
-                  </ul>
+                  </ul> --}}
                   <!-- End Pagination -->
+
+                  {!! $posts -> links()!!}
+
                 </div>
                 <!-- End Blog Posts -->
               </div>

@@ -41,7 +41,7 @@
                                     <a href="post-a-job" class="btn btn-border-filled">Post a Job</a>
                                 </div>
                                 <div class="img-thumb">
-                                    <i class="lni-users"></i>
+                                    <i class="lni-briefcase"></i>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                     <a href="browse-jobs" class="btn btn-border-filled">Browse Jobs</a>
                                 </div>
                                 <div class="img-thumb">
-                                    <i class="lni-leaf"></i>
+                                    <i class="lni-user"></i>
                                 </div>
                             </div>
                         </div>
@@ -589,59 +589,40 @@
                     <p>See what our users have been sharing. From posts, pictures or projects. You can like or comment the ones you find interesting.</p>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                        <!-- Blog Item Starts -->
-                        <div class="blog-item-wrapper">
-                            <div class="blog-item-img">
-                                <a href="single-post.html">
-                                    <img src="{{asset('img')}}/blog/img1.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="blog-item-text">
-                                <h3><a href="single-post.html">Tips to write an impressive resume online for beginner</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
-                                    asperiores ad vitae.</p>
-                            </div>
-                            <a class="readmore" href="#">Read More</a>
-                        </div>
-                        <!-- Blog Item Wrapper Ends-->
-                    </div>
 
+                    @foreach($recentPosts as $recentPost)
                     <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                        <!-- Blog Item Starts -->
-                        <div class="blog-item-wrapper">
-                            <div class="blog-item-img">
-                                <a href="single-post.html">
-                                    <img src="{{asset('img')}}/blog/img2.jpg" alt="">
-                                </a>
+                    <div class="blog-post">
+                            <!-- Post thumb -->
+                            <div class="post-thumb">
+                              <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg" height="200px" alt=""></a>
+                              <div class="hover-wrap">
+                              </div>
                             </div>
-                            <div class="blog-item-text">
-                                <h3><a href="single-post.html">Let's explore 5 cool new features in JobBoard theme</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
-                                    asperiores ad vitae.</p>
-                            </div>
-                            <a class="readmore" href="#">Read More</a>
-                        </div>
-                        <!-- Blog Item Wrapper Ends-->
-                    </div>
+                            <!-- End Post post-thumb -->
 
-                    <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                        <!-- Blog Item Starts -->
-                        <div class="blog-item-wrapper">
-                            <div class="blog-item-img">
-                                <a href="single-post.html">
-                                    <img src="{{asset('img')}}/blog/img3.jpg" alt="">
-                                </a>
+                            <!-- Post Content -->
+                            <div class="post-content">
+                            <h3 class="post-title">{{$recentPost->title}}</h3>
+                              <div class="meta">
+                              <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $recentPost->user->slug])}}"><i class="lni-user"></i> By {{$recentPost->user->username}}</a></span>
+                                <span class="meta-part"><i class="lni-comments-alt"></i> {{$recentPost->post_comments_count}} Comments</span>
+                                <span class="meta-part"><i class="lni-heart-filled"></i>  {{$recentPost->post_likes_count}} Likes</span>
+                                <span class="meta-part"><i class="lni-calendar"></i>{{$recentPost->created_at->format('d/m/Y H:i:s')}}</span>
+                              </div>
+                              <p>{{ str_limit($recentPost->description, $limit = 100, $end = '...') }}</p>
+                              <a href="posts/{{$recentPost->slug}}" class="btn btn-common">Read More</a>
                             </div>
-                            <div class="blog-item-text">
-                                <h3><a href="single-post.html">How to convince recruiters and get your dream job</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore praesentium
-                                    asperiores ad vitae.</p>
-                            </div>
-                            <a class="readmore" href="#">Read More</a>
-                        </div>
-                        <!-- Blog Item Wrapper Ends-->
+                            <!-- Post Content -->
+
+                          </div>
                     </div>
+                    @endforeach
+
+
+                    <div class="col-12 text-center mt-4">
+                            <a href="posts" class="btn btn-common">See all posts</a>
+                        </div>
                 </div>
             </div>
         </section>
@@ -656,7 +637,7 @@
                             <div>
                                 <div class="download-text">
                                     <h4>Mobile apps coming soon!</h4>
-                                    <p>We're currently developing Android, iOS and Winows Phone applications.<br> Be sure to subscribe to our newsletter you that you know when they go live.</p>
+                                    <p>We are currently in process of developing Android, iOS and Winows Phone apps.<br> Be sure to subscribe to our newsletter so that you know when they go live and can start using them.</p>
                                 </div>
                             </div>
                         </div>
@@ -687,6 +668,7 @@
                                     <p>By subscribing you are keeping up with the latest job posts, users posts and all the news we think you'll find interesting.</p>
                                 </div>
                                 <form>
+                                        @csrf
                                     <div class="row">
                                         <div class="col-12 form-line">
                                             <div class="form-group form-search">

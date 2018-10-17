@@ -39,7 +39,11 @@ class UsersSeeder extends Seeder
          Social::create([
             'user_id' => $user->id,
             'instagram' => 'https://www.instagram.com/zika1601/?hl=hr',
-            'facebook' => 'https://www.facebook.com/i1zivkovic'
+            'facebook' => 'https://www.facebook.com/i1zivkovic',
+            'linkedin' => 'https://www.linkedin.com/in/ivan-%C5%BEivkovi%C4%87-a3a17b150/',
+            'github' => 'https://gitlab.com/i1zivkovic',
+            'twitter' => 'https://twitter.com/zikaa1234',
+            'google_plus' => 'https://plus.google.com/115975631602255992448',
         ]);
 
          Location::create([

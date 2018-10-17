@@ -575,8 +575,8 @@ button:focus {
   }
 }
 
-/* ========================================================================== 
-   Scroll To Up 
+/* ==========================================================================
+   Scroll To Up
    ========================================================================== */
 .back-to-top {
   display: none;
@@ -1229,7 +1229,7 @@ button:focus {
 #apply .recruiter .img-thumb {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 30px;
 }
 
 #apply .recruiter .img-thumb i {
@@ -1245,7 +1245,7 @@ button:focus {
 #apply .jobseeker .img-thumb {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 30px;
 }
 
 #apply .jobseeker .img-thumb i {
@@ -3326,7 +3326,7 @@ label {
 }
 
 /* ==========================================================================
-   Blog 
+   Blog
    ========================================================================== */
 #blog .blog-item-wrapper {
   background: #fff;
@@ -3471,27 +3471,32 @@ label {
   display: inline-block;
 }
 
-.pagination li a {
+.pagination li a, .pagination li.active span, .pagination li.disabled span {
   border-radius: 30px !important;
-  padding: 5px 10px;
-  margin: 0 3px;
-  min-width: 40px;
-  height: 40px;
-  line-height: 30px;
-  font-weight: 400;
-  position: relative;
-  font-size: 14px;
-  text-transform: uppercase;
-  background: #26ae61;
-  display: block;
-  color: #fff;
+  padding: 5px 10px !important;
+  margin: 0 3px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  line-height: 30px !important;
+  font-weight: 400 !important;
+  position: relative !important;
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+  background: #26ae61 !important;
+  display: block !important;
+  color: #fff !important;
+  border-color:  #dee2e6 !important;
+}
+
+.pagination li.disabled span {
+    background: rgba(0,0,0,0.3) !important;
 }
 
 .pagination li a:hover {
   box-shadow: 0px 7px 9px rgba(96, 94, 94, 0.17);
 }
 
-.pagination li a:before {
+.pagination li a:before{
   content: '';
   position: absolute;
   top: 0;
@@ -3689,6 +3694,7 @@ blockquote p a:hover {
 }
 
 #comments .comments-list .media .info-body {
+  width: 100%;
   margin-left: 40px;
   box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24);
   padding: 20px;
