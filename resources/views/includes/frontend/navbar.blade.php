@@ -29,7 +29,7 @@
                                 <i class="fas fa-user-tie mr-2"></i>Candidates
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="browse-jobs.html">Browse Jobs</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Browse Jobs</a></li>
                                 <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li>
                             </ul>
                         </li>
@@ -39,7 +39,7 @@
                                 <i class="fas fa-handshake mr-2"></i> Employers
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="post-job.html">Add Job</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Add Job</a></li>
                                 <li><a class="dropdown-item" href="manage-jobs.html">Manage Jobs</a></li>
                             </ul>
                         </li>
@@ -50,7 +50,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">All posts</a></li>
-                                <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">My Posts</a></li>
+                                @guest
+                                <li><a class="dropdown-item" href="{{route('login')}}">My Posts</a></li>
+                                @else
+                                <li><a class="dropdown-item" href="{{route('frontend.myPosts',['slug' => Auth::user()->slug])}}">My Posts</a></li>
+                                @endguest
                                 <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create new post</a></li>
                             </ul>
                         </li>
@@ -68,10 +72,9 @@
                                 <i class="fas fa-user mr-2"></i>{{ Auth::user()->username}}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.user.show',['slug' => Auth::user()->slug])}}">Profile</a></li>
-                                <li><a class="dropdown-item" href="manage-jobs.html">Manage Jobs</a></li>
-                                <li><a class="dropdown-item" href="manage-jobs.html">Jobs History</a></li>
-                                <li><a class="dropdown-item" href="manage-jobs.html">Applications History</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.user.show',['slug' => Auth::user()->slug])}}">My Profile</a></li>
+                    {{--             <li><a class="dropdown-item" href="manage-jobs.html">Jobs History</a></li>
+                                <li><a class="dropdown-item" href="manage-jobs.html">Applications History</a></li> --}}
 
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

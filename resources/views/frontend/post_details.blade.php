@@ -30,7 +30,7 @@
 
                             <!-- Post Content -->
                             <div class="post-content">
-                                <h3 class="post-title"><a href="">{{$post->title}}</a></h3>
+                                <h3 class="post-title">{{$post->title}}</h3>
                                 <div class="meta">
                                     <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $post->user->slug])}}"><i
                                                 class="lni-user"></i> By {{$post->user->username}}</a></span>
@@ -42,6 +42,16 @@
                                             {{$post->post_likes_count}} Likes</span>
                                 </div>
                                 <p>{{$post->description}}</p>
+                                @if(Auth::user() && ($post->user_id == Auth::user()->id))
+                                <hr>
+                                <a href="#">
+                                    <i class="lni-pencil"></i>
+                                </a>
+                                &nbsp;
+                                <a href="#" class="delete-post" data-id="{{$post->id}}">
+                                    <i class="lni-trash"></i>
+                                </a>
+                                @endif
                                 {{-- <div class="share-social">
                                     <span>Share This Job:</span>
                                     <div class="social-link">
@@ -221,7 +231,91 @@
                 });
             }
 
-        </script>
+
+        if ($('#comment').hasClass('is-invalid')) {
+            $('#comment').focus();
+        }
+
+
+        $(".delete-post").click(function (e) {
+            var id = $(this).data('id');
+            const swalWithBootstrapButtons = swal.mixin({
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger mr-3',
+                buttonsStyling: false,
+            })
+            e.preventDefault();
+            swalWithBootstrapButtons({
+                title: 'Are you sure?',
+                text: 'You want to delete this post?',
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    deletePost(id);
+                } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons(
+                        'Cancelled',
+                        'Your post is safe :)',
+                        'error'
+                    )
+                }
+            })
+        });
+
+        function deletePost(post_id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $("input[name=_token]").val()
+                }
+            });
+            $.ajax({
+                url: '{{route("frontend.posts.index")}}/' + post_id,
+                type: 'DELETE',
+                dataType: 'JSON',
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 1) {
+                        let timerInterval
+                        swal({
+                            type: "success",
+                            title: 'Please wait!',
+                            html: 'Deleting your post..',
+                            timer: 500,
+                            onOpen: () => {
+                                swal.showLoading()
+                                timerInterval = setInterval(() => {}, 100)
+                            },
+                            onClose: () => {
+                                clearInterval(timerInterval)
+                            }
+                        }).then((result) => {
+                            if (
+                                result.dismiss === swal.DismissReason.timer
+                            ) {
+                                window.location.href = '{{route("frontend.posts.index")}}';
+                                swal.close();
+
+                            }
+                        });
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'An error has accured while trying to delete the post!',
+                        });
+                    }
+                }
+            });
+        }
+
+    </script>
         <!-- End Content -->
         @stop
     </div>

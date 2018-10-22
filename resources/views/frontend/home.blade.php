@@ -15,16 +15,18 @@
         <!-- Header Section Start -->
         <header id="home" class="hero-area">
 
-                <div class="container">
-                        <div class="row space-100">
-                          <div class="col-lg-12 col-md-12 col-xs-12">
-                            <div class="contents text-center">
-                              <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
-                              <p>Are you a freelancer looking for a full-time job or maybe you want to earn some money by doing some part-time work? <br>Maybe you're a recuriter that needs the right people to a job for you? <br>We got you covered!</p>
-                            </div>
-                          </div>
+            <div class="container">
+                <div class="row space-100">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="contents text-center">
+                            <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
+                            <p>Are you a freelancer looking for a full-time job or maybe you want to earn some money by
+                                doing some part-time work? <br>Maybe you're a recuriter that needs the right people to
+                                a job for you? <br>We got you covered!</p>
                         </div>
-                      </div>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- Apply Us Section Start -->
@@ -38,7 +40,7 @@
                                     <h3>Recruiter</h3>
                                     <p>Post a job and tell us about your project. We'll quickly match you with <br> the
                                         right freelancers and you can choose the ones that suit you best.</p>
-                                    <a href="post-a-job" class="btn btn-border-filled">Post a Job</a>
+                                    <a  href="{{route('frontend.jobs.create')}}" class="btn btn-border-filled">Post a Job</a>
                                 </div>
                                 <div class="img-thumb">
                                     <i class="lni-briefcase"></i>
@@ -51,8 +53,9 @@
                                     <h5>I'm</h5>
                                     <h3>Jobseeker!</h3>
                                     <p>Search through 60,000+ jobs and apply to ones that suit your needs.<br>
-                                    Click on the button to start searching.</p>
-                                    <a href="browse-jobs" class="btn btn-border-filled">Browse Jobs</a>
+                                        Click on the button to start searching.</p>
+                                    <a href="{{route('frontend.jobs.index')}}" class="btn btn-border-filled">Browse
+                                        Jobs</a>
                                 </div>
                                 <div class="img-thumb">
                                     <i class="lni-user"></i>
@@ -64,13 +67,120 @@
             </div>
             <!-- Apply Us Section End -->
         </header>
+
+
+         <!-- How It Work Section Start -->
+         <section class="how-it-works section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">How It Works?</h2>
+                        <p>Not sure where to start? Let us explain it in the easiest way.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="work-process">
+                                <span class="process-icon">
+                                    <i class="lni-user"></i>
+                                </span>
+                                <h4>Create an Account</h4>
+                                <p>First step is to create account.<br> Fill out necessary info so that
+                                    users or companies know a little more about you.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="work-process step-2">
+                                <span class="process-icon">
+                                    <i class="lni-search"></i>
+                                </span>
+                                <h4>Search Jobs</h4>
+                                <p>You can search jobs from our database and find the ones that you like.
+                                    Simply apply to the job, fill out a form and user/company will receive your
+                                    application.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="work-process step-3">
+                                <span class="process-icon">
+                                    <i class="lni-briefcase"></i>
+                                </span>
+                                <h4>Post a job ad</h4>
+                                <p>Create an ad for your job.<br>
+                                    After that you simply wait for users to apply and choose the right ones.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="work-process step-3">
+                                <span class="process-icon">
+                                    <i class="lni-users"></i>
+                                </span>
+                                <h4>Connect with other users</h4>
+                                   <p> You can follow other users using this site. That way their posts will show up on your feed and you can see all the posts they are willing to share.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        <!-- Counter Section Start -->
+        <section id="counter" class="section bg-gray">
+                <div class="container">
+                    <div class="row">
+                        <!-- Start counter -->
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="counter-box">
+                                <div class="icon"><i class="lni-briefcase"></i></div>
+                                <div class="fact-count">
+                                    <h3><span class="counter">{{$jobCount}}</span></h3>
+                                    <p>Jobs Posted</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End counter -->
+                        <!-- Start counter -->
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="counter-box">
+                                <div class="icon"><i class="lni-home"></i></div>
+                                <div class="fact-count">
+                                    <h3><span class="counter">80</span></h3>
+                                    <p>Companies</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End counter -->
+                        <!-- Start counter -->
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="counter-box">
+                                <div class="icon"><i class="lni-user"></i></div>
+                                <div class="fact-count">
+                                    <h3><span class="counter">{{$userCount}}</span></h3>
+                                    <p>Users</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End counter -->
+                        <!-- Start counter -->
+                        <div class="col-lg-3 col-md-6 col-xs-12">
+                            <div class="counter-box">
+                                <div class="icon"><i class="lni-write"></i></div>
+                                <div class="fact-count">
+                                    <h3><span class="counter">1200</span></h3>
+                                    <p>Applications</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End counter -->
+                    </div>
+                </div>
+            </section>
+            <!-- Counter Section End -->
+            <!-- How It Work Section End -->
         <!-- Header Section End -->
 
         <!-- Browse Catagories Section Start -->
-        <section class="browse-catagories section">
+        {{-- <section class="browse-catagories section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Popular job categories</h2>
+                    <h2 class="section-title">Featured job categories</h2>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-xs-12">
@@ -154,11 +264,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Browse Catagories Section End -->
 
         <!-- Featured Section Start -->
-        <section id="featured" class="section bg-cyan">
+       {{--  <section id="featured" class="section bg-cyan">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Featured Jobs</h2>
@@ -181,6 +291,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-6 col-xs-12">
                         <div class="job-featured">
                             <div class="icon">
@@ -266,7 +377,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Featured Section End -->
 
         <!-- Featured Listings Start -->
@@ -367,218 +478,54 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        <a class="job-listings" href="job-details.html">
+                        @foreach($recentJobs as $recentJob)
+                        <a class="job-listings" href="#!">
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
                                         <img src="{{asset('img')}}/features/img1.png" alt="">
                                     </div>
                                     <div class="job-details">
-                                        <h3>App Developer</h3>
+                                        <h3>{{$recentJob->title}}</h3>
                                         <span class="company-neme">
-                                            AmazeSoft
+                                            {{$recentJob->user->username}}
                                         </span>
                                     </div>
+                                    <hr>
                                 </div>
 
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                     <div class="location">
-                                        <i class="lni-map-marker"></i> New Yourk, US
+                                        <i class="lni-map-marker"></i>{{$recentJob->job_location_city}},
+                                        {{$recentJob->job_location_country}}
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-full-time">20$/h</span>
+                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                    <span class="btn-full-time">{{$recentJob->offer}}$
+                                        @if($recentJob->is_per_hour)
+                                        /h
+                                        @else
+                                        /project
+                                        @endif
+                                    </span>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
+                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                     <span class="btn-apply">See more</span>
                                 </div>
                             </div>
                         </a>
-                        <a class="job-listings" href="job-details.html">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-xs-12">
-                                    <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img2.png" alt="">
-                                    </div>
-                                    <div class="job-details">
-                                        <h3>App Developer</h3>
-                                        <span class="company-neme">
-                                            AmazeSoft
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <div class="location">
-                                        <i class="lni-map-marker"></i> New Yourk, US
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-full-time">20$/h</span>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-apply">See more</span>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="job-listings" href="job-details.html">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-xs-12">
-                                    <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img3.png" alt="">
-                                    </div>
-                                    <div class="job-details">
-                                        <h3>App Developer</h3>
-                                        <span class="company-neme">
-                                            AmazeSoft
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <div class="location">
-                                        <i class="lni-map-marker"></i> New Yourk, US
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-full-time">20$/h</span>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-apply">See more</span>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="job-listings" href="job-details.html">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-xs-12">
-                                    <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img4.png" alt="">
-                                    </div>
-                                    <div class="job-details">
-                                        <h3>App Developer</h3>
-                                        <span class="company-neme">
-                                            AmazeSoft
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <div class="location">
-                                        <i class="lni-map-marker"></i> New Yourk, US
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-full-time">20$/h</span>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-right">
-                                    <span class="btn-apply">See more</span>
-                                </div>
-                            </div>
-                        </a>
+                        @endforeach
                     </div>
                     <div class="col-12 text-center mt-4">
-                        <a href="#" class="btn btn-common">Load more listing</a>
+                    <a href="{{route('frontend.jobs.index')}}" class="btn btn-common">See all jobs</a>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Listings Section End -->
 
-        <!-- How It Work Section Start -->
-        <section class="how-it-works section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">How It Works?</h2>
-                    <p>Not sure where to start? Let us explain it in the easiest way.</p>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
-                        <div class="work-process">
-                            <span class="process-icon">
-                                <i class="lni-user"></i>
-                            </span>
-                            <h4>Create an Account</h4>
-                            <p>First step is to create an account.<br> Fill out necessary info so that
-                            users or companies know a little more about you.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="work-process step-2">
-                            <span class="process-icon">
-                                <i class="lni-search"></i>
-                            </span>
-                            <h4>Search Jobs</h4>
-                            <p>You can search jobs from our database and find the ones that you like.
-                            Simply apply to the job, fill out a form and user/company will receive your application.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="work-process step-3">
-                            <span class="process-icon">
-                                <i class="lni-cup"></i>
-                            </span>
-                            <h4>Post a job ad</h4>
-                            <p>Create an ad for your job.<br>
-                            After that you simply wait for users to apply and choose the right ones.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- How It Work Section End -->
 
-        <!-- Counter Section Start -->
-        <section id="counter" class="section bg-gray">
-            <div class="container">
-                <div class="row">
-                    <!-- Start counter -->
-                    <div class="col-lg-3 col-md-6 col-xs-12">
-                        <div class="counter-box">
-                            <div class="icon"><i class="lni-briefcase"></i></div>
-                            <div class="fact-count">
-                                <h3><span class="counter">800</span></h3>
-                                <p>Jobs Posted</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End counter -->
-                    <!-- Start counter -->
-                    <div class="col-lg-3 col-md-6 col-xs-12">
-                        <div class="counter-box">
-                            <div class="icon"><i class="lni-home"></i></div>
-                            <div class="fact-count">
-                                <h3><span class="counter">80</span></h3>
-                                <p>Companies</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End counter -->
-                    <!-- Start counter -->
-                    <div class="col-lg-3 col-md-6 col-xs-12">
-                        <div class="counter-box">
-                            <div class="icon"><i class="lni-user"></i></div>
-                            <div class="fact-count">
-                                <h3><span class="counter">900</span></h3>
-                                <p>Users</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End counter -->
-                    <!-- Start counter -->
-                    <div class="col-lg-3 col-md-6 col-xs-12">
-                        <div class="counter-box">
-                            <div class="icon"><i class="lni-write"></i></div>
-                            <div class="fact-count">
-                                <h3><span class="counter">1200</span></h3>
-                                <p>Applications</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End counter -->
-                </div>
-            </div>
-        </section>
-        <!-- Counter Section End -->
+
 
         <!-- Blog Section -->
         <section id="blog" class="section">
@@ -586,43 +533,49 @@
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Latest Posts</h2>
-                    <p>See what our users have been sharing. From posts, pictures or projects. You can like or comment the ones you find interesting.</p>
+                    <p>See what our users have been sharing. From posts, pictures or projects. You can like and comment
+                        the ones you find interesting.</p>
                 </div>
                 <div class="row">
 
                     @foreach($recentPosts as $recentPost)
                     <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                    <div class="blog-post">
+                        <div class="blog-post">
                             <!-- Post thumb -->
                             <div class="post-thumb">
-                              <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg" height="200px" alt=""></a>
-                              <div class="hover-wrap">
-                              </div>
+                                <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg" height="200px"
+                                        alt=""></a>
+                                <div class="hover-wrap">
+                                </div>
                             </div>
                             <!-- End Post post-thumb -->
 
                             <!-- Post Content -->
                             <div class="post-content">
-                            <h3 class="post-title">{{$recentPost->title}}</h3>
-                              <div class="meta">
-                              <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $recentPost->user->slug])}}"><i class="lni-user"></i> By {{$recentPost->user->username}}</a></span>
-                                <span class="meta-part"><i class="lni-comments-alt"></i> {{$recentPost->post_comments_count}} Comments</span>
-                                <span class="meta-part"><i class="lni-heart-filled"></i>  {{$recentPost->post_likes_count}} Likes</span>
-                                <span class="meta-part"><i class="lni-calendar"></i>{{$recentPost->created_at->format('d/m/Y H:i:s')}}</span>
-                              </div>
-                              <p>{{ str_limit($recentPost->description, $limit = 100, $end = '...') }}</p>
-                              <a href="posts/{{$recentPost->slug}}" class="btn btn-common">Read More</a>
+                                <h3 class="post-title"><a href="{{route('frontend.posts.show',['slug' => $recentPost->slug])}}">{{$recentPost->title}}</a></h3>
+                                <div class="meta">
+                                    <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $recentPost->user->slug])}}"><i
+                                                class="lni-user"></i> {{$recentPost->user->username}}</a></span>
+                                    <span class="meta-part"><i class="lni-comments-alt"></i>
+                                        {{$recentPost->post_comments_count}} Comments</span>
+                                    <span class="meta-part"><i class="lni-heart-filled"></i>
+                                        {{$recentPost->post_likes_count}} Likes</span>
+                                    <span class="meta-part"><i class="lni-calendar"></i>{{$recentPost->created_at->format('d/m/Y
+                                        H:i:s')}}</span>
+                                </div>
+                                <p>{{ str_limit($recentPost->description, $limit = 100, $end = '...') }}</p>
+                                {{-- <a href="posts/{{$recentPost->slug}}" class="btn btn-common">Read More</a> --}}
                             </div>
                             <!-- Post Content -->
 
-                          </div>
+                        </div>
                     </div>
                     @endforeach
 
 
                     <div class="col-12 text-center mt-4">
-                            <a href="posts" class="btn btn-common">See all posts</a>
-                        </div>
+                        <a href="posts" class="btn btn-common">See all posts</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -637,7 +590,9 @@
                             <div>
                                 <div class="download-text">
                                     <h4>Mobile apps coming soon!</h4>
-                                    <p>We are currently in process of developing Android, iOS and Winows Phone apps.<br> Be sure to subscribe to our newsletter so that you know when they go live and can start using them.</p>
+                                    <p>We are currently in process of developing Android, iOS and Winows Phone apps.<br>
+                                        Be sure to subscribe to our newsletter so that you know when they go live and
+                                        can start using them.</p>
                                 </div>
                             </div>
                         </div>
@@ -652,7 +607,7 @@
         </section>
 
         <!-- Subcribe Section Start -->
-        <div id="subscribe" class="section bg-cyan">
+       {{--  <div id="subscribe" class="section bg-cyan">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-xs-12">
@@ -665,10 +620,11 @@
                             <div class="form-wrapper">
                                 <div class="sub-title">
                                     <h3>Subscribe Our Newsletter</h3>
-                                    <p>By subscribing you are keeping up with the latest job posts, users posts and all the news we think you'll find interesting.</p>
+                                    <p>By subscribing you are keeping up with the latest job posts, users posts and all
+                                        the news we think you'll find interesting.</p>
                                 </div>
                                 <form>
-                                        @csrf
+                                    @csrf
                                     <div class="row">
                                         <div class="col-12 form-line">
                                             <div class="form-group form-search">
@@ -684,7 +640,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         @include('includes.frontend.loaderAndArrow')

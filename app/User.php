@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     public function userSkills() {
         return $this->hasMany('App\UserSkill')->join('skills', 'user_skills.skill_id', 'skills.id')->select('user_skills.*', 'skills.name as name');
-        }
+    }
     public function userBusinessCategories() {
         return $this->hasMany('App\UserBusinessCategory');
     }
@@ -45,8 +45,8 @@ class User extends Authenticatable
     public function userProfile() {
         return $this->hasOne('App\Profile');
     }
-    /* public function post() {
+    public function posts() {
         return $this->hasMany('App\Post');
-    } */
+    }
 
 }

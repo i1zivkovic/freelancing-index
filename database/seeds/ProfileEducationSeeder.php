@@ -19,7 +19,7 @@ class ProfileEducationSeeder extends Seeder
             'end_date' => '2010-12-31',
             'description' => 'Test description',
             'degree' => 'Technician for mechatronics',
-            'profile_id' => 1,
+            'profile_id' => 1
         ]);
         ProfileEducation::create([
             'institution_name' => 'Faculty of computing, computer science and information technology, Osijek',
@@ -28,7 +28,7 @@ class ProfileEducationSeeder extends Seeder
             'end_date' => '2018-12-31',
             'description' => 'Faks',
             'degree' => 'Bachelor of information technology',
-            'profile_id' => 1,
+            'profile_id' => 1
         ]);
     }
 }

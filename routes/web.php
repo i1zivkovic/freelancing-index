@@ -14,12 +14,19 @@
 
 Auth::routes();
 
+// ALLOWED ROUTES TO EVERYONE
+Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], function () {
+
+
+});
+
+
+
+// ROUTES ONLY FOR REGISTERED USERS WHICH HAVE FILLED BASE INFO
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth','steps']], function () {
 
-    //HOME PAGE
-    Route::get('/', 'HomeController@index')->name('home');
-    //
-
+        //HOME
+        Route::get('/', 'HomeController@index')->name('home');
 
     //PROFILE COMPLETION STEPS
     Route::get('step-1', 'StepController@getStepOne')->name('getStepOne');
@@ -43,15 +50,25 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
     //POSTS
     Route::resource('posts', 'PostController');
+    Route::get('posts/my-posts/{slug}', 'PostController@getMyPosts')->name('myPosts');
+    //
 
     //COMMENTS
     Route::resource('comments', 'CommentController');
     //
 
+    //JOBS
+    Route::resource('jobs', 'JobController');
+    //
 
+
+    //CONTACT
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
+    //
 });
 
+
+// ROUTE USED TO FILL BASE INFO WITHOUT REDIRECT
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth']], function () {
     //PROFILE COMPLETION STEPS
     Route::post('post-step-1', 'StepController@postStepOne')->name('postStepOne');
@@ -59,6 +76,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
 
 
+
+// BACKEND TODO
 Route::group(['prefix' => 'admin', 'namespace' => 'Backend', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
 });

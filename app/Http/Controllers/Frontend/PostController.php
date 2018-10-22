@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Auth;
 
 use App\Post;
-
+use App\PostComment;
+use App\PostLike;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,11 +21,14 @@ class PostController extends Controller
      */
     public function index()
     {
+
+        $postCount = Post::count();
+
         $posts = Post::
         withCount('postComments','postLikes')
         ->with([
             'user',
-        ]) -> paginate(5);
+        ]) -> orderBy('created_at','desc') -> paginate(5);
 
         $recentPosts = Post::with([
             'user' => function($query){
@@ -31,7 +36,7 @@ class PostController extends Controller
             }
         ])->orderBy('created_at','DESC')->take(3)->select('id','title','created_at','user_id','slug')->get();
 
-        return view('frontend.posts', compact('posts','recentPosts'));
+        return view('frontend.posts', compact('posts','recentPosts', 'postCount'));
     }
 
     /**
@@ -52,7 +57,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+/*
+        dd($request); */
 
+       /*  $rules = [
+            'title' => 'required|max:1000',
+            'post_id' => 'required|exists:posts,id',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        } */
+
+        /* dd($request); */
+        $post = new Post;
+        $post->title = $request->title;
+        $post->user_id = Auth::id();
+        $post->description = $request->description;
+        $post->slug = str_slug($request->title, '-').time();
+
+        $post->save();
+
+        return redirect()->to('posts/'.$post->slug);
 
     }
 
@@ -89,6 +117,9 @@ class PostController extends Controller
     public function edit($id)
     {
 
+        $post = Post::where('id',$id)->firstOrFail();
+
+        return view('frontend.post_edit', compact('post'));
     }
 
     /**
@@ -100,7 +131,29 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        /*  $rules = [
+             'title' => 'required|max:1000',
+             'post_id' => 'required|exists:posts,id',
+         ];
+
+         $validator = Validator::make($request->all(), $rules);
+
+         if ($validator->fails()) {
+             return back()->withErrors($validator)->withInput();
+         } */
+
+         /* dd($request); */
+         $post = Post::find($id);
+         $post->title = $request->title;
+         $post->description = $request->description;
+         $post->slug = str_slug($request->title, '-').time();
+
+         $post->save();
+
+
+         return redirect()->to('posts/'.$post->slug);
+
     }
 
     /**
@@ -112,6 +165,54 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $userId = Auth::id();
+
+        if( Post::where([['user_id', $userId], ['id', $id]])->exists() )
+        {
+
+            // Delete post
+        Post::findOrFail($id)->delete();
+            // Delete comments
+        PostComment::where('post_id', $id)->delete();
+            // Delete likes
+        PostLike::where('post_id',$id)->delete();
+        return [
+        'status' => 1
+        ];
+        }
+        else {
+            return [
+                'status' => 0,
+                'bla' => 1
+            ];
+        }
+    }
+
+
+
+    /**
+     * Get all posts for specified user id.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getMyPosts($slug)
+    {
+
+
+        $postCount = Post::
+        where('user_id', Auth::id())
+        ->count();
+
+        $posts = Post::
+        where('user_id', Auth::id())
+        ->withCount('postComments','postLikes')
+        ->with([
+            'user',
+        ]) -> paginate(5);
+
+        return view('frontend.user_posts', compact('posts','postCount'));
+
 
     }
 

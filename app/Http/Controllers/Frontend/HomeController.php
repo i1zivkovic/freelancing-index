@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Post;
+use App\Job;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -40,7 +41,21 @@ class HomeController extends Controller
         ]) ->orderBy('created_at','DESC')->take(3)->get();
 
 
-        return view('frontend.home', compact('recentPosts'));
+        $recentJobs = Job::with([
+            'user' => function($query) {
+                $query->select('id','username','slug');
+            }
+        ]) ->orderBy('created_at','DESC')
+        ->select('id','slug','user_id', 'title', 'offer', 'is_per_hour', 'job_location_city','job_location_country','is_remote') //
+        ->take(4)->get();
+
+
+        $jobCount = Job::count();
+
+        $userCount = User::count();
+
+
+        return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount'));
 
 
     }

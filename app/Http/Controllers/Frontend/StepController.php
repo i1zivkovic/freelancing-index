@@ -79,7 +79,7 @@ class StepController extends Controller
             $constraint->aspectRatio();
         })->save($destinationPath . $file_name);
 
-        $image->resize(350, 280, function ($constraint) {
+        $image->resize(47, 38, function ($constraint) {
             $constraint->aspectRatio();
         })->save($destinationPathThumb . $file_name);
 

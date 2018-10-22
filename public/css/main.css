@@ -2667,7 +2667,7 @@ button:focus {
   border-top: 1px solid #f1f1f1;
 }
 
-.manager-resumes-item .item-body .tag-list span {
+.manager-resumes-item .item-body .tag-list span  {
   background-color: #f1f1f1;
   color: #9a9a9a;
   padding: 4px 8px;
@@ -2828,6 +2828,18 @@ button:focus {
 
 .bookmarked .job-details {
   margin-left: 76px;
+}
+
+.job-listings .tag-list span {
+        background-color: #f1f1f1;
+        color: #9a9a9a;
+        padding: 4px 8px;
+        margin-right: 8px;
+        font-size: 12px;
+        border-radius: 4px;
+        line-height: 20px;
+        white-space: nowrap;
+        display: inline-block;
 }
 
 /* ==========================================================================
