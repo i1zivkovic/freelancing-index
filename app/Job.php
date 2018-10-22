@@ -26,4 +26,8 @@ class Job extends Model
         return $this->hasMany('App\JobLike');
     }
 
+    public function job_status(){
+        return $this->belongsTo('App\JobStatus');
+    }
+
 }

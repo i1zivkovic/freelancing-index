@@ -21,7 +21,8 @@ class JobController extends Controller
 
         $jobs = Job:: with([
             'user',
-            'job_skills'
+            'job_skills',
+            'job_status'
         ])
         ->withCount(['job_likes', 'job_comments'])
         -> orderBy('created_at','desc') -> paginate(5);
@@ -83,7 +84,8 @@ class JobController extends Controller
         where('slug',$slug)
         ->with([
             'user',
-            'job_skills'
+            'job_skills',
+            'job_status'
         ]) -> firstOrFail();
 /*
             dd($job); */
@@ -159,7 +161,8 @@ class JobController extends Controller
             });
         })
         ->with([
-        'job_skills', 
+        'job_skills',
+        'job_status',
         'user' => function($query){
             $query->select('id', 'username');
         }])
