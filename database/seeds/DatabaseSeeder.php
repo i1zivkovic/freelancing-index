@@ -22,8 +22,14 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileExperienceSeeder::class);
         $this->call(PostSeeder::class);
         $this->call(JobSeeder::class);
+<<<<<<< HEAD
         /*$this->call(PostLikesSeeder::class);
         $this->call(PostCommentsSeeder::class); */
+=======
+        $this->call(JobSkillSeeder::class);
+        /* $this->call(PostLikesSeeder::class);
+        $this->call(PostCommentsSeeder::class);  */
+>>>>>>> 612c8c3992c5e0169494e804f7ac30b92e44c50a
 
 
     }
