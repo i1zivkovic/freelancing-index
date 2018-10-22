@@ -59,7 +59,7 @@
                             <p>{{$job->description}}</p>
                             <h5>What You Need for this Position</h5>
                             <ul>
-                                @foreach($job->jobSkills as $jobSkill)
+                                @foreach($job->job_skills as $jobSkill)
                                 <li>- {{$jobSkill->name}}</li>
                                 @endforeach
                             </ul>

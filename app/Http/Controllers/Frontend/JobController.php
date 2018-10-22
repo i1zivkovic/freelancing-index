@@ -21,9 +21,10 @@ class JobController extends Controller
 
         $jobs = Job:: with([
             'user',
-            'jobSkills'
-        ]) -> orderBy('created_at','desc') -> paginate(5);
-
+            'job_skills'
+        ])
+        ->withCount(['job_likes', 'job_comments'])
+        -> orderBy('created_at','desc') -> paginate(5);
 
         /* dd($jobs); */
 
@@ -82,7 +83,7 @@ class JobController extends Controller
         where('slug',$slug)
         ->with([
             'user',
-            'jobSkills'
+            'job_skills'
         ]) -> firstOrFail();
 /*
             dd($job); */
@@ -132,10 +133,10 @@ class JobController extends Controller
 
         $jobs = Job::
         where('job_status_id', 1)
-        ->when($request->input('keywords'), function($query) use ($request) {
+        ->when($request->input('q'), function($query) use ($request) {
             return $query->where(function ($query) use ($request) {
-            $query->where('title', 'like', '%'.$request->input('keywords').'%');
-            $keywords = explode(' ', $request->input('keywords'));
+            $query->where('title', 'like', '%'.$request->input('q').'%');
+            $keywords = explode(' ', $request->input('q'));
                 foreach ($keywords as $keyword) {
                     $query->orWhereHas('job_skills', function ($query) use ($keyword){
                         $query->join('skills', 'job_skills.skill_id', 'skills.id');
@@ -145,13 +146,26 @@ class JobController extends Controller
                 }
             });
         })
+        ->when($request->input('location'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $locations = explode(' ', $request->input('location'));
+                foreach ($locations as $location) {
+                    $query->where('job_location_zip', 'like', '%'.$location.'%');
+                    $query->orWhere('job_location_state', 'like', '%'.$location.'%');
+                    $query->orWhere('job_location_country', 'like', '%'.$location.'%');
+                    $query->orWhere('job_location_street', 'like', '%'.$location.'%');
+                    $query->orWhere('job_location_city', 'like', '%'.$location.'%');
+                }
+            });
+        })
         ->with([
         'job_skills', 
         'user' => function($query){
             $query->select('id', 'username');
         }])
-        ->paginate(9);
-
+        ->withCount(['job_likes', 'job_comments'])
+        ->paginate(5);
+        
         return view('frontend.jobs', compact('jobs', 'request'));
     }
 }

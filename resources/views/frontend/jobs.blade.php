@@ -18,10 +18,10 @@
                         {!! Form::open(['route' => ['frontend.jobsFilter'], 'role' => 'form', 'autocomplete' => 'off', 'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
                         <div class="wrap-search-filter row">
                             <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill" name="keywords" value="{{!empty($request) ? $request->input('keywords') : ''}}">
+                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill" name="q" value="{{!empty($request) ? $request->input('q') : ''}}">
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Location: City, State, Zip">
+                                <input type="text" class="form-control" placeholder="Location: City, State, Zip" name="location" value="{{!empty($request) ? $request->input('location') : ''}}">
                             </div>
                             <div class="col-lg-2 col-md-2 col-xs-12">
                                 <button type="submit" class="btn btn-common float-right">Filter</button>
@@ -30,7 +30,7 @@
                         {!!Form::close()!!}
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        @foreach($jobs as $job)
+                    @foreach($jobs as $job)
                     <a class="job-listings" href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
@@ -52,7 +52,7 @@
                                     </p>
                                     <br>
                                     <div class="tag-list">
-                                        @foreach($job->jobSkills as $jobSkill)
+                                        @foreach($job->job_skills as $jobSkill)
                                             <span>{{$jobSkill->name}}</span>
                                         @endforeach
                                         </div>
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                    <span class="btn-full-time">2<i class="lni-comments-alt"></i> 3<i class="lni-heart"></i></span>
+                                    <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i> {{$job->job_likes_count}} <i class="lni-heart"></i></span>
                                 </div>
                             </div>
                         </a>
