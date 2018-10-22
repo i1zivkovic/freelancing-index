@@ -15,9 +15,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
+                        {!! Form::open(['route' => ['frontend.jobsFilter'], 'role' => 'form', 'autocomplete' => 'off', 'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
                         <div class="wrap-search-filter row">
                             <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Keyword: Name, Tag">
+                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill" name="keywords" value="{{!empty($request) ? $request->input('keywords') : ''}}">
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-12">
                                 <input type="text" class="form-control" placeholder="Location: City, State, Zip">
@@ -26,6 +27,7 @@
                                 <button type="submit" class="btn btn-common float-right">Filter</button>
                             </div>
                         </div>
+                        {!!Form::close()!!}
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         @foreach($jobs as $job)
@@ -84,7 +86,11 @@
 
 
                         <!-- Start Pagination -->
+                        @if(empty($request))
                         {!! $jobs -> links()!!}
+                        @else
+                        {{ $jobs->appends($request->all())->links() }}
+                        @endif
                         <!-- End Pagination -->
                     </div>
                 </div>
@@ -97,7 +103,16 @@
 
         @include('includes.frontend.loaderAndArrow')
         @section('js')
-
+        <script type="text/javascript">
+            $('#search-form').submit(function () {
+                $(this)
+                .find('input[name]')
+                .filter(function () {
+                    return !this.value;
+                })
+                .prop('name', '');
+            });
+        </script>
         @stop
     </div>
 </div>

@@ -59,6 +59,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
     //JOBS
     Route::resource('jobs', 'JobController');
+    Route::any('jobs-filter', 'JobController@postJobsFilter')->name('jobsFilter');
     //
 
 

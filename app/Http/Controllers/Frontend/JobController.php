@@ -122,4 +122,32 @@ class JobController extends Controller
     {
         //
     }
+
+
+    public function postJobsFilter(Request $request){
+
+        $jobs = Job::
+        where('job_status_id', 1)
+        ->when($request->input('keywords'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $query->where('title', 'like', '%'.$request->input('keywords').'%');
+            $keywords = explode(' ', $request->input('keywords'));
+                foreach ($keywords as $keyword) {
+                    $query->orWhereHas('job_skills', function ($query) use ($keyword){
+                        $query->join('skills', 'job_skills.skill_id', 'skills.id');
+                        $query->select('skills.id', 'name', 'job_id');
+                        $query->where('name', 'like', '%'.$keyword.'%');
+                    });
+                }
+            });
+        })
+        ->with([
+        'job_skills', 
+        'user' => function($query){
+            $query->select('id', 'username');
+        }])
+        ->paginate(9);
+
+        return view('frontend.jobs', compact('jobs', 'request'));
+    }
 }
