@@ -52,7 +52,7 @@
                                     </p>
                                     <br>
                                     <div class="tag-list">
-                                        @foreach($job->jobSkills as $jobSkill)
+                                        @foreach($job->job_skills as $jobSkill)
                                             <span>{{$jobSkill->name}}</span>
                                         @endforeach
                                         </div>

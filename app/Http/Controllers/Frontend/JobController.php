@@ -21,7 +21,8 @@ class JobController extends Controller
 
         $jobs = Job:: with([
             'user',
-            'jobSkills'
+            'job_skills',
+            'job_status',
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
 
@@ -82,7 +83,8 @@ class JobController extends Controller
         where('slug',$slug)
         ->with([
             'user',
-            'jobSkills'
+            'job_skills',
+            'job_status'
         ]) -> firstOrFail();
 /*
             dd($job); */
@@ -146,11 +148,11 @@ class JobController extends Controller
             });
         })
         ->with([
-        'job_skills', 
+        'job_skills',
         'user' => function($query){
             $query->select('id', 'username');
         }])
-        ->paginate(9);
+        ->paginate(5);
 
         return view('frontend.jobs', compact('jobs', 'request'));
     }
