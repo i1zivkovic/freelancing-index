@@ -14,4 +14,8 @@ class Job extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function jobSkills() {
+        return $this->hasMany('App\JobSkill')->join('skills', 'job_skills.skill_id', 'skills.id')->select('job_skills.*', 'skills.name as name');
+    }
+
 }

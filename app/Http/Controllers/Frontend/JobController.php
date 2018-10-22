@@ -21,6 +21,7 @@ class JobController extends Controller
 
         $jobs = Job:: with([
             'user',
+            'jobSkills'
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
 
@@ -80,8 +81,11 @@ class JobController extends Controller
         $job = Job::
         where('slug',$slug)
         ->with([
-            'user'
+            'user',
+            'jobSkills'
         ]) -> firstOrFail();
+/*
+            dd($job); */
 
         return view('frontend.job_details', compact('job'));
     }

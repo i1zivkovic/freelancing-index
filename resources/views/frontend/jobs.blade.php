@@ -50,10 +50,9 @@
                                     </p>
                                     <br>
                                     <div class="tag-list">
-                                            <span>HTML5</span>
-                                            <span>CSS3</span>
-                                            <span>Bootstrap</span>
-                                            <span>Wordpress</span>
+                                        @foreach($job->jobSkills as $jobSkill)
+                                            <span>{{$jobSkill->name}}</span>
+                                        @endforeach
                                         </div>
                                         <hr>
                                 </div>

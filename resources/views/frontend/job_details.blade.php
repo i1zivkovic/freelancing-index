@@ -59,11 +59,9 @@
                             <p>{{$job->description}}</p>
                             <h5>What You Need for this Position</h5>
                             <ul>
-                                <li>- Objective-C</li>
-                                <li>- iOS SDK</li>
-                                <li>- XCode</li>
-                                <li>- Cocoa</li>
-                                <li>- ClojureScript</li>
+                                @foreach($job->jobSkills as $jobSkill)
+                                <li>- {{$jobSkill->name}}</li>
+                                @endforeach
                             </ul>
                             <h5>Application Link</h5>
                             <a href="#!">http://google.com</a>
