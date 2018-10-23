@@ -22,10 +22,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 1,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
         $job = Job::create([
@@ -37,10 +37,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 1,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
         $job = Job::create([
@@ -52,10 +52,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 0,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
         $job = Job::create([
@@ -67,10 +67,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 0,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
         $job = Job::create([
@@ -82,10 +82,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 0,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
         $job = Job::create([
@@ -97,10 +97,10 @@ class JobSeeder extends Seeder
             'is_per_hour' => 0,
             'is_remote' => 1,
             'job_status_id' => 1,
-            'job_location_zip' => 32100,
+
             'job_location_city' => 'Vinkovci',
-            'job_location_state' => 'Vukovarsko-Srijemska',
-            'job_location_street' => 'Matije Ivanića 9',
+
+
             'job_location_country' =>  'Croatia'
         ]);
     }

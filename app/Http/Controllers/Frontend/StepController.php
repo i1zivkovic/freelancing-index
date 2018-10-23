@@ -39,7 +39,7 @@ class StepController extends Controller
 
     public function postStepTwo(Request $r){
         $arr = [];
-        $skills = $r->tag_list;
+        $skills = $r->skill_list;
 
         if(empty($skills))
             return redirect(route('frontend.user.show',Auth::user()->slug));

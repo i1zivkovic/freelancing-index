@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 
 use Auth;
-use App\PostComment;
+use App\JobComment;
 use Validator;
 
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class JobCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class CommentController extends Controller
 
         $rules = [
             'comment' => 'required|max:1000',
-            'post_id' => 'required|exists:posts,id',
+            'job_id' => 'required|exists:jobs,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -52,14 +52,14 @@ class CommentController extends Controller
         }
 
         /* dd($request); */
-        $comment = new PostComment;
+        $comment = new JobComment;
         $comment->comment = $request->comment;
         $comment->user_id = Auth::id();
-        $comment->post_id = $request->post_id;
+        $comment->job_id = $request->job_id;
 
         $comment->save();
 
-        return redirect()->to('posts/'.$request->post_slug);
+        return redirect()->to('jobs/'.$request->job_slug);
     }
 
     /**
@@ -107,9 +107,9 @@ class CommentController extends Controller
 
         $userId = Auth::id();
 
-        if( PostComment::where([['user_id', $userId], ['id', $id]])->exists() )
+        if( JobComment::where([['user_id', $userId], ['id', $id]])->exists() )
         {
-        PostComment::findOrFail($id)->delete();
+        JobComment::findOrFail($id)->delete();
         return [
         'status' => 1
         ];

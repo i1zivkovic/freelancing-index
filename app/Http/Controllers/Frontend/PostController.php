@@ -22,8 +22,6 @@ class PostController extends Controller
     public function index()
     {
 
-        $postCount = Post::count();
-
         $posts = Post::
         withCount('postComments','postLikes')
         ->with([
@@ -36,7 +34,7 @@ class PostController extends Controller
             }
         ])->orderBy('created_at','DESC')->take(3)->select('id','title','created_at','user_id','slug')->get();
 
-        return view('frontend.posts', compact('posts','recentPosts', 'postCount'));
+        return view('frontend.posts', compact('posts','recentPosts'));
     }
 
     /**

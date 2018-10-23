@@ -34,7 +34,7 @@
 
                     <!--  Posts counter widget -->
                     <div class="widget">
-                            <h5 class="widget-title"># of posts: {{$postCount}} </h5>
+                            <h5 class="widget-title"># of posts: {{$posts->total()}} </h5>
                           </div>
 
                   <!-- Categories Widget -->
@@ -155,17 +155,6 @@
                         <span class="meta-part"><i class="lni-comments-alt"></i> {{$post->post_comments_count}} Comments</span>
                       </div>
                       <p>{{$post->description}}</p>
-
-                      @if(Auth::user() && ($post->user_id == Auth::user()->id))
-                      <hr>
-                      <a href="#">
-                          <i class="lni-pencil"></i>
-                      </a>
-                      &nbsp;
-                      <a href="#" class="delete-post" data-id="{{$post->id}}">
-                          <i class="lni-trash"></i>
-                      </a>
-                      @endif
                    {{--    <a href="{{route('frontend.posts.show',['slug' => $post->slug])}}" class="btn btn-common">Read More</a> --}}
                     </div>
                     <!-- Post Content -->
@@ -203,90 +192,7 @@
 
         @section('js')
         {{-- --}}
-        <script>
-                if ($('#comment').hasClass('is-invalid')) {
-                    $('#comment').focus();
-                }
 
-
-                $(".delete-post").click(function (e) {
-                    var id = $(this).data('id');
-                    const swalWithBootstrapButtons = swal.mixin({
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger mr-3',
-                        buttonsStyling: false,
-                    })
-                    e.preventDefault();
-                    swalWithBootstrapButtons({
-                        title: 'Are you sure?',
-                        text: 'You want to delete this post?',
-                        type: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes, delete it!',
-                        cancelButtonText: 'No, cancel!',
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.value) {
-                            deletePost(id);
-                        } else if (
-                            // Read more about handling dismissals
-                            result.dismiss === swal.DismissReason.cancel
-                        ) {
-                            swalWithBootstrapButtons(
-                                'Cancelled',
-                                'Your post is safe :)',
-                                'error'
-                            )
-                        }
-                    })
-                });
-
-                function deletePost(post_id) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $("input[name=_token]").val()
-                        }
-                    });
-                    $.ajax({
-                        url: '{{route("frontend.posts.index")}}/' + post_id,
-                        type: 'DELETE',
-                        dataType: 'JSON',
-                        success: function (data) {
-                            console.log(data);
-                            if (data.status == 1) {
-                                let timerInterval
-                                swal({
-                                    type: "success",
-                                    title: 'Please wait!',
-                                    html: 'Deleting your post..',
-                                    timer: 500,
-                                    onOpen: () => {
-                                        swal.showLoading()
-                                        timerInterval = setInterval(() => {}, 100)
-                                    },
-                                    onClose: () => {
-                                        clearInterval(timerInterval)
-                                    }
-                                }).then((result) => {
-                                    if (
-                                        result.dismiss === swal.DismissReason.timer
-                                    ) {
-                                        $('#row_' + post_id).remove();
-                                        swal.close();
-                                    }
-                                });
-                            } else {
-                                swal({
-                                    type: 'error',
-                                    title: 'Oops...',
-                                    text: 'An error has accured while trying to delete the post!',
-                                });
-                            }
-                        }
-                    });
-                }
-
-            </script>
         @stop
     </div>
 </div>

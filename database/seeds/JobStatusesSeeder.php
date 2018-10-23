@@ -20,15 +20,12 @@ class JobStatusesSeeder extends Seeder
           JobStatus::create([
             'name' => 'Done',
         ]);
-        JobStatus::create([
-            'name' => 'Reserved',
-        ]);
           //
           JobStatus::create([
             'name' => 'In Progress',
         ]);
           JobStatus::create([
-            'name' => 'Canceled',
+            'name' => 'Removed',
         ]);
     }
 }

@@ -22,7 +22,7 @@
                      @csrf
                     <h3>Add your skills</h3>
                     <p class="mb-5">Feel free to add your skills now, or you can click on NEXT and do it later on your profile settings.</p>
-                    <select class="js-data-example-ajax" id="tag_list" multiple="multiple" name="tag_list[]"></select>
+                    <select class="js-data-example-ajax" id="skill_list" multiple="multiple" name="skill_list[]"></select>
                     <button type="submit" class="btn btn-common mt-5">Next</button>
                     {!!Form::close()!!}
                 </div>
@@ -39,7 +39,7 @@
 {{-- --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-    $('#tag_list').select2({
+    $('#skill_list').select2({
 
         width: '100%',
         placeholder: "Choose tags...",

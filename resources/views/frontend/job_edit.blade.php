@@ -5,6 +5,7 @@
 
 @section('css')
 {{-- --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @stop
 
 @section('content')
@@ -18,90 +19,109 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-9 col-md-12 col-xs-12">
                         <div class="post-job box">
-                            <h3 class="job-title">Post a new Job</h3>
-                            {!! Form::open(['method' => 'PUT', 'route' => ['frontend.jobs.update'], 'autocomplete' =>
+                            <h3 class="job-title">Edit you job</h3>
+                            {!! Form::open(['method' => 'PUT', 'route' => ['frontend.jobs.update', $job->id],
+                            'autocomplete' =>
                             'off',
                             'files' => true, 'enctype' => 'multipart/form-data', 'id' => 'jobPostForm', 'class' =>
                             'form-ad']) !!}
                             @csrf
                             <div class="form-group">
                                 <label class="control-label">Job Title</label>
-                                <input type="text" class="form-control" placeholder="" name="title" required>
+                                <input type="text" class="form-control" placeholder="" name="title" required value="{{$job->title}}">
                             </div>
                             {{-- <div class="form-group">
                                 <label class="control-label">Company</label>
                                 <input type="text" class="form-control" placeholder="Write company name">
                             </div> --}}
-                            <div class="form-row">
-                                <div class="col-sm-12 col-md-6">
-                                    <label class="control-label">Job Country</label>
-                                    <input type="text" class="form-control" name="job_location_country">
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <label class="control-label">Job City</label>
-                                    <input type="text" class="form-control" placeholder="" name="job_location_city">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <label class="control-label">Job Country</label>
+                                        <input type="text" class="form-control" name="job_location_country" value="{{$job->job_location_country}}">
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <label class="control-label">Job City</label>
+                                        <input type="text" class="form-control" placeholder="" name="job_location_city"
+                                            value="{{$job->job_location_city}}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Category</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
-                                        <select class="dropdown-product selectpicker">
-                                            <option>All Categories</option>
-                                            <option>Finance</option>
-                                            <option>IT & Engineering</option>
-                                            <option>Education/Training</option>
-                                            <option>Art/Design</option>
-                                            <option>Sale/Markting</option>
-                                            <option>Healthcare</option>
-                                            <option>Science</option>
-                                            <option>Food Services</option>
-                                        </select>
+                                        {!! Form::select('business_category_id[]', $businessCategories,
+                                        $selectedCategories, ['class' => ' dropdown-product selectpicker
+                                        js-example-basic-multiple', 'multiple' =>
+                                        true]) !!}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Required Skills</label>
+                                <div class="search-category-container">
+                                    <label class="styled-select">
+                                        {!! Form::select('skill_list[]', $skills,
+                                        $selectedSkills, ['class' => ' dropdown-product selectpicker
+                                        js-example-basic-multiple', 'multiple' =>
+                                        true, 'id'=>'skill_list']) !!}
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Description</label>
-                                <textarea class="form-control" placeholder="" name="description" value="" rows="7" required></textarea>
+                                <textarea class="form-control" placeholder="" name="description" value="" rows="7"
+                                    required>{{$job->description}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Price</label>
-                                <input type="text" class="form-control" placeholder="" name="offer" required>
+                                <label class="control-label">Offer</label>
+                                <input type="text" class="form-control" placeholder="" name="offer" required value="{{$job->offer}}">
                             </div>
                             <div class="
                                         form-group">
-                                <label class="control-label">Price type</label>
+                                <label class="control-label">Offer type</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
-                                        <select class="dropdown-product selectpicker" name="is_per_hour">
-                                            <option value="1" selected>Per hour</option>
-                                            <option value="0">Per project</option>
-                                        </select>
+                                        {!! Form::select('is_per_hour', [1 => 'Per Hour', 0 => 'Per Project'],
+                                        $job->is_per_hour, ['class' => 'dropdown-product selectpicker']) !!}
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label class="control-label">Is remote</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
-                                        <select class="dropdown-product selectpicker" name="is_remote">
-                                            <option value="1" selected>Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
+                                        {!! Form::select('is_remote', [1 => 'Yes', 0 => 'No'], $job->is_remote,
+                                        ['class' => 'dropdown-product selectpicker']) !!}
                                     </label>
                                 </div>
                             </div>
-                            <div class="
-                                        form-group">
-                                <label class="control-label">Application E-mail / URL</label>
-                                <input type="text" class="form-control" placeholder="">
+                            <div class="form-group">
+                                <label class="control-label">Upload File (will create new or overwrite existing)</label>
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="file" name="file">
+                                   {{--  <span class="help-block"> <i>Uploading a file will create new file or overwrite if
+                                            one
+                                            already exists.</i></span> --}}
+                                    <label class="custom-file-label form-control" for="file" id="file-label">
+                                        Choose file...
+                                    </label>
+                                </div>
                             </div>
-                            <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="validatedCustomFile">
-                                <label class="custom-file-label form-control" for="validatedCustomFile">Choose
-                                    file...</label>
+                            <div class="form-group">
+                                    <label class="control-label">Uploaded File</label>
+                            @if ($job->job_files)
+                            <div class="form-group">
+                                <p id="file-info"> <a href="{{asset('uploads')}}/{{Auth::user()->username}}/{{$job->job_files->path}}"
+                                        download>{{$job->job_files->path}}</a> <a href="#!" class="text-danger" id="delete-file"
+                                        data-id="{{$job->job_files->id}}"><i class="lni-trash"></i></a></p>
                             </div>
-                            <button type="submit" class="btn btn-common">Submit your job</button>
+                            @endif
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-common">Update your job</button>
                             {!!Form::close()!!}
                         </div>
                     </div>
@@ -114,6 +134,10 @@
 
         @include('includes.frontend.loaderAndArrow')
         @section('js')
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+        {!!Html::script(asset('js/custom/job-edit.js'))!!}
 
         @stop
     </div>

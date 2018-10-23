@@ -51,28 +51,50 @@
                                 <h5>Job Description</h5>
                                 <p>{{$job->description}}</p>
                                 <h5>Skills required</h5>
-                                {{-- <ul>
-                                    @foreach($job->job_skills as $jobSkill)
-                                    <li>- {{$jobSkill->name}}</li>
-                                    @endforeach
-                                </ul> --}}
                                 <div class="tag-list">
-                                        @foreach($job->job_skills as $jobSkill)
-                                            <span>{{$jobSkill->name}}</span>
-                                        @endforeach
-                                        </div>
+                                    @if ($job->job_skills->count())
+
+                                    @foreach($job->job_skills as $jobSkill)
+                                    <span>{{$jobSkill->name}} </span>
+                                    @endforeach
+                                    @else
+                                    <i>No skills required</i>
+                                    @endif
+                                </div>
+                                <h5>Categories</h5>
+                                <div class="tag-list">
+                                    @if ($job->job_business_categories->count())
+                                    @foreach($job->job_business_categories as $jobCategory)
+                                    <span>{{$jobCategory->name}}</span>
+                                    @endforeach
+                                    @else
+                                    <i>No categories assigned</i>
+                                    @endif
+                                </div>
                                 <h5>
                                     Offer
                                 </h5>
-                                <p class="offer">20$
+                                <p class="offer">{{$job->offer}}$
                                     @if($job->is_per_hour)
                                     /hour
                                     @else
                                     /project
                                     @endif
                                 </p>
+                                @if(!Auth::user() || !($job->user_id == Auth::user()->id))
                                 <hr>
                                 <a href="#" class="btn btn-common">Apply to a job</a>
+                                @endif
+                                @if(Auth::user() && ($job->user_id == Auth::user()->id))
+                                <hr>
+                                <a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
+                                    <i class="lni-pencil"></i>
+                                </a>
+                                &nbsp;
+                                <a href="#" class="delete-job" data-id="{{$job->id}}">
+                                    <i class="lni-trash"></i>
+                                </a>
+                                @endif
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -112,9 +134,10 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <!-- Start Comment Area -->
                         <div id="comments">
-                            <h3>There are 5 comments on this post</h3>
+                            <h3>There are {{$job->job_comments->count()}} comments on this post</h3>
                             <ol class="comments-list">
-                                <li>
+                                @foreach($job->job_comments as $job_comment)
+                                <li id="row_{{$job_comment->id}}">
                                     <div class="media">
                                         <div class="thumb-left">
                                             <a href="#">
@@ -122,75 +145,57 @@
                                             </a>
                                         </div>
                                         <div class="info-body">
-                                            <h4 class="name">Roy Fisher</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia
-                                                possimus
-                                                dignissimos eveniet aliquid optio sit sint fugit dolorem autem placeat
-                                                nostrum deleniti nulla error, dolores in dolorum illum, tempore,
-                                                perferendis.</p>
-                                            <span class="comment-date">Mar 02, 2016</span>
-
-                                        </div>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <div class="media">
-                                        <div class="thumb-left">
+                                            <h4 class="name">{{$job_comment->username}}</h4>
+                                            <p>{{$job_comment->comment}}</p>
+                                            <form>
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                                        aria-describedby="emailHelp" placeholder="Enter email">
+                                                </div>
+                                            </form>
+                                            <span class="comment-date">{{\Carbon\Carbon::parse($job_comment->created_at)->format('d/m/Y')}}</span>
+                                            <hr>
                                             <a href="#">
-                                                <img src="{{asset('img')}}/blog/user3.png" alt="">
+                                                <i class="lni-pencil"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="delete-comment" data-id="{{$job_comment->id}}">
+                                                <i class="lni-trash"></i>
                                             </a>
                                         </div>
-                                        <div class="info-body">
-                                            <h4 class="name">Nancy Watson</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia
-                                                possimus
-                                                dignissimos eveniet aliquid optio sit sint fugit dolorem autem placeat
-                                                nostrum deleniti nulla error, dolores in dolorum illum, tempore,
-                                                perferendis.</p>
-                                            <span class="comment-date">Mar 02, 2016</span>
-
-                                        </div>
                                     </div>
+
                                 </li>
+                                @endforeach
                             </ol>
                             <!-- Start Respond Form -->
-                            <div id="respond">
-                                <h2 class="respond-title">Leave a comment</h2>
-                                <form action="#">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input id="author" class="form-control" name="author" type="text" value=""
-                                                    size="30" placeholder="Enter your name">
-                                            </div>
+                            <div id="respond" class="mb-5" <h2 class="respond-title">Leave a comment</h2>
+                                {!! Form::open(['method' => 'POST', 'route' =>
+                                ['frontend.job-comments.store'], 'autocomplete' =>
+                                'on','id' => 'commentForm', 'class' => 'form-ad']) !!}
+                                @csrf
+                                <input type="hidden" value="{{$job->id}}" name="job_id">
+                                <input type="hidden" value="{{$job->slug}}" name="job_slug">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea id="comment" class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}"
+                                                name="comment" cols="45" rows="8" placeholder="Here goes your comment (1000 characters max.)"
+                                                required>{{ old('comment') }}</textarea>
+                                            @if ($errors->has('comment'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('comment') }}</strong>
+                                            </span>
+                                            @endif
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input id="email" class="form-control" name="author" type="text" value=""
-                                                    size="30" placeholder="Enter your email">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <input id="subject" class="form-control" name="author" type="text"
-                                                    value="" size="30" placeholder="Subject (optional)">
-                                            </div>
-                                        </div>
+                                        <button type="submit" id="submit" class="btn btn-common">Submit
+                                            Comment</button>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <textarea id="comment" class="form-control" name="comment" cols="45"
-                                                    rows="8" placeholder="Here goes your comment"></textarea>
-                                            </div>
-                                            <button type="submit" id="submit" class="btn btn-common" style="margin-bottom: 50px;">Submit
-                                                Comment</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
+                                {!!Form::close()!!}
                             </div>
                             <!-- End Respond Form -->
+
 
                         </div>
                     </div>
@@ -201,6 +206,9 @@
 
 
             @section('js')
+            <!-- Focus comment input if there is an error -->
+
+            {!!Html::script(asset('js/custom/job-details.js'))!!}
 
             @stop
         </div>

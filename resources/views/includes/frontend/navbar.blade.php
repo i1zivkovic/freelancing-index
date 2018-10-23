@@ -40,7 +40,12 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Add Job</a></li>
-                                <li><a class="dropdown-item" href="manage-jobs.html">Manage Jobs</a></li>
+                                @guest
+                                <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li>
+                                @else
+                                <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My Jobs</a></li>
+                                @endguest
+
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

@@ -53,13 +53,20 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::get('posts/my-posts/{slug}', 'PostController@getMyPosts')->name('myPosts');
     //
 
-    //COMMENTS
-    Route::resource('comments', 'CommentController');
+    //POST COMMENTS
+    Route::resource('post-comments', 'PostCommentController');
+    //
+
+    //POST COMMENTS
+    Route::resource('job-comments', 'JobCommentController');
     //
 
     //JOBS
     Route::resource('jobs', 'JobController');
     Route::any('jobs-filter', 'JobController@postJobsFilter')->name('jobsFilter');
+    Route::any('my-jobs-filter', 'JobController@postMyJobsFilter')->name('myJobsFilter');
+    Route::get('posts/my-jobs/{slug}', 'JobController@getMyJobs')->name('myJobs');
+    Route::delete('delete-job-file/{id}', 'AjaxController@deleteJobFile')->name('deleteJobFile');
     //
 
 

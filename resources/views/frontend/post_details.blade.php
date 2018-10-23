@@ -35,18 +35,18 @@
                                     <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $post->user->slug])}}"><i
                                                 class="lni-user"></i> By {{$post->user->username}}</a></span>
                                     <span class="meta-part"><i class="lni-calendar"></i>
-                                            {{$post->created_at->format('m/d/Y H:i:s')}}</span>
+                                        {{$post->created_at->format('m/d/Y H:i:s')}}</span>
                                     <span class="meta-part"><i class="lni-comments-alt"></i>
-                                            {{$post->postComments->count()}} Comments</span>
+                                        {{$post->postComments->count()}} Comments</span>
                                     <span class="meta-part"><i class="lni-heart-filled"></i>
-                                            {{$post->post_likes_count}} Likes</span>
+                                        {{$post->post_likes_count}} Likes</span>
                                 </div>
                                 <p>{{$post->description}}</p>
                                 @if(Auth::user() && ($post->user_id == Auth::user()->id))
                                 <hr>
-                                <a href="#">
-                                    <i class="lni-pencil"></i>
-                                </a>
+                                <a href="{{route('frontend.posts.edit',['id' => $post->id])}}">
+                                        <i class="lni-pencil"></i>
+                                    </a>
                                 &nbsp;
                                 <a href="#" class="delete-post" data-id="{{$post->id}}">
                                     <i class="lni-trash"></i>
@@ -107,7 +107,7 @@
                             <div id="respond">
                                 <h2 class="respond-title">Leave a comment</h2>
                                 {!! Form::open(['method' => 'POST', 'route' =>
-                                ['frontend.comments.store'], 'autocomplete' =>
+                                ['frontend.post-comments.store'], 'autocomplete' =>
                                 'on','id' => 'commentForm', 'class' => 'form-ad']) !!}
                                 @csrf
                                 <input type="hidden" value="{{$post->id}}" name="post_id">
@@ -148,174 +148,11 @@
 
         @section('js')
         <!-- Focus comment input if there is an error -->
-        <script>
-            if ($('#comment').hasClass('is-invalid')) {
-                $('#comment').focus();
-            }
 
 
-            $(".delete-comment").click(function (e) {
-                var id = $(this).data('id');
-                const swalWithBootstrapButtons = swal.mixin({
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger mr-3',
-                    buttonsStyling: false,
-                })
-                e.preventDefault();
-                swalWithBootstrapButtons({
-                    title: 'Are you sure?',
-                    text: 'You want to delete this comment?',
-                    type: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.value) {
-                        deleteComment(id);
-                    } else if (
-                        // Read more about handling dismissals
-                        result.dismiss === swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons(
-                            'Cancelled',
-                            'Your comment is safe :)',
-                            'error'
-                        )
-                    }
-                })
-            });
-
-            function deleteComment(comment_id) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $("input[name=_token]").val()
-                    }
-                });
-                $.ajax({
-                    url: '{{route("frontend.comments.index")}}/' + comment_id,
-                    type: 'DELETE',
-                    dataType: 'JSON',
-                    success: function (data) {
-                        console.log(data);
-                        if (data.status == 1) {
-                            let timerInterval
-                            swal({
-                                type: "success",
-                                title: 'Please wait!',
-                                html: 'Deleting your comment..',
-                                timer: 500,
-                                onOpen: () => {
-                                    swal.showLoading()
-                                    timerInterval = setInterval(() => {}, 100)
-                                },
-                                onClose: () => {
-                                    clearInterval(timerInterval)
-                                }
-                            }).then((result) => {
-                                if (
-                                    result.dismiss === swal.DismissReason.timer
-                                ) {
-                                    $('#row_' + comment_id).remove();
-                                    swal.close();
-                                }
-                            });
-                        } else {
-                            swal({
-                                type: 'error',
-                                title: 'Oops...',
-                                text: 'An error has accured while trying to delete the comment!',
-                            });
-                        }
-                    }
-                });
-            }
+        {!!Html::script(asset('js/custom/post-details.js'))!!}
 
 
-        if ($('#comment').hasClass('is-invalid')) {
-            $('#comment').focus();
-        }
-
-
-        $(".delete-post").click(function (e) {
-            var id = $(this).data('id');
-            const swalWithBootstrapButtons = swal.mixin({
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger mr-3',
-                buttonsStyling: false,
-            })
-            e.preventDefault();
-            swalWithBootstrapButtons({
-                title: 'Are you sure?',
-                text: 'You want to delete this post?',
-                type: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    deletePost(id);
-                } else if (
-                    // Read more about handling dismissals
-                    result.dismiss === swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons(
-                        'Cancelled',
-                        'Your post is safe :)',
-                        'error'
-                    )
-                }
-            })
-        });
-
-        function deletePost(post_id) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $("input[name=_token]").val()
-                }
-            });
-            $.ajax({
-                url: '{{route("frontend.posts.index")}}/' + post_id,
-                type: 'DELETE',
-                dataType: 'JSON',
-                success: function (data) {
-                    console.log(data);
-                    if (data.status == 1) {
-                        let timerInterval
-                        swal({
-                            type: "success",
-                            title: 'Please wait!',
-                            html: 'Deleting your post..',
-                            timer: 500,
-                            onOpen: () => {
-                                swal.showLoading()
-                                timerInterval = setInterval(() => {}, 100)
-                            },
-                            onClose: () => {
-                                clearInterval(timerInterval)
-                            }
-                        }).then((result) => {
-                            if (
-                                result.dismiss === swal.DismissReason.timer
-                            ) {
-                                window.location.href = '{{route("frontend.posts.index")}}';
-                                swal.close();
-
-                            }
-                        });
-                    } else {
-                        swal({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'An error has accured while trying to delete the post!',
-                        });
-                    }
-                }
-            });
-        }
-
-    </script>
         <!-- End Content -->
         @stop
     </div>

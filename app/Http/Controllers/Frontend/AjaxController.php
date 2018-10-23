@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Skill;
 use App\PostComment;
+use App\JobFile;
+use Auth;
 
 class AjaxController extends Controller
 {
@@ -31,4 +33,20 @@ class AjaxController extends Controller
         return \Response::json($formatted_skills);
     }
 
+
+    public function deleteJobFile($id) {
+
+        $job_file = JobFile::findOrFail($id);
+        if ($job_file->exists()) {
+            unlink(public_path().'/uploads/'.Auth::user()->username.'/'.$job_file->path);
+            $job_file->delete();
+            return [
+                'status' => 1
+            ];
+        }else {
+            return [
+                'status' => 0
+            ];
+        }
+    }
 }
