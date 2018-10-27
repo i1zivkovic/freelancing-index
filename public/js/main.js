@@ -59,7 +59,7 @@ JS INDEX
         label:'',
         closedSymbol:'<i class="lni-chevron-right"><i/>',
         openedSymbol:'<i class="lni-chevron-down"><i/>',
-        brand:'<a href="index.html"><img src="'+logo_path+'" class="img-responsive" alt="logo"></a>'
+        brand:'<a href="/"><img src="'+logo_path+'" class="img-responsive" alt="logo"></a>'
     });
 
     /*====================================
@@ -86,31 +86,9 @@ JS INDEX
 
 
     /*====================================
-    Testimonials Carousel
-    ======================================*/
-    var testiOwl = $("#testimonials");
-    testiOwl.owlCarousel({
-        autoplay:true,
-        margin:30,
-        dots:true,
-        autoplayHoverPause:true,
-        nav:false,
-        loop:true,
-        responsiveClass:true,
-        responsive:{
-            0: {
-                items:1,
-            },
-            991:{
-                items:1
-          }
-        }
-    });
-
-    /*====================================
     New Products Owl Carousel
     ======================================*/
-    var newproducts = $("#new-products");
+    var newproducts = $("#top-hiring");
       newproducts.owlCarousel({
         autoplay: true,
         nav: true,

@@ -26,7 +26,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <i class="fas fa-user-tie mr-2"></i>Candidates
+                                <i class="fas fa-user-tie mr-2"></i> Work
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Browse Jobs</a></li>
@@ -36,10 +36,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <i class="fas fa-handshake mr-2"></i> Employers
+                                <i class="fas fa-handshake mr-2"></i> Recruit
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Add Job</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Post a job</a></li>
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li>
                                 @else

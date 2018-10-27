@@ -14,21 +14,47 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-xs-12">
-                        {!! Form::open(['route' => ['frontend.myJobsFilter'], 'role' => 'form', 'autocomplete' => 'off', 'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
-                        <div class="wrap-search-filter row">
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill" name="q" value="{{!empty($request) ? $request->input('q') : ''}}">
+                        <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                   <i class="lni-funnel"></i> Filter jobs
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in show">
+                                            <div class="panel-body">
+
+                                                {!! Form::open(['route' => ['frontend.myJobsFilter'], 'role' => 'form',
+                                                'autocomplete' => 'off',
+                                                'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                        <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
+                                                            name="q" value="{{!empty($request) ? $request->input('q') : null}}">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                        <input type="text" class="form-control" placeholder="Location: City, State, Zip"
+                                                            name="location" value="{{!empty($request) ? $request->input('location') : null}}">
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                        <input type="text" class="form-control" placeholder="Category: Food, Communications, It"
+                                                            name="category" value="{{!empty($request) ? $request->input('category') : null}}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <button type="submit" class="btn btn-common btn-block">Filter</button>
+                                                    </div>
+                                                </div>
+                                                {!!Form::close()!!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Location: City, Country" name="location" value="{{!empty($request) ? $request->input('location') : ''}}">
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                <button type="submit" class="btn btn-common float-right">Filter</button>
-                            </div>
-                        </div>
-                        {!!Form::close()!!}
-                    </div>
                     <div class="col-lg-12 col-md-12 col-xs-12">
                     @foreach($jobs as $job)
                     <div class="job-listings">
@@ -55,6 +81,16 @@
                                         @foreach($job->job_skills as $jobSkill)
                                             <span>{{$jobSkill->name}}</span>
                                         @endforeach
+                                        </div>
+                                        <br>
+                                        <div class="category-list">
+                                            @foreach($job->job_business_categories as $jobCategory)
+                                            @if($loop->last)
+                                            <span>{{$jobCategory->name}}</span>
+                                            @else
+                                            <span>{{$jobCategory->name}} - </span>
+                                            @endif
+                                            @endforeach
                                         </div>
                                         <hr>
                                 </div>

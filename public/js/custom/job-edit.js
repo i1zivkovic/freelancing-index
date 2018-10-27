@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 
-
+    // listener for input file
     $('input[type="file"]').change(function (e) {
         if (e.target.files[0]) {
             var fileName = e.target.files[0].name;
@@ -13,12 +13,13 @@ $(document).ready(function () {
     });
 
 
+    // create select 2
     $('.js-example-basic-multiple').select2({
         width: '100%',
     });
 
 
-
+    // create select 2 for skills with ajax
     $('#skill_list').select2({
 
         width: '100%',
@@ -43,14 +44,16 @@ $(document).ready(function () {
     });
 
 
+    // swal mixin
+    const swalWithBootstrapButtons = swal.mixin({
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger mr-3',
+        buttonsStyling: false,
+    })
+
     // CLICK EVENT ON COMMENT
     $("#delete-file").click(function (e) {
         var id = $(this).data('id');
-        const swalWithBootstrapButtons = swal.mixin({
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger mr-3',
-            buttonsStyling: false,
-        })
         e.preventDefault();
         swalWithBootstrapButtons({
             title: 'Are you sure?',
@@ -62,6 +65,14 @@ $(document).ready(function () {
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
+                swal({
+                    title: 'Deleting your file...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    onOpen: () => {
+                        swal.showLoading()
+                    }
+                })
                 deleteFile(id);
             } else if (
                 // Read more about handling dismissals
@@ -90,34 +101,25 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.status == 1) {
-                    let timerInterval
-                    swal({
-                        type: "success",
-                        title: 'Please wait!',
-                        html: 'Deleting your file..',
-                        timer: 500,
-                        onOpen: () => {
-                            swal.showLoading()
-                            timerInterval = setInterval(() => {}, 100)
-                        },
-                        onClose: () => {
-                            clearInterval(timerInterval)
-                        }
-                    }).then((result) => {
-                        if (
-                            result.dismiss === swal.DismissReason.timer
-                        ) {
-                            $('#file-info').remove();
-                            swal.close();
-                        }
+                    swalWithBootstrapButtons({
+                        type: 'success',
+                        title: 'File deleted',
+                        text: 'You have successfully delete your file.',
+                        confirmButtonText: 'Ok',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
                     });
                 } else {
-                    swal({
+                    swalWithBootstrapButtons({
                         type: 'error',
                         title: 'Oops...',
                         text: 'An error has accured while trying to delete the file!',
                     });
                 }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
             }
         });
     }

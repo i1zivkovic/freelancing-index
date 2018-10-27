@@ -40,7 +40,8 @@
                                     <h3>Recruiter</h3>
                                     <p>Post a job and tell us about your project. We'll quickly match you with <br> the
                                         right freelancers and you can choose the ones that suit you best.</p>
-                                    <a  href="{{route('frontend.jobs.create')}}" class="btn btn-border-filled">Post a Job</a>
+                                    <a href="{{route('frontend.jobs.create')}}" class="btn btn-border-filled">Post a
+                                        Job</a>
                                 </div>
                                 <div class="img-thumb">
                                     <i class="lni-briefcase"></i>
@@ -51,8 +52,8 @@
                             <div class="jobseeker item-box">
                                 <div class="content-inner">
                                     <h5>I'm</h5>
-                                    <h3>Jobseeker!</h3>
-                                    <p>Search through 60,000+ jobs and apply to ones that suit your needs.<br>
+                                    <h3>Freelancer!</h3>
+                                    <p>Search through {{$jobCount}} jobs and apply to ones that suit your needs.<br>
                                         Click on the button to start searching.</p>
                                     <a href="{{route('frontend.jobs.index')}}" class="btn btn-border-filled">Browse
                                         Jobs</a>
@@ -69,111 +70,112 @@
         </header>
 
 
-         <!-- How It Work Section Start -->
-         <section class="how-it-works section">
-                <div class="container">
-                    <div class="section-header">
-                        <h2 class="section-title">How It Works?</h2>
-                        <p>Not sure where to start? Let us explain it in the easiest way.</p>
+        <!-- How It Work Section Start -->
+        <section class="how-it-works section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How It Works?</h2>
+                    <p>Not sure where to start? Let us explain it in the easiest way.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="work-process">
+                            <span class="process-icon">
+                                <i class="lni-user"></i>
+                            </span>
+                            <h4>Create an Account</h4>
+                            <p>First step is to create account.<br> Fill out necessary info so that
+                                users or companies know a little more about you.</p>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                            <div class="work-process">
-                                <span class="process-icon">
-                                    <i class="lni-user"></i>
-                                </span>
-                                <h4>Create an Account</h4>
-                                <p>First step is to create account.<br> Fill out necessary info so that
-                                    users or companies know a little more about you.</p>
-                            </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="work-process step-2">
+                            <span class="process-icon">
+                                <i class="lni-search"></i>
+                            </span>
+                            <h4>Search Jobs</h4>
+                            <p>You can search jobs from our database and find the ones that you like.
+                                Simply apply to the job, fill out a form and user/company will receive your
+                                application.</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="work-process step-2">
-                                <span class="process-icon">
-                                    <i class="lni-search"></i>
-                                </span>
-                                <h4>Search Jobs</h4>
-                                <p>You can search jobs from our database and find the ones that you like.
-                                    Simply apply to the job, fill out a form and user/company will receive your
-                                    application.</p>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="work-process step-3">
+                            <span class="process-icon">
+                                <i class="lni-briefcase"></i>
+                            </span>
+                            <h4>Post a job ad</h4>
+                            <p>Create an ad for your job.<br>
+                                After that you simply wait for users to apply and choose the right ones.</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="work-process step-3">
-                                <span class="process-icon">
-                                    <i class="lni-briefcase"></i>
-                                </span>
-                                <h4>Post a job ad</h4>
-                                <p>Create an ad for your job.<br>
-                                    After that you simply wait for users to apply and choose the right ones.</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="work-process step-3">
-                                <span class="process-icon">
-                                    <i class="lni-users"></i>
-                                </span>
-                                <h4>Connect with other users</h4>
-                                   <p> You can follow other users using this site. That way their posts will show up on your feed and you can see all the posts they are willing to share.</p>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="work-process step-3">
+                            <span class="process-icon">
+                                <i class="lni-users"></i>
+                            </span>
+                            <h4>Connect with other users</h4>
+                            <p> You can follow other users using this site. That way their posts will show up on your
+                                feed and you can see all the posts they are willing to share.</p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
         <!-- Counter Section Start -->
         <section id="counter" class="section bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <!-- Start counter -->
-                        <div class="col-lg-3 col-md-6 col-xs-12">
-                            <div class="counter-box">
-                                <div class="icon"><i class="lni-briefcase"></i></div>
-                                <div class="fact-count">
-                                    <h3><span class="counter">{{$jobCount}}</span></h3>
-                                    <p>Jobs Posted</p>
-                                </div>
+            <div class="container">
+                <div class="row">
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-briefcase"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">{{$jobCount}}</span></h3>
+                                <p>Jobs Posted</p>
                             </div>
                         </div>
-                        <!-- End counter -->
-                        <!-- Start counter -->
-                        <div class="col-lg-3 col-md-6 col-xs-12">
-                            <div class="counter-box">
-                                <div class="icon"><i class="lni-home"></i></div>
-                                <div class="fact-count">
-                                    <h3><span class="counter">80</span></h3>
-                                    <p>Companies</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End counter -->
-                        <!-- Start counter -->
-                        <div class="col-lg-3 col-md-6 col-xs-12">
-                            <div class="counter-box">
-                                <div class="icon"><i class="lni-user"></i></div>
-                                <div class="fact-count">
-                                    <h3><span class="counter">{{$userCount}}</span></h3>
-                                    <p>Users</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End counter -->
-                        <!-- Start counter -->
-                        <div class="col-lg-3 col-md-6 col-xs-12">
-                            <div class="counter-box">
-                                <div class="icon"><i class="lni-write"></i></div>
-                                <div class="fact-count">
-                                    <h3><span class="counter">1200</span></h3>
-                                    <p>Applications</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End counter -->
                     </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-home"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">{{$companyCount}}</span></h3>
+                                <p>Companies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-user"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">{{$userCount}}</span></h3>
+                                <p>Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
+                    <!-- Start counter -->
+                    <div class="col-lg-3 col-md-6 col-xs-12">
+                        <div class="counter-box">
+                            <div class="icon"><i class="lni-write"></i></div>
+                            <div class="fact-count">
+                                <h3><span class="counter">{{$jobApplicationCount}}</span></h3>
+                                <p>Applications</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End counter -->
                 </div>
-            </section>
-            <!-- Counter Section End -->
-            <!-- How It Work Section End -->
+            </div>
+        </section>
+        <!-- Counter Section End -->
+        <!-- How It Work Section End -->
         <!-- Header Section End -->
 
         <!-- Browse Catagories Section Start -->
@@ -268,7 +270,7 @@
         <!-- Browse Catagories Section End -->
 
         <!-- Featured Section Start -->
-       {{--  <section id="featured" class="section bg-cyan">
+        {{-- <section id="featured" class="section bg-cyan">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Featured Jobs</h2>
@@ -387,7 +389,7 @@
                     <h2 class="section-title">Top Hiring Users and Companies</h2>
                 </div>
                 <div class=" wow fadeIn" data-wow-delay="0.5s">
-                    <div id="new-products" class="owl-carousel">
+                    <div id="top-hiring" class="owl-carousel">
                         <div class="item">
                             <div class="product-item">
                                 <div class="icon-thumb">
@@ -479,7 +481,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         @foreach($recentJobs as $recentJob)
-                        <a class="job-listings" href="#!">
+                        <a class="job-listings" href="{{route('frontend.jobs.show',['slug' => $recentJob->slug])}}">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
@@ -493,6 +495,29 @@
                                     </div>
                                     <hr>
                                 </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 text-left">
+                                    <p>
+                                        {{ str_limit($recentJob->description, $limit = 300, $end = '...') }}
+                                    </p>
+                                    <br>
+                                    <div class="tag-list">
+                                        @foreach($recentJob->job_skills as $jobSkill)
+                                        <span>{{$jobSkill->name}}</span>
+                                        @endforeach
+                                    </div>
+                                    <br>
+                                    <div class="category-list">
+                                        @foreach($recentJob->job_business_categories as $jobCategory)
+                                        @if($loop->last)
+                                        <span>{{$jobCategory->name}}</span>
+                                        @else
+                                        <span>{{$jobCategory->name}} - </span>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                    <hr>
+
+                                </div>
 
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                     <div class="location">
@@ -501,7 +526,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                    <span class="btn-full-time">{{$recentJob->offer}}$
+                                    <span class="btn-open">{{$recentJob->offer}}$
                                         @if($recentJob->is_per_hour)
                                         /h
                                         @else
@@ -510,14 +535,15 @@
                                     </span>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                    <span class="btn-apply">See more</span>
+                                    <span class="btn-full-time">{{$recentJob->job_comments_count}} <i class="lni-comments-alt"></i>
+                                        {{$recentJob->job_likes_count}} <i class="lni-heart"></i></span>
                                 </div>
                             </div>
                         </a>
                         @endforeach
                     </div>
                     <div class="col-12 text-center mt-4">
-                    <a href="{{route('frontend.jobs.index')}}" class="btn btn-common">See all jobs</a>
+                        <a href="{{route('frontend.jobs.index')}}" class="btn btn-common">See all jobs</a>
                     </div>
                 </div>
             </div>
@@ -607,7 +633,7 @@
         </section>
 
         <!-- Subcribe Section Start -->
-       {{--  <div id="subscribe" class="section bg-cyan">
+        {{-- <div id="subscribe" class="section bg-cyan">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-xs-12">

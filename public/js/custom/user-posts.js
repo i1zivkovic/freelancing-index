@@ -1,12 +1,15 @@
 
+
+// Swal mixin
+const swalWithBootstrapButtons = swal.mixin({
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger mr-3',
+    buttonsStyling: false,
+})
+
 // CLICK EVENT ON POST DELETE
 $(".delete-post").click(function (e) {
     var id = $(this).data('id');
-    const swalWithBootstrapButtons = swal.mixin({
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger mr-3',
-        buttonsStyling: false,
-    })
     e.preventDefault();
     swalWithBootstrapButtons({
         title: 'Are you sure?',
@@ -18,6 +21,14 @@ $(".delete-post").click(function (e) {
         reverseButtons: true
     }).then((result) => {
         if (result.value) {
+            swal({
+                title: 'Deleting your post...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                onOpen: () => {
+                    swal.showLoading()
+                }
+            })
             deletePost(id);
         } else if (
             // Read more about handling dismissals
@@ -39,6 +50,7 @@ function deletePost(post_id) {
             'X-CSRF-TOKEN': $("input[name=_token]").val()
         }
     });
+
     $.ajax({
         url: 'http://localhost:8000/posts/' + post_id,
         type: 'DELETE',
@@ -46,34 +58,29 @@ function deletePost(post_id) {
         success: function (data) {
             console.log(data);
             if (data.status == 1) {
-                let timerInterval
-                swal({
-                    type: "success",
-                    title: 'Please wait!',
-                    html: 'Deleting your post..',
-                    timer: 500,
-                    onOpen: () => {
-                        swal.showLoading()
-                        timerInterval = setInterval(() => {}, 100)
-                    },
-                    onClose: () => {
-                        clearInterval(timerInterval)
-                    }
+                swalWithBootstrapButtons({
+                    type: 'success',
+                    title: 'Post deleted',
+                    text: 'You have successfully deleted your post.',
+                    confirmButtonText: 'Reload page',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
                 }).then((result) => {
-                    if (
-                        result.dismiss === swal.DismissReason.timer
-                    ) {
-                        $('#row_' + post_id).remove();
-                        swal.close();
+                    if (result.value) {
+                        location.reload();
                     }
                 });
             } else {
-                swal({
+                swalWithBootstrapButtons({
                     type: 'error',
                     title: 'Oops...',
                     text: 'An error has accured while trying to delete the post!',
                 });
             }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
         }
     });
 }

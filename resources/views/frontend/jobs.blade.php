@@ -14,24 +14,50 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-xs-12">
-                        {!! Form::open(['route' => ['frontend.jobsFilter'], 'role' => 'form', 'autocomplete' => 'off', 'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
-                        <div class="wrap-search-filter row">
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill" name="q" value="{{!empty($request) ? $request->input('q') : ''}}">
-                            </div>
-                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                <input type="text" class="form-control" placeholder="Location: City, State, Zip" name="location" value="{{!empty($request) ? $request->input('location') : ''}}">
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                <button type="submit" class="btn btn-common float-right">Filter</button>
+                    <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                           <i class="lni-funnel"></i> Filter jobs
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in show">
+                                    <div class="panel-body">
+
+                                        {!! Form::open(['route' => ['frontend.jobsFilter'], 'role' => 'form',
+                                        'autocomplete' => 'off',
+                                        'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
+                                                    name="q" value="{{!empty($request) ? $request->input('q') : null}}">
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                <input type="text" class="form-control" placeholder="Location: City, State, Zip"
+                                                    name="location" value="{{!empty($request) ? $request->input('location') : null}}">
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                <input type="text" class="form-control" placeholder="Category: Food, Communications, It"
+                                                    name="category" value="{{!empty($request) ? $request->input('category') : null}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <button type="submit" class="btn btn-common btn-block">Filter</button>
+                                            </div>
+                                        </div>
+                                        {!!Form::close()!!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        {!!Form::close()!!}
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                    @foreach($jobs as $job)
-                    <a class="job-listings" href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
+                        @foreach($jobs as $job)
+                        <a class="job-listings" href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
@@ -48,20 +74,30 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-xs-12 text-left">
                                     <p>
-                                        {{$job->description}}
+                                            {{ str_limit($job->description, $limit = 300, $end = '...') }}
                                     </p>
                                     <br>
                                     <div class="tag-list">
                                         @foreach($job->job_skills as $jobSkill)
-                                            <span>{{$jobSkill->name}}</span>
+                                        <span>{{$jobSkill->name}}</span>
                                         @endforeach
-                                        </div>
-                                        <hr>
+                                    </div>
+                                    <br>
+                                    <div class="category-list">
+                                        @foreach($job->job_business_categories as $jobCategory)
+                                        @if($loop->last)
+                                        <span>{{$jobCategory->name}}</span>
+                                        @else
+                                        <span>{{$jobCategory->name}} - </span>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                    <hr>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
 
                                     <span class="btn-open">
-                                        {{$job->offer}}€
+                                        {{$job->offer}}$
                                         @if($job->is_per_hour)
                                         /h
                                         @else
@@ -76,7 +112,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                    <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i> {{$job->job_likes_count}} <i class="lni-heart"></i></span>
+                                    <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>
+                                        {{$job->job_likes_count}} <i class="lni-heart"></i></span>
                                 </div>
                             </div>
                         </a>
@@ -105,12 +142,13 @@
         <script type="text/javascript">
             $('#search-form').submit(function () {
                 $(this)
-                .find('input[name]')
-                .filter(function () {
-                    return !this.value;
-                })
-                .prop('name', '');
+                    .find('input[name]')
+                    .filter(function () {
+                        return !this.value;
+                    })
+                    .prop('name', '');
             });
+
         </script>
         @stop
     </div>

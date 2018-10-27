@@ -62,39 +62,52 @@
                                     @endif
                                 </div>
                                 <h5>Categories</h5>
-                                <div class="tag-list">
+                                <div class="category-list">
                                     @if ($job->job_business_categories->count())
                                     @foreach($job->job_business_categories as $jobCategory)
+                                    @if($loop->last)
                                     <span>{{$jobCategory->name}}</span>
+                                    @else
+                                    <span>{{$jobCategory->name}} - </span>
+                                    @endif
                                     @endforeach
                                     @else
                                     <i>No categories assigned</i>
                                     @endif
                                 </div>
                                 <h5>
-                                    Offer
+                                    Attached file
                                 </h5>
-                                <p class="offer">{{$job->offer}}$
-                                    @if($job->is_per_hour)
-                                    /hour
+                                @if ($job->job_files)
+                                <p id="file-info"> <a href="{{asset('uploads')}}/{{$job->user->username}}/{{$job->job_files->path}}"
+                                        download>{{$job->job_files->path}}</a>
                                     @else
-                                    /project
+                                    <i>No files uploaded</i>
                                     @endif
-                                </p>
-                                @if(!Auth::user() || !($job->user_id == Auth::user()->id))
-                                <hr>
-                                <a href="#" class="btn btn-common">Apply to a job</a>
-                                @endif
-                                @if(Auth::user() && ($job->user_id == Auth::user()->id))
-                                <hr>
-                                <a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
-                                    <i class="lni-pencil"></i>
-                                </a>
-                                &nbsp;
-                                <a href="#" class="delete-job" data-id="{{$job->id}}">
-                                    <i class="lni-trash"></i>
-                                </a>
-                                @endif
+                                    <h5>
+                                        Offer
+                                    </h5>
+                                    <p class="offer">{{$job->offer}}$
+                                        @if($job->is_per_hour)
+                                        /hour
+                                        @else
+                                        /project
+                                        @endif
+                                    </p>
+                                    @if(!Auth::user() || !($job->user_id == Auth::user()->id))
+                                    <hr>
+                                    <a href="#" class="btn btn-common">Apply to a job</a>
+                                    @endif
+                                    @if(Auth::user() && ($job->user_id == Auth::user()->id))
+                                    <hr>
+                                    <a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
+                                        <i class="lni-pencil"></i>
+                                    </a>
+                                    &nbsp;
+                                    <a href="#" class="delete-job" data-id="{{$job->id}}">
+                                        <i class="lni-trash"></i>
+                                    </a>
+                                    @endif
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-xs-12">

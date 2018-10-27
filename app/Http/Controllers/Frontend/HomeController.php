@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Post;
 use App\Job;
+use App\JobApplication;
+use App\Company;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -19,18 +21,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-       /*  $user = User::with([
-            'userSkills',
-            'userBusinessCategories' => function($query) {
-                $query -> join('business_categories', 'user_business_categories.business_category_id', 'business_categories.id');
-                $query -> select('user_business_categories.*', 'business_categories.name as name');
-            },
-            'userLocation',
-            'userRole',
-            'userSocial',
-            'userProfile'
-        ]) -> findOrFail(Auth::id());
-        return view('frontend.home', compact('user')); */
 
         $recentPosts = Post::
         withCount('postLikes', 'postComments')
@@ -42,20 +32,28 @@ class HomeController extends Controller
 
 
         $recentJobs = Job::with([
+            'job_skills',
+            'job_business_categories',
             'user' => function($query) {
                 $query->select('id','username','slug');
             }
-        ]) ->orderBy('created_at','DESC')
-        ->select('id','slug','user_id', 'title', 'offer', 'is_per_hour', 'job_location_city','job_location_country','is_remote') //
+        ]) ->withCount(['job_likes', 'job_comments'])
+        ->orderBy('created_at','DESC')
+        /* ->select('id','slug','user_id', 'title', 'description','offer', 'is_per_hour', 'job_location_city','job_location_country','is_remote')  *///
         ->take(4)->get();
 
+       /*  dd($recentJobs); */
 
         $jobCount = Job::count();
 
         $userCount = User::count();
 
+        $jobApplicationCount = JobApplication::count();
 
-        return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount'));
+        $companyCount = Company::count();
+
+
+        return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount','jobApplicationCount','companyCount'));
 
 
     }

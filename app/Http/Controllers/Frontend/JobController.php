@@ -9,9 +9,12 @@ use App\Job;
 use App\BusinessCategory;
 use App\JobBusinessCategory;
 use App\JobSkill;
+use App\JobComment;
+use App\JobLike;
+use App\JobFile;
 use Carbon\Carbon;
 use App\Skill;
-
+use Validator;
 class JobController extends Controller
 {
     /**
@@ -22,7 +25,6 @@ class JobController extends Controller
     public function index()
     {
         //
-
 
         $jobs = Job:: with([
             'user',
@@ -59,9 +61,28 @@ class JobController extends Controller
     public function store(Request $request)
     {
 
+        // Validation rules
+        $rules = [
+            'title' => 'required|max:200|min:10',
+            'job_location_country' => 'max:200|min:2',
+            'job_location_city' => 'max:100|min:2',
+            'description' => 'max:1000|min:50',
+            'offer' => 'required|numeric'
+        ];
+
+        // make validator
+        $validator = Validator::make($request->all(), $rules);
+
+        // check if validation success
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // create job
         $job = Job::create($request->except(['business_category_id','skill_list'])+['slug' => str_slug($request->title, '-').time(), 'user_id' => Auth::id(), 'job_status_id' => 1]);
 
 
+        // create relations
         $arrCategories = [];
         $arrSkills= [];
         $categories = $request->business_category_id;
@@ -80,16 +101,22 @@ class JobController extends Controller
         JobSkill::insert($arrSkills);
 
 
+        // upload file if exists
         if(!empty($request->file('file'))){
             $file = $this->uploadFile($request->file('file'), Auth::user()->username);
             $job->job_files()->create(['path' => $file]);
         }
 
+        // redirect
         return redirect()->to('jobs/'.$job->slug);
     }
 
 
-
+    /**
+     * Method used to upload files
+     * @param $file file
+     * @param $folder name of the folder
+     */
     public function uploadFile($file, $folder){
 
         if (!is_dir(public_path().'/uploads/'.$folder)) {
@@ -173,6 +200,24 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
 
+         // Validation rules
+         $rules = [
+            'title' => 'required|max:200|min:10',
+            'job_location_country' => 'max:200|min:2',
+            'job_location_city' => 'max:100|min:2',
+            'description' => 'max:1000|min:50',
+            'offer' => 'required|numeric',
+        ];
+
+        // make validator
+        $validator = Validator::make($request->all(), $rules);
+
+        // check if validation success
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+
         $job = Job::with('job_files')
         ->findOrFail($id);
 
@@ -221,6 +266,33 @@ class JobController extends Controller
     public function destroy($id)
     {
         //
+        $userId = Auth::id();
+
+        if( Job::where([['user_id', $userId], ['id', $id]])->exists() )
+        {
+
+            // Delete Job
+        Job::findOrFail($id)->delete();
+            // Delete comments
+        JobComment::where('job_id', $id)->delete();
+            // Delete likes
+        JobLike::where('job_id',$id)->delete();
+            // Delete job business categories
+        JobBusinessCategory::where('job_id',$id)->delete();
+            // Delete job skills
+        JobSkill::where('job_id',$id)->delete();
+            // Delete job files
+        JobFile::where('job_id',$id)->delete();
+        return [
+        'status' => 1
+        ];
+        }
+        else {
+            return [
+                'status' => 0,
+                'bla' => 1
+            ];
+        }
     }
 
 
@@ -245,21 +317,32 @@ class JobController extends Controller
             return $query->where(function ($query) use ($request) {
             $locations = explode(' ', $request->input('location'));
                 foreach ($locations as $location) {
-                    $query->where('job_location_zip', 'like', '%'.$location.'%');
-                    $query->orWhere('job_location_state', 'like', '%'.$location.'%');
                     $query->orWhere('job_location_country', 'like', '%'.$location.'%');
-                    $query->orWhere('job_location_street', 'like', '%'.$location.'%');
                     $query->orWhere('job_location_city', 'like', '%'.$location.'%');
+                }
+            });
+        })
+        ->when($request->input('category'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $categories = explode(' ', $request->input('category'));
+                foreach ($categories as $category) {
+                    $query->orWhereHas('job_business_categories', function ($query) use ($category){
+                    $query->join('business_categories', 'job_business_categories.business_category_id', 'business_categories.id');
+                    $query->select('business_categories.id', 'name', 'job_id');
+                    $query->where('name', 'like', '%'.$category.'%');
+                });
                 }
             });
         })
         ->with([
         'job_skills',
         'job_status',
+        'job_business_categories',
         'user' => function($query){
             $query->select('id', 'username');
         }])
         ->withCount(['job_likes', 'job_comments'])
+        ->orderBy('created_at','desc')
         ->paginate(5);
 
         return view('frontend.jobs', compact('jobs', 'request'));
@@ -291,13 +374,27 @@ class JobController extends Controller
                 }
             });
         })
+        ->when($request->input('category'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $categories = explode(' ', $request->input('category'));
+                foreach ($categories as $category) {
+                    $query->orWhereHas('job_business_categories', function ($query) use ($category){
+                    $query->join('business_categories', 'job_business_categories.business_category_id', 'business_categories.id');
+                    $query->select('business_categories.id', 'name', 'job_id');
+                    $query->where('name', 'like', '%'.$category.'%');
+                });
+                }
+            });
+        })
         ->with([
         'job_skills',
         'job_status',
+        'job_business_categories',
         'user' => function($query){
             $query->select('id', 'username');
         }])
         ->withCount(['job_likes', 'job_comments'])
+        ->orderBy('created_at','desc')
         ->paginate(5);
 
         return view('frontend.user_jobs', compact('jobs', 'request'));
@@ -324,7 +421,7 @@ class JobController extends Controller
         ->withCount('job_comments','job_likes')
         ->with([
             'user',
-        ]) -> paginate(5);
+        ]) -> orderBy('created_at','desc')-> paginate(5);
 
         return view('frontend.user_jobs', compact('jobs','jobCount'));
 

@@ -27,7 +27,12 @@
                             @csrf
                             <div class="form-group">
                                 <label class="control-label">Job Title</label>
-                                <input type="text" class="form-control" placeholder="" name="title" required>
+                            <input type="text" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="" name="title" required value="{{old('title')}}">
+                                @if ($errors->has('title'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                                @endif
                             </div>
                             {{-- <div class="form-group">
                                 <label class="control-label">Company</label>
@@ -37,11 +42,21 @@
                             <div class="form-row">
                                 <div class="col-sm-12 col-md-6">
                                     <label class="control-label">Job Country</label>
-                                    <input type="text" class="form-control" name="job_location_country">
+                                    <input type="text" class="form-control {{ $errors->has('job_location_country') ? ' is-invalid' : '' }}" name="job_location_country" value="{{old('job_location_country')}}">
+                                    @if ($errors->has('job_location_country'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('job_location_country') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <label class="control-label">Job City</label>
-                                    <input type="text" class="form-control" placeholder="" name="job_location_city">
+                                    <input type="text" class="form-control {{ $errors->has('job_location_city') ? ' is-invalid' : '' }}" placeholder="" name="job_location_city"  value="{{old('job_location_city')}}">
+                                    @if ($errors->has('job_location_city'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('job_location_city') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -68,12 +83,22 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Description</label>
-                                <textarea class="form-control" placeholder="" name="description" value="" rows="7"
-                                    required></textarea>
+                                <textarea class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="" name="description" value="" rows="7"
+                                    required>{{old('description')}}</textarea>
+                                    @if ($errors->has('description'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                    @endif
                             </div>
                             <div class="form-group">
                                 <label class="control-label">Offer</label>
-                                <input type="text" class="form-control" placeholder="" name="offer" required>
+                                <input type="text" class="form-control {{ $errors->has('offer') ? ' is-invalid' : '' }}" placeholder="" name="offer" required value="{{old('offer')}}">
+                                @if ($errors->has('offer'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('offer') }}</strong>
+                                </span>
+                                @endif
                             </div>
                             <div class="
                                         form-group">
