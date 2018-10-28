@@ -51,6 +51,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //POSTS
     Route::resource('posts', 'PostController');
     Route::get('posts/my-posts/{slug}', 'PostController@getMyPosts')->name('myPosts');
+    Route::any('posts-filter', 'PostController@postPostFilter')->name('postsFilter');
+    Route::any('my-posts-filter', 'PostController@postMyPostFilter')->name('myPostsFilter');
     //
 
     //POST COMMENTS
@@ -73,6 +75,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //CONTACT
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
     //
+
+
+    // PASSWORD CHANGE
+    Route::get('change-password', 'PasswordController@index')->name('changePassword');
 });
 
 

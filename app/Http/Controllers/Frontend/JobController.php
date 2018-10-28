@@ -173,34 +173,39 @@ class JobController extends Controller
     public function edit($id)
     {
         //
-        $job = Job::
-        where('id',$id)
-        ->with('job_files')
-        ->firstOrFail();
+        if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
+              $job = Job::
+            where('id',$id)
+            ->with('job_files')
+            ->firstOrFail();
 
+             $selectedCategories = JobBusinessCategory::where('job_id', $id) ->pluck('business_category_id');
+             $businessCategories = BusinessCategory::pluck('name','id');
 
-        $selectedCategories = JobBusinessCategory::where('job_id', $id) ->pluck('business_category_id');
-        $businessCategories = BusinessCategory::pluck('name','id');
+            $selectedSkills = JobSkill::where('job_id', $id) ->pluck('skill_id');
+            $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
 
-        $selectedSkills = JobSkill::where('job_id', $id) ->pluck('skill_id');
-        $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
+            return view('frontend.job_edit', compact('job','businessCategories', 'selectedCategories', 'selectedSkills', 'skills'));
+        }
+        else {
+            return abort(404);
+        }
 
-       /*  dd($skills); */
-
-        return view('frontend.job_edit', compact('job','businessCategories', 'selectedCategories', 'selectedSkills', 'skills'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $id Job ID
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
 
-         // Validation rules
+         if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
+
+            // Validation rules
          $rules = [
             'title' => 'required|max:200|min:10',
             'job_location_country' => 'max:200|min:2',
@@ -209,20 +214,22 @@ class JobController extends Controller
             'offer' => 'required|numeric',
         ];
 
-        // make validator
+        // create validator with given rules and check request
         $validator = Validator::make($request->all(), $rules);
 
-        // check if validation success
+        // check if validation succeeds
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
+         // find the specific job
+         $job = Job::with('job_files')
+         ->findOrFail($id);
 
-        $job = Job::with('job_files')
-        ->findOrFail($id);
-
+        // update all field except categories and skills
         $job->update($request->except(['business_category_id','skills_list'])+['slug'=> str_slug($request->title, '-').time()]);
 
+        // check for uploaded file
         if(!empty($request->file('file'))){
             if(!empty($job->job_files)) {
                  $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/'.$job->job_files->path;
@@ -234,6 +241,7 @@ class JobController extends Controller
             $job->job_files()->updateOrCreate([], ['path'=>$file]);
          }
 
+         //....
          $arrCategories = [];
          $arrSkills= [];
          $categories = $request->business_category_id;
@@ -255,6 +263,14 @@ class JobController extends Controller
 
 
         return redirect()->to('jobs/'.$job->slug);
+
+        } else {
+
+            return abort(404);
+
+        }
+
+
     }
 
     /**
@@ -268,31 +284,31 @@ class JobController extends Controller
         //
         $userId = Auth::id();
 
-        if( Job::where([['user_id', $userId], ['id', $id]])->exists() )
-        {
-
-            // Delete Job
-        Job::findOrFail($id)->delete();
-            // Delete comments
-        JobComment::where('job_id', $id)->delete();
-            // Delete likes
-        JobLike::where('job_id',$id)->delete();
-            // Delete job business categories
-        JobBusinessCategory::where('job_id',$id)->delete();
-            // Delete job skills
-        JobSkill::where('job_id',$id)->delete();
-            // Delete job files
-        JobFile::where('job_id',$id)->delete();
-        return [
-        'status' => 1
-        ];
-        }
-        else {
+            if( Job::where([['user_id', $userId], ['id', $id]])->exists() )
+            {
+                // Delete Job
+            Job::findOrFail($id)->delete();
+                // Delete comments
+            JobComment::where('job_id', $id)->delete();
+                // Delete likes
+            JobLike::where('job_id',$id)->delete();
+                // Delete job business categories
+            JobBusinessCategory::where('job_id',$id)->delete();
+                // Delete job skills
+            JobSkill::where('job_id',$id)->delete();
+                // Delete job files
+            JobFile::where('job_id',$id)->delete();
             return [
-                'status' => 0,
-                'bla' => 1
+            'status' => 1
             ];
-        }
+            }
+            else {
+                return [
+                    'status' => 0,
+                    'bla' => 1
+                ];
+            }
+
     }
 
 
@@ -411,7 +427,6 @@ class JobController extends Controller
     public function getMyJobs($slug)
     {
 
-
         $jobCount = Job::
         where('user_id', Auth::id())
         ->count();
@@ -428,4 +443,3 @@ class JobController extends Controller
 
     }
 }
-

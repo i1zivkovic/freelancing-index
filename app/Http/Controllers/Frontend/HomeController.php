@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
 
         $recentPosts = Post::
-        withCount('postLikes', 'postComments')
+        withCount('post_likes', 'post_comments')
         ->with([
             'user' => function($query) {
                 $query->select('id','username','slug');

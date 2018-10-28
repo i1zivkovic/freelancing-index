@@ -14,7 +14,7 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                        <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
+                        <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                                 <div class="panel-group" id="accordion">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
@@ -30,6 +30,7 @@
                                                 {!! Form::open(['route' => ['frontend.myJobsFilter'], 'role' => 'form',
                                                 'autocomplete' => 'off',
                                                 'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                                @csrf
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
                                                         <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
@@ -55,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="col-lg-8 col-md-12 col-xs-12">
                     @foreach($jobs as $job)
                     <div class="job-listings">
                             <div class="row">
@@ -159,6 +160,9 @@
                 .prop('name', '');
             });
         </script>
+
+        {!!Html::script(asset('js/custom/user-jobs.js'))!!}
+
         @stop
     </div>
 </div>

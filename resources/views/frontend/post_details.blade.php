@@ -37,7 +37,7 @@
                                     <span class="meta-part"><i class="lni-calendar"></i>
                                         {{$post->created_at->format('m/d/Y H:i:s')}}</span>
                                     <span class="meta-part"><i class="lni-comments-alt"></i>
-                                        {{$post->postComments->count()}} Comments</span>
+                                        {{$post->post_comments->count()}} Comments</span>
                                     <span class="meta-part"><i class="lni-heart-filled"></i>
                                         {{$post->post_likes_count}} Likes</span>
                                 </div>
@@ -72,9 +72,9 @@
 
                         <!-- Start Comment Area -->
                         <div id="comments">
-                            <h3>There are {{$post->postComments->count()}} comments on this post</h3>
+                            <h3>There are {{$post->post_comments->count()}} comments on this post</h3>
                             <ol class="comments-list">
-                                @forEach($post->postComments as $comment)
+                                @forEach($post->post_comments as $comment)
                                 <li id="row_{{$comment->id}}">
                                     <div class="media">
                                         <div class="thumb-left">

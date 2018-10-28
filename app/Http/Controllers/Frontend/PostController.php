@@ -23,18 +23,13 @@ class PostController extends Controller
     {
 
         $posts = Post::
-        withCount('postComments','postLikes')
+        withCount('post_comments','post_likes')
         ->with([
             'user',
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
-        $recentPosts = Post::with([
-            'user' => function($query){
-                $query->select('id','username', 'slug');
-            }
-        ])->orderBy('created_at','DESC')->take(3)->select('id','title','created_at','user_id','slug')->get();
 
-        return view('frontend.posts', compact('posts','recentPosts'));
+        return view('frontend.posts', compact('posts'));
     }
 
     /**
@@ -93,10 +88,10 @@ class PostController extends Controller
 
         $post = Post::
         where('slug',$slug)
-        ->withCount('postLikes')
+        ->withCount('post_likes')
         ->with([
             'user',
-            'postComments' => function($query) {
+            'post_comments' => function($query) {
                 $query -> join('users', 'post_comments.user_id', 'users.id');
                 $query -> join('profiles', 'users.id', 'profiles.user_id');
                 $query -> select('post_comments.*', 'users.username', 'users.slug', 'profiles.first_name', 'profiles.last_name')->orderBy('created_at','ASC');
@@ -117,7 +112,13 @@ class PostController extends Controller
 
         $post = Post::where('id',$id)->firstOrFail();
 
-        return view('frontend.post_edit', compact('post'));
+        if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
+        {
+         return view('frontend.post_edit', compact('post'));
+        }
+         else {
+            return abort(404);
+        }
     }
 
     /**
@@ -142,6 +143,11 @@ class PostController extends Controller
          } */
 
          /* dd($request); */
+
+
+         if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
+         {
+
          $post = Post::find($id);
          $post->title = $request->title;
          $post->description = $request->description;
@@ -151,6 +157,10 @@ class PostController extends Controller
 
 
          return redirect()->to('posts/'.$post->slug);
+         }
+         else {
+             return abort(404);
+         }
 
     }
 
@@ -204,7 +214,7 @@ class PostController extends Controller
 
         $posts = Post::
         where('user_id', Auth::id())
-        ->withCount('postComments','postLikes')
+        ->withCount('post_comments','post_likes')
         ->with([
             'user',
         ]) -> paginate(5);
@@ -212,6 +222,61 @@ class PostController extends Controller
         return view('frontend.user_posts', compact('posts','postCount'));
 
 
+    }
+
+
+    /**
+     * Filter for posts
+     */
+    public function postPostFilter(Request $request){
+        $posts = Post::when($request->input('q'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $query->where('title', 'like', '%'.$request->input('q').'%');
+            });
+        })
+        ->when($request->input('username'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+
+            $username =  $request->input('username');
+            $user = User::where('username', '=', $username)->first();
+                    $query->orWhere('user_id', '=', $user->id);
+            });
+        })
+        ->with([
+        'user' => function($query){
+            $query->select('id', 'username');
+        }])
+        ->withCount(['post_likes', 'post_comments'])
+        ->orderBy('created_at','desc')
+        ->paginate(5);
+/*
+        dd($posts); */
+
+        return view('frontend.posts', compact('posts', 'request'));
+    }
+
+    /**
+     * Filter for posts
+     */
+    public function postMyPostFilter(Request $request){
+        $posts = Post::
+        where('user_id', Auth::id())
+       -> when($request->input('q'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $query->where('title', 'like', '%'.$request->input('q').'%');
+            });
+        })
+        ->with([
+        'user' => function($query){
+            $query->select('id', 'username');
+        }])
+        ->withCount(['post_likes', 'post_comments'])
+        ->orderBy('created_at','desc')
+        ->paginate(5);
+/*
+        dd($posts); */
+
+        return view('frontend.user_posts', compact('posts', 'request'));
     }
 
 

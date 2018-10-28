@@ -14,13 +14,13 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
+                    <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                           <i class="lni-funnel"></i> Filter jobs
+                                            <i class="lni-funnel"></i> Filter jobs
                                         </a>
                                     </h4>
                                 </div>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="col-lg-8 col-md-12 col-xs-12">
                         @foreach($jobs as $job)
                         <a class="job-listings" href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                             <div class="row">
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-xs-12 text-left">
                                     <p>
-                                            {{ str_limit($job->description, $limit = 300, $end = '...') }}
+                                        {{ str_limit($job->description, $limit = 300, $end = '...') }}
                                     </p>
                                     <br>
                                     <div class="tag-list">

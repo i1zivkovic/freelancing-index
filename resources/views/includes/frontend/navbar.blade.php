@@ -29,7 +29,7 @@
                                 <i class="fas fa-user-tie mr-2"></i> Work
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Browse Jobs</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Find a job</a></li>
                                 <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li>
                             </ul>
                         </li>
@@ -54,13 +54,13 @@
                                 <i class="fas fa-newspaper mr-2"></i> Posts
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create new post</a></li>
                                 <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">All posts</a></li>
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Posts</a></li>
                                 @else
                                 <li><a class="dropdown-item" href="{{route('frontend.myPosts',['slug' => Auth::user()->slug])}}">My Posts</a></li>
                                 @endguest
-                                <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create new post</a></li>
                             </ul>
                         </li>
                         @guest

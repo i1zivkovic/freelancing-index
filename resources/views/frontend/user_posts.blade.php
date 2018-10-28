@@ -16,32 +16,43 @@
         <div id="content">
             <div class="container">
                 <div class="row">
-                    <!--Sidebar-->
-                    <aside id="sidebar" class="col-lg-12 col-md-12 col-xs-12">
 
-                        <!-- Search Widget -->
-                        <div class="widget">
-                            <h5 class="widget-title">Search my posts</h5>
-                            <div class="widget-search widget-box">
-                                <form action="#">
-                                    @csrf
-                                    <input class="form-control search" type="search" placeholder="Enter your keyword" />
-                                    <button class="search-btn" type="submit"><i class="lni-search"></i></button>
-                                </form>
+                        <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
+                                <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                    <i class="lni-funnel"></i> Filter posts
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in show">
+                                            <div class="panel-body">
+
+                                                {!! Form::open(['route' => ['frontend.myPostsFilter'], 'role' => 'form',
+                                                'autocomplete' => 'off',
+                                                'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                        <input type="text" class="form-control" placeholder="Title keywords"
+                                                            name="q" value="{{!empty($request) ? $request->input('q') : null}}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <button type="submit" class="btn btn-common btn-block">Filter</button>
+                                                    </div>
+                                                </div>
+                                                {!!Form::close()!!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-
-                        <!--  Posts counter widget -->
-                        <div class="widget">
-                            <h5 class="widget-title">No. of posts: {{$postCount}} </h5>
-                        </div>
-
-
-                    </aside>
-                    <!--End sidebar-->
                     <!-- Start Blog Posts -->
-                    <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="col-lg-8 col-md-12 col-xs-12">
                         <!-- Start Post -->
                         @foreach($posts as $post)
                     <div class="blog-post" id="row_{{$post->id}}">
@@ -85,7 +96,14 @@
                         <!-- End Post -->
 
 
+
+                        <!-- Start Pagination -->
+                        @if(empty($request))
                         {!! $posts -> links()!!}
+                        @else
+                        {{ $posts->appends($request->all())->links() }}
+                        @endif
+                        <!-- End Pagination -->
 
                     </div>
                     <!-- End Blog Posts -->
@@ -101,6 +119,18 @@
         @section('js')
         {{-- --}}
         {!!Html::script(asset('js/custom/user-posts.js'))!!}
+
+        <script type="text/javascript">
+            $('#search-form').submit(function () {
+                $(this)
+                    .find('input[name]')
+                    .filter(function () {
+                        return !this.value;
+                    })
+                    .prop('name', '');
+            });
+
+        </script>
         @stop
     </div>
 </div>

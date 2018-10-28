@@ -16,7 +16,7 @@ class StepController extends Controller
 
     public function getStepOne(){
 
-        return view('frontend.step-one');
+        return view('frontend.step_one');
     }
 
     public function postStepOne(Request $r){
@@ -34,7 +34,7 @@ class StepController extends Controller
     }
 
     public function getStepTwo(){
-        return view('frontend.step-two');
+        return view('frontend.step_two');
     }
 
     public function postStepTwo(Request $r){

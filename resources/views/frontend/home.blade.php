@@ -565,6 +565,7 @@
                 <div class="row">
 
                     @foreach($recentPosts as $recentPost)
+
                     <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
                         <div class="blog-post">
                             <!-- Post thumb -->
