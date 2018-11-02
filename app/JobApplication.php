@@ -18,4 +18,8 @@ class JobApplication extends Model
         return $this->belongsTo('App\Job');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
 }

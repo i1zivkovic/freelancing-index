@@ -4525,3 +4525,17 @@ div.job-listings .category-list span{
     margin-top: 10px !important;
 }
 
+/*jawe*/
+.job-app-title{
+    font-size: 18px;
+}
+
+.job-app-timestamp{
+    position: absolute;
+    right: 15px;
+    top: 0px;
+}
+
+.job-app-title-active{
+    color:#26ae61;
+}

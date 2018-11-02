@@ -181,11 +181,54 @@ class JobApplicationController extends Controller
             'job_application_state',
             'job.user'
             ])
-            ->get();
+        ->get();
 
 
            /*  dd($job_applications); */
 
         return view('frontend.user_applications', compact('job_applications'));
+    }
+
+    /**
+     * Method used to display manage applications
+     */
+    public function manageApplications() {
+
+        $job_ids = Job::where([['user_id', Auth::id()], ['job_status_id', 1]])->select('id')->get();
+
+        $job_applications = JobApplication::whereIn('job_id',$job_ids)
+            ->with([
+            'user'
+            ])
+            ->paginate(10);
+
+        $jobs = Job::where('user_id', Auth::id())
+            ->select('id', 'title', 'slug')
+            ->get();
+
+
+        return view('frontend.manage_applications', compact('jobs', 'job_applications'));
+    }
+
+    /**
+     * Method used to display manage applications by slug
+     */
+    public function manageApplicationsSlug($slug) {
+
+        $selected_job = Job::where([['slug', $slug], ['job_status_id', 1]])->select('id')->firstOrFail();
+
+        $job_applications = JobApplication::where('job_id',$selected_job->id)
+            ->with([
+            'user',
+            'job_application_state'
+            ])
+            ->paginate(10);
+
+        $jobs = Job::where('user_id', Auth::id())
+            ->select('id', 'title', 'slug')
+            ->get();
+        
+
+        return view('frontend.manage_applications', compact('jobs', 'job_applications', 'selected_job'));
     }
 }

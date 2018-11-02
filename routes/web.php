@@ -76,6 +76,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //JOB APPLICATIONS
     Route::resource('job-applications', 'JobApplicationController');
     Route::get('user-applications', 'JobApplicationController@userApplications')->name('getUserApplications');
+    Route::get('manage-applications', 'JobApplicationController@manageApplications')->name('getManageApplications');
+    Route::get('manage-applications/{slug}', 'JobApplicationController@manageApplicationsSlug')->name('getManageApplicationsSlug');
 
 
     //CONTACT

@@ -46,7 +46,7 @@
                                {{--  <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li> --}}
                                 @else
                                 <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My Job Ads</a></li>
-                                 <li><a class="dropdown-item" href="#!">Manage Applications</a></li>
+                                 <li><a class="dropdown-item" href="{{route('frontend.getManageApplications')}}">Manage Applications</a></li>
                                 @endguest
 
                             </ul>
