@@ -14,6 +14,9 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
+                        <div class="col-sm-12 text-center mb-5">
+                                <h3>Jobs</h3>
+                            </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
@@ -76,12 +79,15 @@
                                     <p>
                                         {{ str_limit($job->description, $limit = 300, $end = '...') }}
                                     </p>
+                                    @if ($job->job_skills->count() > 0)
                                     <br>
                                     <div class="tag-list">
                                         @foreach($job->job_skills as $jobSkill)
                                         <span>{{$jobSkill->name}}</span>
                                         @endforeach
                                     </div>
+                                    @endif
+                                    @if ($job->job_business_categories->count() > 0)
                                     <br>
                                     <div class="category-list">
                                         @foreach($job->job_business_categories as $jobCategory)
@@ -92,6 +98,7 @@
                                         @endif
                                         @endforeach
                                     </div>
+                                    @endif
                                     <hr>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">

@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Posts')
+@section('title', 'My Posts')
 @section('description', "")
 
 @section('css')
@@ -16,6 +16,18 @@
         <div id="content">
             <div class="container">
                 <div class="row">
+
+                        @if($posts->count() <= 0) <div class="col-lg-12 col-md-12 col-xs-12 mb-2 text-center">
+                                <h5>You have no posts posted so far.</h5>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 mb-2 text-center">
+                            <a class="btn btn-common" href="{{route('frontend.posts.create')}}">Create a post</a>
+                        </div>
+                        @else
+
+                        <div class="col-sm-12 text-center mb-5">
+                            <h3>My Posts</h3>
+                        </div>
 
                         <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                                 <div class="panel-group" id="accordion">
@@ -107,6 +119,7 @@
 
                     </div>
                     <!-- End Blog Posts -->
+                    @endif
                 </div>
             </div>
         </div>

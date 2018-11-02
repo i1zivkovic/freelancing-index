@@ -57,12 +57,10 @@ function deleteJob(job_id) {
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {
-            console.log(data);
-            if (data.status == 1) {
                 swalWithBootstrapButtons({
                     type: 'success',
                     title: 'Job deleted',
-                    text: 'You have successfully delete your job.',
+                    text: '' + data.success,
                     confirmButtonText: 'Go to jobs',
                     allowOutsideClick: false,
                     allowEscapeKey: false
@@ -71,17 +69,13 @@ function deleteJob(job_id) {
                         location.reload();
                     }
                 });
-            } else {
-                swalWithBootstrapButtons({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'An error has accured while trying to delete the job!',
-                });
-            }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
+        error: function (error) {
+            swalWithBootstrapButtons({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error,
+            });
         }
     });
 }

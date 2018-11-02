@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="row">
                     <!-- Start Blog Posts -->
-                    <div class="col-lg-12 col-md-12 col-xs-12">
+                    <div class="col-lg-8 col-md-12 col-xs-12">
                         <!-- Start Post -->
                         <div class="blog-post">
                             <!-- Post thumb -->
@@ -36,17 +36,13 @@
                                                 class="lni-user"></i> By {{$post->user->username}}</a></span>
                                     <span class="meta-part"><i class="lni-calendar"></i>
                                         {{$post->created_at->format('m/d/Y H:i:s')}}</span>
-                                    <span class="meta-part"><i class="lni-comments-alt"></i>
-                                        {{$post->post_comments->count()}} Comments</span>
-                                    <span class="meta-part"><i class="lni-heart-filled"></i>
-                                        {{$post->post_likes_count}} Likes</span>
                                 </div>
                                 <p>{{$post->description}}</p>
                                 @if(Auth::user() && ($post->user_id == Auth::user()->id))
                                 <hr>
                                 <a href="{{route('frontend.posts.edit',['id' => $post->id])}}">
-                                        <i class="lni-pencil"></i>
-                                    </a>
+                                    <i class="lni-pencil"></i>
+                                </a>
                                 &nbsp;
                                 <a href="#" class="delete-post" data-id="{{$post->id}}">
                                     <i class="lni-trash"></i>
@@ -68,20 +64,54 @@
                             </div>
                             <!-- Post Content -->
                         </div>
-                        <!-- End Post -->
+                    </div>
+                    <!-- End Post -->
 
-                        <!-- Start Comment Area -->
+
+                    {{-- Share and like --}}
+                    <div class="col-lg-4 col-md-12 col-xs-12 mb-5">
+                        <div class="sideber">
+                            <div class="widghet">
+                                <h3>Share This Post</h3>
+                                <div class="share-job">
+                                    <div class="form-group">
+                                        <input type="text" name="share_link" class="form-control" value="http://localhost:8000/jobs/{{$post->slug}}"
+                                            style="color: #9a9a9a !important;">
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widghet">
+                                <h3>Like This Post</h3>
+                                <div class="">
+                                    <div class="form-group">
+                                        <a href="#!" onclick="actOnLikeUnlike(event);" data-id="{{$post->id}}" id="post-like-button">
+                                            <i class="{{$post->post_likes->contains('user_id', Auth::id()) ? 'lni-heart-filled' : "lni-heart"}}"
+                                                id="post-like-action"></i>
+                                        </a>
+                                        <span id="post-likes-count">{{$post->post_likes_count}}</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End share and like --}}
+
+
+
+                    <!-- Start Comment Area -->
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Comments ({{$post->post_comments->count()}})</a>
+                        </ul>
+
                         <div id="comments">
-                            <h3>There are {{$post->post_comments->count()}} comments on this post</h3>
                             <ol class="comments-list">
                                 @forEach($post->post_comments as $comment)
                                 <li id="row_{{$comment->id}}">
                                     <div class="media">
-                                        <div class="thumb-left">
-                                            <a href="#">
-                                                <img src="{{asset('img')}}/blog/user1.png" alt="">
-                                            </a>
-                                        </div>
                                         <div class="info-body">
                                             <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $comment->slug])}}">{{$comment->first_name}}
                                                     {{$comment->last_name}}</a></h4>
@@ -135,7 +165,6 @@
                         <!-- End Comment Area -->
                     </div>
                     <!-- End Blog Posts -->
-
                 </div>
             </div>
         </div>

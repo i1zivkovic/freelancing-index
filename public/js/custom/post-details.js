@@ -1,4 +1,3 @@
-
 // FOCUS COMMENT INPUT IF IT IS INVALID
 if ($('#comment').hasClass('is-invalid')) {
     $('#comment').focus();
@@ -60,13 +59,12 @@ function deleteComment(comment_id) {
         url: 'http://localhost:8000/post-comments/' + comment_id,
         type: 'DELETE',
         dataType: 'JSON',
+            // if comment is deleted, display message and reload page
         success: function (data) {
-            console.log(data);
-            if (data.status == 1) {
                 swalWithBootstrapButtons({
                     type: 'success',
                     title: 'Comment deleted.',
-                    text: 'You have successfully deleted your comment.',
+                    text: '' + data.success,
                     confirmButtonText: 'Reload page',
                     allowOutsideClick: false,
                     allowEscapeKey: false
@@ -75,17 +73,14 @@ function deleteComment(comment_id) {
                         location.reload();
                     }
                 });
-            } else {
-                swalWithBootstrapButtons({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'An error has accured while trying to delete the comment!',
-                });
-            }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
+         // if error happens, display error message
+         error: function (error) {
+            swalWithBootstrapButtons({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error,
+            });
         }
     });
 }
@@ -141,12 +136,10 @@ function deletePost(post_id) {
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {
-            console.log(data);
-            if (data.status == 1) {
                 swalWithBootstrapButtons({
                     type: 'success',
                     title: 'Post deleted',
-                    text: 'You have successfully delete your post.',
+                    text: '' + data.success,
                     confirmButtonText: 'Go to posts',
                     allowOutsideClick: false,
                     allowEscapeKey: false
@@ -155,18 +148,116 @@ function deletePost(post_id) {
                         window.location.href = 'http://localhost:8000/posts/';
                     }
                 });
-            } else {
-                swalWithBootstrapButtons({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'An error has accured while trying to delete the post!',
-                });
-            }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
+           // if error happens, display error message
+           error: function (error) {
+            swalWithBootstrapButtons({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error,
+            });
         }
     });
 }
 
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+
+// Toast swal mixin
+const toast = swal.mixin({
+    toast: true,
+    position: 'bottom-start',
+    showConfirmButton: false,
+    timer: 3000
+});
+
+
+
+// Stats handler functions wrapped in object
+var updatePostLikesStats = {
+    Like: function () {
+        document.querySelector('#post-likes-count').textContent++;
+    },
+
+    Unlike: function () {
+        document.querySelector('#post-likes-count').textContent--;
+    }
+};
+
+// Toggle icon actins wrapper in object
+var toggleIcon = {
+    Like: function () {
+        $('#post-like-action').removeClass('lni-heart').addClass('lni-heart-filled');
+    },
+
+    Unlike: function () {
+        $('#post-like-action').removeClass('lni-heart-filled').addClass('lni-heart');
+    }
+};
+
+// Like/Unlike handler
+var actOnLikeUnlike = function (event) {
+
+    var postId = $('#post-like-button').data('id');
+    var icon = event.target.className;
+
+    if (icon == 'lni-heart') {
+        updatePostLikesStats.Like();
+        toggleIcon.Like();
+        likeUnlikeAjax(postId, 'Like');
+    } else {
+        updatePostLikesStats.Unlike();
+        toggleIcon.Unlike();
+        likeUnlikeAjax(postId, 'Unlike');
+    }
+
+};
+
+// Ajax call to the backend
+function likeUnlikeAjax(post_id, action) {
+
+    console.log('Ajax data');
+    console.log(post_id);
+    console.log(action);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("input[name=_token]").val()
+        }
+    });
+
+    $.ajax({
+        url: 'http://localhost:8000/post-likes/' + post_id,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            action: action
+        },
+        success: function (data) {
+            // Display success message
+            toast({
+                type: 'success',
+                title: '' + data.success
+            });
+        },
+        error: function (error) {
+            // Display error message
+            toast({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error
+            });
+
+            // If error happens, reverse stats and icon
+            switch (action) {
+                case 'Like':
+                    updatePostLikesStats.Unlike();
+                    toggleIcon.Unlike();
+                    break;
+                case 'Unlike':
+                    updatePostLikesStats.Like();
+                    toggleIcon.Like();
+                    break;
+            }
+        }
+    });
+}

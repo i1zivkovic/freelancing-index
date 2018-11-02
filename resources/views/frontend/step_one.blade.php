@@ -59,7 +59,7 @@
                   </div>
                   <div class="form-group">
                     <label class="control-label">About me</label>
-                    <textarea class="form-control" placeholder="Education.." name="about_me" value="{{old('about_me')}}" rows="7"></textarea>
+                    <textarea class="form-control" placeholder="Describe yourself or your work" name="about_me" value="{{old('about_me')}}" rows="7"></textarea>
                     @if ($errors->has('about_me'))
                         <span class="help-block">
                             <strong>{{ $errors->first('about_me') }}</strong>

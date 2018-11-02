@@ -152,10 +152,21 @@ class JobController extends Controller
             'job_skills',
             'job_business_categories',
             'job_status',
+          /*   'job_likes'  => function($query) {
+                $query -> join('users', 'job_likes.user_id', 'users.id');
+                $query -> join('profiles', 'users.id', 'profiles.user_id');
+                $query -> select('job_likes.*', 'users.username', 'users.slug','profiles.first_name', 'profiles.last_name')->orderBy('job_likes.created_at','DESC');
+            }, */
+            'job_applications' => function($query) {
+                $query -> join('users', 'job_applications.user_id', 'users.id');
+                $query -> join('profiles', 'users.id', 'profiles.user_id');
+                $query -> join('job_application_states', 'job_applications.job_application_state_id', 'job_application_states.id');
+                $query -> select('job_applications.*', 'users.username', 'users.slug','profiles.first_name', 'profiles.last_name', 'job_application_states.id as job_application_state_id','job_application_states.state as job_application_state')->orderBy('job_applications.created_at','DESC');
+            },
             'job_comments' => function($query) {
                 $query -> join('users', 'job_comments.user_id', 'users.id');
                 $query -> join('profiles', 'users.id', 'profiles.user_id');
-                $query -> select('job_comments.*', 'users.username', 'users.slug', 'profiles.first_name', 'profiles.last_name')->orderBy('created_at','ASC');
+                $query -> select('job_comments.*', 'users.username', 'users.slug', 'profiles.first_name', 'profiles.last_name')->orderBy('job_comments.created_at','ASC');
             }
         ]) -> firstOrFail();
 
@@ -298,15 +309,16 @@ class JobController extends Controller
             JobSkill::where('job_id',$id)->delete();
                 // Delete job files
             JobFile::where('job_id',$id)->delete();
-            return [
-            'status' => 1
-            ];
+            $return = array(
+                'success' => 'You have successfully deleted this job!'
+            );
+            return response()->json($return, 200);
             }
             else {
-                return [
-                    'status' => 0,
-                    'bla' => 1
-                ];
+                $return = array(
+                    'error' => 'This job does not exist in database!'
+                );
+                return response()->json($return, 400);
             }
 
     }
@@ -421,7 +433,7 @@ class JobController extends Controller
     /**
      * Get all posts for specified user id.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
     public function getMyJobs($slug)
@@ -439,7 +451,7 @@ class JobController extends Controller
         ]) -> orderBy('created_at','desc')-> paginate(5);
 
         return view('frontend.user_jobs', compact('jobs','jobCount'));
-
-
     }
+
+
 }

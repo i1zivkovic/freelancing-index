@@ -12,26 +12,6 @@ use Illuminate\Http\Request;
 class JobCommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,7 +19,7 @@ class JobCommentController extends Controller
      */
     public function store(Request $request)
     {
-
+        // set rules and check them
         $rules = [
             'comment' => 'required|max:1000',
             'job_id' => 'required|exists:jobs,id',
@@ -51,7 +31,7 @@ class JobCommentController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        /* dd($request); */
+        // if rules are asserted, create new comment
         $comment = new JobComment;
         $comment->comment = $request->comment;
         $comment->user_id = Auth::id();
@@ -60,28 +40,6 @@ class JobCommentController extends Controller
         $comment->save();
 
         return redirect()->to('jobs/'.$request->job_slug);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -104,21 +62,24 @@ class JobCommentController extends Controller
      */
     public function destroy($id)
     {
-
         $userId = Auth::id();
 
+        // if there is job comment that matches these conditionals
         if( JobComment::where([['user_id', $userId], ['id', $id]])->exists() )
         {
-        JobComment::findOrFail($id)->delete();
-        return [
-        'status' => 1
-        ];
+            //dete job comment
+            JobComment::findOrFail($id)->delete();
+             $return = array(
+                        'success' => 'Comment has been successfully deleted!'
+                    );
+             return response()->json($return, 200);
         }
+        // else throw error
         else {
-            return [
-                'status' => 0,
-                'bla' => 1
-            ];
+            $return = array(
+                'error' => 'This comment does not exist in database!'
+            );
+            return response()->json($return, 400);
         }
 
 

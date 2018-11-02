@@ -38,4 +38,8 @@ class Job extends Model
         return $this->hasOne('App\JobFile');
     }
 
+    public function job_applications() {
+        return $this->hasMany('App\JobApplication');
+    }
+
 }

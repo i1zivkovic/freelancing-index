@@ -24,12 +24,20 @@
                     </div>
                     @endif
 
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 text-center mb-5">
+                                <h3>Contact Us</h3>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <div class="row contact-form-area">
+
                         <div class="col-md-12 col-lg-6 col-sm-12">
                             <div class="contact-block">
-                                <h2>Contact Form</h2>
                                 {!! Form::open(['method' => 'POST', 'route' => ['frontend.sendMail'], 'autocomplete' =>
                                 'on','id' => 'sendMailForm', 'class' => 'form-ad']) !!}
                                 @csrf
@@ -95,7 +103,6 @@
                         </div>
                         <div class="col-md-12 col-lg-6 col-sm-12">
                             <div class="contact-right-area wow fadeIn">
-                                <h2>Contact Address</h2>
                                 <div class="contact-info">
                                     <div class="single-contact">
                                         <div class="contact-icon">
@@ -106,7 +113,8 @@
                                     <div class="single-contact">
                                         <div class="contact-icon">
                                             <i class="lni-envelope"></i>
-                                        </div><a href="mailto:i1zivkovic@outlook.com">Support: i1zivkovic@outlook.com</a>
+                                        </div><a href="mailto:ivanzivkovic1601@gmail.com">Support:
+                                            ivanzivkovic1601@gmail.com</a>
                                     </div>
                                     <div class="single-contact">
                                         <div class="contact-icon">

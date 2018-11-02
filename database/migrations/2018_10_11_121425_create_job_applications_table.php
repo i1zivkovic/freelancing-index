@@ -19,7 +19,9 @@ class CreateJobApplicationsTable extends Migration
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('is_active');
+            $table->unsignedInteger('job_application_state_id');
+            $table->foreign('job_application_state_id')->references('id')->on('job_application_states')->onDelete('cascade');
+            $table->string('comment',1000);
             $table->timestamps();
         });
     }

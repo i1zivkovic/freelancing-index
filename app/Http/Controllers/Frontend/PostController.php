@@ -109,12 +109,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
-        $post = Post::where('id',$id)->firstOrFail();
-
         if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
         {
+
+         $post = Post::where('id',$id)->firstOrFail();
          return view('frontend.post_edit', compact('post'));
+
         }
          else {
             return abort(404);
@@ -184,15 +184,16 @@ class PostController extends Controller
         PostComment::where('post_id', $id)->delete();
             // Delete likes
         PostLike::where('post_id',$id)->delete();
-        return [
-        'status' => 1
-        ];
+        $return = array(
+            'success' => 'You have successfully deleted this post!'
+        );
+        return response()->json($return, 200);
         }
         else {
-            return [
-                'status' => 0,
-                'bla' => 1
-            ];
+            $return = array(
+                'error' => 'This post does not exist in database!'
+            );
+            return response()->json($return, 400);
         }
     }
 

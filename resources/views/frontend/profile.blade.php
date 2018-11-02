@@ -10,16 +10,19 @@
 @section('content')
 
 <!-- Start Content -->
-<div class="section">
+<div class="section user-info">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-12 col-xs-12">
+                <div class="col-sm-12 text-center mb-5">
+                        <h3>Profile</h3>
+                    </div>
+            {{-- <div class="col-lg-4 col-md-12 col-xs-12">
                 <div class="right-sideabr">
                     <h4>Profile</h4>
                     <ul class="list-item">
                         <li><a href="resume.html">Info</a></li>
-                        {{-- <li><a href="bookmarked.html">Bookmarked Jobs</a></li>
-                        <li><a href="bookmarked.html">Bookmarked Posts</a></li> --}}
+                        <li><a href="bookmarked.html">Bookmarked Jobs</a></li>
+                        <li><a href="bookmarked.html">Bookmarked Posts</a></li>
                         <li><a href="notifications.html">Notifications <span class="notinumber">2</span></a></li>
                         <li><a href="manage-applications.html">Manage Applications</a></li>
                         <li><a href="job-alerts.html">Job Alerts</a></li>
@@ -27,8 +30,8 @@
                         <li><a href="index.html">Sing Out</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="col-lg-8 col-md-12 col-xs-12">
+            </div> --}}
+            <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="inner-box my-resume">
                     <div class="author-resume">
                         <div class="row">
@@ -162,6 +165,126 @@
     </div>
 </div>
 <!-- End Content -->
+
+<section class="profile-tabs">
+    <!-- Start Content -->
+    <div class="container">
+        <div class="row">
+
+            <!-- Start Blog Posts -->
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <ul class="nav nav-tabs  mb-1" id="profile-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="portfolio-tab" data-toggle="tab" href="#portfolio" role="tab"
+                            aria-controls="posts" aria-selected="false">Portfolio</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="profile-tab-content">
+                    <div class="tab-pane active" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
+                        <!-- Posts Section -->
+                        <section id="blog" class="section">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                                    <div class="blog-post">
+                                        <!-- Post thumb -->
+                                        <div class="post-thumb">
+                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
+                                                    height="200px" alt=""></a>
+                                            <div class="hover-wrap">
+                                            </div>
+                                        </div>
+                                        <!-- End Post post-thumb -->
+
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
+                                            <div class="meta">
+                                                <span class="meta-part"><a><i
+                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><i class="lni-comments-alt"></i>
+                                                    3 Comments</span>
+                                                <span class="meta-part"><i class="lni-heart-filled"></i>
+                                                    5 Likes</span>
+                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
+                                            </div>
+                                            <p>This is a test description</p>
+                                        </div>
+                                        <!-- Post Content -->
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                                    <div class="blog-post">
+                                        <!-- Post thumb -->
+                                        <div class="post-thumb">
+                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
+                                                    height="200px" alt=""></a>
+                                            <div class="hover-wrap">
+                                            </div>
+                                        </div>
+                                        <!-- End Post post-thumb -->
+
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
+                                            <div class="meta">
+                                                <span class="meta-part"><a><i
+                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><i class="lni-comments-alt"></i>
+                                                    3 Comments</span>
+                                                <span class="meta-part"><i class="lni-heart-filled"></i>
+                                                    5 Likes</span>
+                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
+                                            </div>
+                                            <p>This is a test description</p>
+                                        </div>
+                                        <!-- Post Content -->
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
+                                    <div class="blog-post">
+                                        <!-- Post thumb -->
+                                        <div class="post-thumb">
+                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
+                                                    height="200px" alt=""></a>
+                                            <div class="hover-wrap">
+                                            </div>
+                                        </div>
+                                        <!-- End Post post-thumb -->
+
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
+                                            <div class="meta">
+                                                <span class="meta-part"><a><i
+                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><i class="lni-comments-alt"></i>
+                                                    3 Comments</span>
+                                                <span class="meta-part"><i class="lni-heart-filled"></i>
+                                                    5 Likes</span>
+                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
+                                            </div>
+                                            <p>This is a test description</p>
+                                        </div>
+                                        <!-- Post Content -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                    <a href="#!" class="btn btn-common">See all posts</a>
+                                </div>
+                        </section>
+                        <!-- blog Section End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</section>
 
 
 @include('includes.frontend.loaderAndArrow')

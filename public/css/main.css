@@ -4482,6 +4482,35 @@ div.job-listings .category-list span{
     color: #26ae61 !important;
 }
 
+
+/* job likes section */
+.job-detail #job-like-action, .job-detail #job-likes-count,  #post-like-action,  #post-likes-count {
+    font-size: 25px !important;
+}
+
+
+/* Margin removed */
+#comments .comments-list .media .info-body {
+    margin-left: 0px !important;
+}
+
+@media only screen and (max-width: 767px) {
+    #comments .comments-list .media .info-body {
+        margin-left: 0px !important;
+    }
+}
+
+/* Padding between comments */
+#comments .comments-list .media {
+    padding: 15px 0px !important;
+}
+
+/* Z-index for navbar */
+.top-nav-collapse {
+    z-index: 100 !important;
+}
+
+
 .job-detail .content-area .category-list span  {
 
 }

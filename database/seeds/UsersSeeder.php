@@ -25,6 +25,30 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'is_active' => 1,
         ]);
+        $user = User::create([
+            'role_id' => 2,
+            'username' => 'i2zivkovic',
+            'slug' => 'i2zivkovic-'.time(),
+            'email' => 'i2zivkovic@outlook.com',
+            'password' => bcrypt('12345678'),
+            'is_active' => 1,
+        ]);
+        $user = User::create([
+            'role_id' => 2,
+            'username' => 'i3zivkovic',
+            'slug' => 'i3zivkovic-'.time(),
+            'email' => 'i3zivkovic@outlook.com',
+            'password' => bcrypt('12345678'),
+            'is_active' => 1,
+        ]);
+        $user = User::create([
+            'role_id' => 2,
+            'username' => 'i4zivkovic',
+            'slug' => 'i4zivkovic-'.time(),
+            'email' => 'i4zivkovic@outlook.com',
+            'password' => bcrypt('12345678'),
+            'is_active' => 1,
+        ]);
 
          UserSkill::create([
             'user_id' => $user->id,

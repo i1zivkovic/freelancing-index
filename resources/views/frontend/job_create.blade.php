@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Post a job')
+@section('title', 'Post A Job')
 @section('description', "")
 
 @section('css')
@@ -17,9 +17,11 @@
         <section class="section">
             <div class="container">
                 <div class="row justify-content-center">
+                        <div class="col-sm-12 col-lg-9 col-md-12 col-xs-12 text-center mb-5">
+                                <h3>Post a new job ad</h3>
+                            </div>
                     <div class="col-lg-9 col-md-12 col-xs-12">
                         <div class="post-job box">
-                            <h3 class="job-title">Post a new Job</h3>
                             {!! Form::open(['method' => 'POST', 'route' => ['frontend.jobs.store'], 'autocomplete' =>
                             'off',
                             'files' => true, 'enctype' => 'multipart/form-data', 'id' => 'jobPostForm', 'class' =>
@@ -92,7 +94,7 @@
                                     @endif
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Offer</label>
+                                <label class="control-label">Offer ($)</label>
                                 <input type="text" class="form-control {{ $errors->has('offer') ? ' is-invalid' : '' }}" placeholder="" name="offer" required value="{{old('offer')}}">
                                 @if ($errors->has('offer'))
                                 <span class="invalid-feedback" role="alert">

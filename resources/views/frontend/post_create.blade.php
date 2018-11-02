@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Posts')
+@section('title', 'Create New Post')
 @section('description', "")
 
 @section('css')
@@ -16,6 +16,9 @@
         <section id="content">
             <div class="container">
                 <div class="row justify-content-center">
+                        <div class="col-sm-12 col-lg-9 col-md-12 col-xs-12 text-center mb-5">
+                                <h3>Create new post</h3>
+                            </div>
                     <div class="col-lg-9 col-md-12 col-xs-12">
                         <div class="post-job box">
                             {!! Form::open(['method' => 'POST', 'route' => ['frontend.posts.store'], 'autocomplete' =>
@@ -23,8 +26,7 @@
                             'files' => true, 'enctype' => 'multipart/form-data', 'id' => 'postStoreForm', 'class' =>
                             'form-ad']) !!}
                              @csrf
-                            <h3>Create new post</h3>
-                            <div class="form-group mt-5">
+                            <div class="form-group">
                                 <label class="control-label">Title</label>
                                 <input type="text" class="form-control" placeholder="" name="title">
                             </div>

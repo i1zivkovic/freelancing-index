@@ -25,27 +25,26 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], 
 // ROUTES ONLY FOR REGISTERED USERS WHICH HAVE FILLED BASE INFO
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth','steps']], function () {
 
-        //HOME
-        Route::get('/', 'HomeController@index')->name('home');
+    //HOME
+    Route::get('/', 'HomeController@index')->name('home');
 
     //PROFILE COMPLETION STEPS
     Route::get('step-1', 'StepController@getStepOne')->name('getStepOne');
     Route::get('step-2', 'StepController@getStepTwo')->name('getStepTwo');
     Route::post('post-step-2', 'StepController@postStepTwo')->name('postStepTwo');
-    //
 
-    //CONTACT PAGE
-    Route::get('contact', 'ContactController@index')->name('contact');
-    //
+
+
+
 
     //AJAX
     Route::get('skills/find', 'AjaxController@findSkill');
-    //
+
 
 
     //PROFILE
     Route::get('profile/{slug}', 'UserController@show')->name('user.show');
-    //
+
 
 
     //POSTS
@@ -53,15 +52,14 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::get('posts/my-posts/{slug}', 'PostController@getMyPosts')->name('myPosts');
     Route::any('posts-filter', 'PostController@postPostFilter')->name('postsFilter');
     Route::any('my-posts-filter', 'PostController@postMyPostFilter')->name('myPostsFilter');
-    //
-
+    //POST LIKES
+    Route::post('post-likes/{id}', 'PostLikeController@likeUnlikeHandler')->name('postLikeUnlike');
     //POST COMMENTS
     Route::resource('post-comments', 'PostCommentController');
-    //
 
-    //POST COMMENTS
-    Route::resource('job-comments', 'JobCommentController');
-    //
+
+
+
 
     //JOBS
     Route::resource('jobs', 'JobController');
@@ -69,12 +67,21 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::any('my-jobs-filter', 'JobController@postMyJobsFilter')->name('myJobsFilter');
     Route::get('posts/my-jobs/{slug}', 'JobController@getMyJobs')->name('myJobs');
     Route::delete('delete-job-file/{id}', 'AjaxController@deleteJobFile')->name('deleteJobFile');
-    //
+    //JOB LIKES
+    Route::post('job-likes/{id}', 'JobLikeController@likeUnlikeHandler')->name('jobLikeUnlike');
+    //JOB COMMENTS
+    Route::resource('job-comments', 'JobCommentController');
+
+
+    //JOB APPLICATIONS
+    Route::resource('job-applications', 'JobApplicationController');
+    Route::get('user-applications', 'JobApplicationController@userApplications')->name('getUserApplications');
 
 
     //CONTACT
+    Route::get('contact', 'ContactController@index')->name('contact');
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
-    //
+
 
 
     // PASSWORD CHANGE

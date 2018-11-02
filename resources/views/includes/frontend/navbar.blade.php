@@ -29,8 +29,9 @@
                                 <i class="fas fa-user-tie mr-2"></i> Work
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Find a job</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Find A Job</a></li>
                                 <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li>
+                            <li><a class="dropdown-item" href="{{route('frontend.getUserApplications')}}">My Applications</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -39,11 +40,13 @@
                                 <i class="fas fa-handshake mr-2"></i> Recruit
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Post a job</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Post A Job Ad</a></li>
                                 @guest
-                                <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li>
+                                <li><a class="dropdown-item" href="{{route('login')}}">My Job Ads</a></li>
+                               {{--  <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li> --}}
                                 @else
-                                <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My Jobs</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My Job Ads</a></li>
+                                 <li><a class="dropdown-item" href="#!">Manage Applications</a></li>
                                 @endguest
 
                             </ul>
@@ -54,8 +57,8 @@
                                 <i class="fas fa-newspaper mr-2"></i> Posts
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create new post</a></li>
-                                <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">All posts</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create New Post</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">All Posts</a></li>
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Posts</a></li>
                                 @else

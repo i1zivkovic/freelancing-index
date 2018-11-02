@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(SkillsSeeder::class);
         $this->call(BusinessCategoriesSeeder::class);
+        $this->call(JobApplicationStateSeeder::class);
         $this->call(JobStatusesSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(ProfileSeeder::class);
@@ -25,9 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JobSkillSeeder::class);
         $this->call(JobLikesSeeder::class);
         $this->call(JobCommentsSeeder::class);
-        /* $this->call(PostLikesSeeder::class);
-        $this->call(PostCommentsSeeder::class);  */
-
-
+        $this->call(JobApplicationSeeder::class);
+        $this->call(PostLikesSeeder::class);
+        $this->call(PostCommentsSeeder::class);
     }
 }

@@ -21,8 +21,8 @@
                         <div class="contents text-center">
                             <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
                             <p>Are you a freelancer looking for a full-time job or maybe you want to earn some money by
-                                doing some part-time work? <br>Maybe you're a recuriter that needs the right people to
-                                a job for you? <br>We got you covered!</p>
+                                doing something you're good at? <br>Maybe you're a recuriter that needs the right people to
+                               do a job for you? <br>We got you covered!</p>
                         </div>
                     </div>
                 </div>
@@ -499,12 +499,15 @@
                                     <p>
                                         {{ str_limit($recentJob->description, $limit = 300, $end = '...') }}
                                     </p>
+                                    @if ($recentJob->job_skills->count() > 0)
                                     <br>
                                     <div class="tag-list">
                                         @foreach($recentJob->job_skills as $jobSkill)
                                         <span>{{$jobSkill->name}}</span>
                                         @endforeach
                                     </div>
+                                    @endif
+                                    @if ($recentJob->job_business_categories->count() > 0)
                                     <br>
                                     <div class="category-list">
                                         @foreach($recentJob->job_business_categories as $jobCategory)
@@ -515,6 +518,7 @@
                                         @endif
                                         @endforeach
                                     </div>
+                                    @endif
                                     <hr>
 
                                 </div>

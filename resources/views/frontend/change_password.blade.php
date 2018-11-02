@@ -44,7 +44,12 @@
                         <input class="form-control" type="text">
                         <span class="material-input"></span>
                       </div>
-                      <a href="#" id="submit" class="btn btn-common">Save Change</a>
+                      <div class="form-group is-empty">
+                        <label class="control-label">Confirm New Password*</label>
+                        <input class="form-control" type="text">
+                        <span class="material-input"></span>
+                      </div>
+                      <a href="#" id="submit" class="btn btn-common">Save</a>
                     </form>
                   </div>
                 </div>

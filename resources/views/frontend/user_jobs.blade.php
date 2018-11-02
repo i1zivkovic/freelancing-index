@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Jobs')
+@section('title', 'My Jobs')
 @section('description', "")
 
 @section('css')
@@ -14,156 +14,171 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                        <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
-                                <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                   <i class="lni-funnel"></i> Filter jobs
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in show">
-                                            <div class="panel-body">
-
-                                                {!! Form::open(['route' => ['frontend.myJobsFilter'], 'role' => 'form',
-                                                'autocomplete' => 'off',
-                                                'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                                        <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
-                                                            name="q" value="{{!empty($request) ? $request->input('q') : null}}">
-                                                    </div>
-                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                                        <input type="text" class="form-control" placeholder="Location: City, State, Zip"
-                                                            name="location" value="{{!empty($request) ? $request->input('location') : null}}">
-                                                    </div>
-                                                    <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                                        <input type="text" class="form-control" placeholder="Category: Food, Communications, It"
-                                                            name="category" value="{{!empty($request) ? $request->input('category') : null}}">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <button type="submit" class="btn btn-common btn-block">Filter</button>
-                                                    </div>
-                                                </div>
-                                                {!!Form::close()!!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    @if($jobs->count() <= 0) <div class="col-lg-12 col-md-12 col-xs-12 mb-2 text-center">
+                        <h5>You have no job ads posted so far.</h5>
+                </div>
+                <div class="col-lg-12 col-md-12 col-xs-12 mb-2 text-center">
+                    <a class="btn btn-common" href="{{route('frontend.jobs.create')}}">Post a job</a>
+                </div>
+                @else
+                <div class="col-sm-12 text-center mb-5">
+                        <h3>My Job Ads</h3>
+                    </div>
+                <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        <i class="lni-funnel"></i> Filter jobs
+                                    </a>
+                                </h4>
                             </div>
-                    <div class="col-lg-8 col-md-12 col-xs-12">
-                    @foreach($jobs as $job)
-                    <div class="job-listings">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                    <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img1.png" alt="">
-                                    </div>
-                                    <div class="job-details">
-                                        <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}"><h3>{{$job->title}}</h3></a>
-                                        <span class="company-neme">
-                                            {{$job->user->username}}
-                                        </span>
-                                    </div>
+                            <div id="collapseOne" class="panel-collapse collapse in show">
+                                <div class="panel-body">
 
-                                    <hr>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-xs-12 text-left">
-                                    <p>
-                                        {{$job->description}}
-                                    </p>
-                                    <br>
-                                    <div class="tag-list">
-                                        @foreach($job->job_skills as $jobSkill)
-                                            <span>{{$jobSkill->name}}</span>
-                                        @endforeach
+                                    {!! Form::open(['route' => ['frontend.myJobsFilter'], 'role' => 'form',
+                                    'autocomplete' => 'off',
+                                    'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                            <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
+                                                name="q" value="{{!empty($request) ? $request->input('q') : null}}">
                                         </div>
-                                        <br>
-                                        <div class="category-list">
-                                            @foreach($job->job_business_categories as $jobCategory)
-                                            @if($loop->last)
-                                            <span>{{$jobCategory->name}}</span>
-                                            @else
-                                            <span>{{$jobCategory->name}} - </span>
-                                            @endif
-                                            @endforeach
+                                        <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                            <input type="text" class="form-control" placeholder="Location: City, State, Zip"
+                                                name="location" value="{{!empty($request) ? $request->input('location') : null}}">
                                         </div>
-                                        <hr>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
-
-                                    <span class="btn-open">
-                                        {{$job->offer}}€
-                                        @if($job->is_per_hour)
-                                        /h
-                                        @else
-                                        /project
-                                        @endif
-                                    </span>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
-                                    <div class="location">
-                                        <i class="lni-map-marker"></i> {{$job->job_location_city}},
-                                        {{$job->job_location_country}}
+                                        <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                            <input type="text" class="form-control" placeholder="Category: Food, Communications, It"
+                                                name="category" value="{{!empty($request) ? $request->input('category') : null}}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
-                                    <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>&nbsp; &nbsp; {{$job->job_likes_count}} <i class="lni-heart"></i></span>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
-                                        @if(Auth::user() && ($job->user_id == Auth::user()->id))
-                                       <span><a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
-                                               <i class="lni-pencil"></i>
-                                           </a></span>
-                                           &nbsp;
-                                          <span><a href="#" class="delete-job" data-id="{{$job->id}}">
-                                               <i class="lni-trash"></i>
-                                           </a></span>
-                                           @endif
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <button type="submit" class="btn btn-common btn-block">Filter</button>
+                                        </div>
+                                    </div>
+                                    {!!Form::close()!!}
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-
-
-
-                        <!-- Start Pagination -->
-                        @if(empty($request))
-                        {!! $jobs -> links()!!}
-                        @else
-                        {{ $jobs->appends($request->all())->links() }}
-                        @endif
-                        <!-- End Pagination -->
                     </div>
                 </div>
+                <div class="col-lg-8 col-md-12 col-xs-12">
+                    @foreach($jobs as $job)
+                    <div class="job-listings">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="job-company-logo">
+                                    <img src="{{asset('img')}}/features/img1.png" alt="">
+                                </div>
+                                <div class="job-details">
+                                    <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
+                                        <h3>{{$job->title}}</h3>
+                                    </a>
+                                    <span class="company-neme">
+                                        {{$job->user->username}}
+                                    </span>
+                                </div>
+
+                                <hr>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-xs-12 text-left">
+                                <p>
+                                    {{$job->description}}
+                                </p>
+                                <br>
+                                <div class="tag-list">
+                                    @foreach($job->job_skills as $jobSkill)
+                                    <span>{{$jobSkill->name}}</span>
+                                    @endforeach
+                                </div>
+                                <br>
+                                <div class="category-list">
+                                    @foreach($job->job_business_categories as $jobCategory)
+                                    @if($loop->last)
+                                    <span>{{$jobCategory->name}}</span>
+                                    @else
+                                    <span>{{$jobCategory->name}} - </span>
+                                    @endif
+                                    @endforeach
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+
+                                <span class="btn-open">
+                                    {{$job->offer}}€
+                                    @if($job->is_per_hour)
+                                    /h
+                                    @else
+                                    /project
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <div class="location">
+                                    <i class="lni-map-marker"></i> {{$job->job_location_city}},
+                                    {{$job->job_location_country}}
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>&nbsp;
+                                    &nbsp; {{$job->job_likes_count}} <i class="lni-heart"></i></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
+                                @if(Auth::user() && ($job->user_id == Auth::user()->id))
+                                <span><a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
+                                        <i class="lni-pencil"></i>
+                                    </a></span>
+                                &nbsp;
+                                <span><a href="#" class="delete-job" data-id="{{$job->id}}">
+                                        <i class="lni-trash"></i>
+                                    </a></span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+
+
+
+                    <!-- Start Pagination -->
+                    @if(empty($request))
+                    {!! $jobs -> links()!!}
+                    @else
+                    {{ $jobs->appends($request->all())->links() }}
+                    @endif
+                    <!-- End Pagination -->
+                </div>
+                @endif
             </div>
-        </section>
-        <!-- Job Browse Section End -->
+    </div>
+    </section>
+    <!-- Job Browse Section End -->
 
 
 
 
-        @include('includes.frontend.loaderAndArrow')
-        @section('js')
-        <script type="text/javascript">
-            $('#search-form').submit(function () {
-                $(this)
+    @include('includes.frontend.loaderAndArrow')
+    @section('js')
+    <script type="text/javascript">
+        $('#search-form').submit(function () {
+            $(this)
                 .find('input[name]')
                 .filter(function () {
                     return !this.value;
                 })
                 .prop('name', '');
-            });
-        </script>
+        });
 
-        {!!Html::script(asset('js/custom/user-jobs.js'))!!}
+    </script>
 
-        @stop
-    </div>
+    {!!Html::script(asset('js/custom/user-jobs.js'))!!}
+
+    @stop
+</div>
 </div>
 @stop
