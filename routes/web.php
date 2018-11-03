@@ -23,7 +23,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], 
 
 
 // ROUTES ONLY FOR REGISTERED USERS WHICH HAVE FILLED BASE INFO
-Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth','steps']], function () {
+Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['verified','auth','steps']], function () {
 
     //HOME
     Route::get('/', 'HomeController@index')->name('home');
