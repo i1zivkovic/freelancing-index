@@ -29,6 +29,6 @@ class UserController extends Controller
         ->firstOrFail();
         $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
 
-        return view('frontend.profile_edit', compact('user'));
+        return view('frontend.profile_edit', compact('user', 'profile'));
     }
 }
