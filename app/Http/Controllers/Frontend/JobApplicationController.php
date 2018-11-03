@@ -198,7 +198,8 @@ class JobApplicationController extends Controller
 
         $job_applications = JobApplication::whereIn('job_id',$job_ids)
             ->with([
-            'user'
+            'user',
+            'job'
             ])
             ->paginate(10);
 
@@ -227,7 +228,7 @@ class JobApplicationController extends Controller
         $jobs = Job::where('user_id', Auth::id())
             ->select('id', 'title', 'slug')
             ->get();
-        
+
 
         return view('frontend.manage_applications', compact('jobs', 'job_applications', 'selected_job'));
     }

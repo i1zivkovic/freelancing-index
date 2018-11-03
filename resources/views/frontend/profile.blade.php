@@ -31,6 +31,9 @@
                     </ul>
                 </div>
             </div> --}}
+
+        <a href="{{route('frontend.profileEdit', ['slug' => Auth::user()->slug])}}" class="btn btn-common">Edit profile</a>
+
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="inner-box my-resume">
                     <div class="author-resume">
@@ -165,7 +168,7 @@
     </div>
 </div>
 <!-- End Content -->
-
+{{--
 <section class="profile-tabs">
     <!-- Start Content -->
     <div class="container">
@@ -284,7 +287,7 @@
     </div>
     </div>
 
-</section>
+</section> --}}
 
 
 @include('includes.frontend.loaderAndArrow')

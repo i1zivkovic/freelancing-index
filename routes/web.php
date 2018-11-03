@@ -27,6 +27,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
     //HOME
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/faq', 'HomeController@faq')->name('faq');
+    Route::get('/about-us', 'HomeController@about')->name('about');
 
     //PROFILE COMPLETION STEPS
     Route::get('step-1', 'StepController@getStepOne')->name('getStepOne');
@@ -34,18 +36,15 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('post-step-2', 'StepController@postStepTwo')->name('postStepTwo');
 
 
-
-
-
     //AJAX
     Route::get('skills/find', 'AjaxController@findSkill');
 
 
-
     //PROFILE
     Route::get('profile/{slug}', 'UserController@show')->name('user.show');
-
-
+    Route::get('profile-edit/{slug}', 'UserController@profile_edit')->name('profileEdit');
+    //PROFILE EXPERIENCE
+    Route::post('profile-experience', 'ProfileExperienceController@update')->name('profileExperience');
 
     //POSTS
     Route::resource('posts', 'PostController');
@@ -56,9 +55,6 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('post-likes/{id}', 'PostLikeController@likeUnlikeHandler')->name('postLikeUnlike');
     //POST COMMENTS
     Route::resource('post-comments', 'PostCommentController');
-
-
-
 
 
     //JOBS

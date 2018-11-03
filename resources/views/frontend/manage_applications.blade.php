@@ -11,12 +11,12 @@
 <div class="">
     <div class="space-100">
 
-        <section class="job-browse section">
+        <section class="manage-applications section">
             <div class="container">
                 <div class="row">
-                        <div class="col-sm-12 text-center mb-5">
-                                <h3>Manage Applications</h3>
-                            </div>
+                    <div class="col-sm-12 text-center mb-5">
+                        <h3>Manage Applications</h3>
+                    </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
@@ -33,7 +33,7 @@
                                             <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
                                                 @foreach($jobs as $job)
                                                 <a href="{{route('frontend.getManageApplicationsSlug',['id' => $job->slug])}}">
-                                                    <p class="job-app-title mb-3 {{!empty($selected_job) && $job->id == $selected_job->id ? 'job-app-title-active' : ''}}">
+                                                    <p class=" mb-3 {{!empty($selected_job) && $job->id == $selected_job->id ? 'job-app-title-active' : ''}}">
                                                         {{$job->title}}
                                                     </p>
                                                 </a>
@@ -47,35 +47,49 @@
                     </div>
                     <div class="col-lg-8 col-md-12 col-xs-12">
                         @if($job_applications->count() == 0)
-                            <p class="text-center"><b>Currently there are no applicants for your job!</b></p>
+                        <p class="text-center"><b>Currently there are no applicants for your job!</b></p>
                         @else
-                            <p>About <b>{{$job_applications->total()}}</b>
-                            {{$job_applications->total() % 10 == 1 && $job_applications->total() % 11 != 0 ? 'result' : 'results'}} 
-                            </p>
-                            <hr>
+                        <p>About <b>{{$job_applications->total()}}</b>
+                            {{$job_applications->total() % 10 == 1 && $job_applications->total() % 11 != 0 ? 'result' :
+                            'results'}}
+                        </p>
+                        <hr>
                         @endif
                         @foreach($job_applications as $job_application)
-                        <div class="job-listings">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                    <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img1.png" alt="">
+
+
+
+                        <div class="manager-resumes-item">
+                            <div class="manager-content">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <a href="#!"><img class="resume-thumb" src="{{asset('img')}}/features/img1.png"
+                                                alt=""></a>
+                                        <div class="manager-info">
+                                            <div class="manager-name">
+                                                <h4> <a href="{{route('frontend.user.show',['id' => $job_application->user->slug])}}">
+                                                        {{$job_application->user->username}}
+                                                    </a></h4>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="job-details">
-                                        <a href="{{route('frontend.user.show',['id' => $job_application->user->slug])}}"><h6>{{$job_application->user->username}}</h6></a>
+                                    <div class="col-sm-12 col-md-6 text-right">
+                                        <p>{{\Carbon\Carbon::createFromTimeStamp(strtotime($job_application->created_at))->diffForHumans()}}</p>
                                     </div>
-                                    <hr>
-                                    <p class="job-app-timestamp">{{\Carbon\Carbon::createFromTimeStamp(strtotime($job_application->created_at))->diffForHumans()}}</p>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-xs-12 text-left">
-                                    <p class="mt-3">
-                                        {{$job_application->comment}}
-                                    </p>
-                                    <hr>
+
+                            </div>
+                            <div class="item-body">
+                                <div class="content">
+                                Job: <a href="http://localhost:8000/jobs/{{$job_application->job->slug}}">{{$job_application->job->slug}}</a>
+                                    <br>
+                                    <br>
+                                    <p>{{$job_application->comment}}</p>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-xs-12 text-right">
+                                <div class="resume-skills">
+                                    <div class="row"></div>
                                     @if($job_application->job_application_state->id == 1)
-                                    <a href="#!" class="accept-application mr-5" onclick="actOnJobApplicationAction({{$job_application->id}}, 2, {{$job_application->job_id}})">
+                                    <a href="#!" class="accept-application" onclick="actOnJobApplicationAction({{$job_application->id}}, 2, {{$job_application->job_id}})">
                                         <i class="fas fa-check"></i>
                                     </a>
                                     &nbsp;
@@ -83,10 +97,9 @@
                                         <i class="fas fa-times text-danger"></i>
                                     </a>
                                     @else
-                                    {{$job_application->job_application_state->state}}
+                                <p class="{{$job_application->job_application_state->state == 'Accepted' ? 'text-success' : 'text-danger'}}">{{$job_application->job_application_state->state}}</p>
                                     @endif
                                 </div>
-                                
                             </div>
                         </div>
                         @endforeach

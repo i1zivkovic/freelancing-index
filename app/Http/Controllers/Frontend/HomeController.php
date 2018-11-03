@@ -54,7 +54,19 @@ class HomeController extends Controller
 
 
         return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount','jobApplicationCount','companyCount'));
-
-
     }
+
+
+
+    public function faq() {
+        return view('frontend.faq');
+    }
+
+
+
+    public function about() {
+        return view('frontend.about');
+    }
+
+
 }

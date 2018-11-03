@@ -2955,6 +2955,7 @@ Categories All Page Style
     white-space: nowrap;
     display: inline-block;
 }
+
 .job-detail .content-area .offer {
     color: #26ae61;
     border: 2px solid #26ae61;
@@ -4442,7 +4443,8 @@ footer .menu li .small-title {
 
 
 /* Remove border from select2 */
-.select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+.select2-container--default .select2-selection--multiple,
+.select2-container--default.select2-container--focus .select2-selection--multiple {
     border: unset !important;
 }
 
@@ -4457,9 +4459,11 @@ footer .menu li .small-title {
 }
 
 /* Fixed margin top for serach field */
-.select2-container--default .select2-selection--multiple .select2-selection__choice, .select2-container .select2-search--inline .select2-search__field {
+.select2-container--default .select2-selection--multiple .select2-selection__choice,
+.select2-container .select2-search--inline .select2-search__field {
     margin-top: 10px !important;
 }
+
 /*
 .select2-container--default .select2-results__option[aria-selected=true] {
     background-color: rgba(38,174,97,0.1) !important;
@@ -4478,13 +4482,16 @@ footer .menu li .small-title {
 }
 
 /* Fixed color for category list */
-div.job-listings .category-list span{
+div.job-listings .category-list span {
     color: #26ae61 !important;
 }
 
 
 /* job likes section */
-.job-detail #job-like-action, .job-detail #job-likes-count,  #post-like-action,  #post-likes-count {
+.job-detail #job-like-action,
+.job-detail #job-likes-count,
+#post-like-action,
+#post-likes-count {
     font-size: 25px !important;
 }
 
@@ -4511,31 +4518,50 @@ div.job-listings .category-list span{
 }
 
 
-.job-detail .content-area .category-list span  {
-
-}
-
-/* Fix offer font-size */
-.job-detail .content-area .offer {
-
-}
-
-
 .contact-info {
     margin-top: 10px !important;
 }
 
 /*jawe*/
-.job-app-title{
+.job-app-title {
     font-size: 18px;
 }
 
-.job-app-timestamp{
-    position: absolute;
-    right: 15px;
-    top: 0px;
+.job-app-title-active {
+    color: #26ae61;
 }
 
-.job-app-title-active{
-    color:#26ae61;
+
+/* Fix for manage-applications */
+.manage-applications .manager-resumes-item {
+    border-left: 4px solid white !important;
+    transition: all 0.4s ease 0s !important;
+    border-radius: 4px !important;
+}
+
+.manage-applications .manager-resumes-item:hover {
+    border-left: 4px solid #26ae61 !important;
+}
+
+.manage-applications .manager-content {
+    padding: 10px 30px !important;
+    background: unset !important;
+    border-bottom: 1px solid #f1f1f1 !important;
+}
+
+.manage-applications .resume-thumb {
+    border-radius: 0 !important;
+}
+
+.manage-applications .resume-skills {
+    margin: 0 !important;
+}
+
+
+/* Profile edit fix */
+
+.profile-edit .add-post-btn {
+
+    padding-bottom: 0px !important;
+
 }

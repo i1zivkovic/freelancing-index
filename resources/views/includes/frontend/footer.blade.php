@@ -16,9 +16,9 @@
             <div class="widget">
               <h3 class="block-title">Quick Links</h3>
               <ul class="menu">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#"">FAQ</a></li>
-                <li><a href="contact">Contact</a></li>
+              <li><a href="{{route('frontend.about')}}">About Us</a></li>
+              <li><a href="{{route('frontend.faq')}}"">FAQ</a></li>
+                <li><a href="{{route('frontend.contact')}}">Contact</a></li>
               </ul>
             </div>
           </div>

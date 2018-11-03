@@ -18,4 +18,17 @@ class UserController extends Controller
         $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
         return view('frontend.profile', compact('user','profile'));
     }
+
+
+
+    public function profile_edit($slug) {
+
+        $user = User::
+        where('slug', $slug)
+        ->with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
+        ->firstOrFail();
+        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
+
+        return view('frontend.profile_edit', compact('user'));
+    }
 }
