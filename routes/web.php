@@ -38,6 +38,12 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
     //COMMUNITY
     Route::get('users', 'CommunityController@index')->name('getUsers');
+    Route::get('show-followers', 'CommunityController@show_followers')->name('showFollowers');
+    Route::get('show-following', 'CommunityController@show_following')->name('showFollowing');
+    //FOLLOW / UNFOLLOW
+    Route::post('follow-unfollow/{id}', 'CommunityController@follow_unfollow')->name('followUnfollow');
+    Route::any('users-filter', 'CommunityController@users_filter')->name('usersFilter');
+    Route::any('followers-filter', 'CommunityController@followers_filter')->name('followersFilter');
 
 
     //AJAX

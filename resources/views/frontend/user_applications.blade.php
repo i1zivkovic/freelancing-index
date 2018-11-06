@@ -9,48 +9,61 @@
 
 @section('content')
 
-   <!-- Start Content -->
-   <div id="content">
-        <div class="container">
-          <div class="row">
-                <div class="col-sm-12 text-center mb-5">
-                        <h3>My Job Applications</h3>
-                    </div>
+<!-- Start Content -->
+<div id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center mb-5">
+                <h3>My Job Applications</h3>
+            </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
-              <div class="job-alerts-item">
-                    @if($job_applications->count() <= 0)
-                        <i>You have no job applications yet.</i>
-                    @else
-                        @foreach($job_applications as $job_application)
-                        <div class="applications-content">
+
+                @if($job_applications->count() == 0)
+                <p class="text-center"><b>No job applications found!</b></p>
+                @else
+                <p>About <b>{{$job_applications->total()}}</b>
+                    {{$job_applications->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                    'results'}}
+                </p>
+                <hr>
+
+                <div class="job-alerts-item">
+                    @foreach($job_applications as $job_application)
+                    <div class="applications-content">
                         <div class="row">
                             <div class="col-md-4">
-                            <h3><a href="{{route('frontend.jobs.show',['slug' => $job_application->job->slug])}}">{{$job_application->job->title}}</a></h3>
-                            <span><a href="{{route('frontend.user.show',['slug' => $job_application->job->user->slug])}}"><i class="fas fa-user-tie"></i>    {{$job_application->job->user->username}}</a></span>
+                                <h3><a href="{{route('frontend.jobs.show',['slug' => $job_application->job->slug])}}">{{$job_application->job->title}}</a></h3>
+                                <span><a href="{{route('frontend.user.show',['slug' => $job_application->job->user->slug])}}"><i
+                                            class="fas fa-user-tie"></i> {{$job_application->job->user->username}}</a></span>
                             </div>
 
                             <div class="col-md-4 text-center">
-                            <p><i class="far fa-calendar-alt"></i>  {{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</p>
+                                <p><i class="far fa-calendar-alt"></i>
+                                    {{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</p>
                             </div>
                             <div class="col-md-4 text-right">
-                            @if ($job_application->job_application_state->state == 'Rejected')
-                                <p class="text-danger">{{$job_application->job_application_state->state}}  <i class="fas fa-times"></i></p>
-                            @elseif ($job_application->job_application_state->state == 'Accepted')
-                            <p class="text-success">{{$job_application->job_application_state->state}}  <i class="fas fa-check"></i></p>
-                            @else
-                                <p>{{$job_application->job_application_state->state}}  </p>
-                            @endif
+                                @if ($job_application->job_application_state->state == 'Rejected')
+                                <p class="text-danger">{{$job_application->job_application_state->state}} <i class="fas fa-times"></i></p>
+                                @elseif ($job_application->job_application_state->state == 'Accepted')
+                                <p class="text-success">{{$job_application->job_application_state->state}} <i class="fas fa-check"></i></p>
+                                @else
+                                <p>{{$job_application->job_application_state->state}} </p>
+                                @endif
                             </div>
                         </div>
-                        </div>
-                        @endforeach
-                    @endif
-              </div>
+                    </div>
+                    @endforeach
+                        
+                    <!-- Start Pagination -->
+                    {!! $job_applications -> links()!!}
+                        <!-- End Pagination -->
+                @endif
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- End Content -->
+    </div>
+</div>
+<!-- End Content -->
 
 @include('includes.frontend.loaderAndArrow')
 

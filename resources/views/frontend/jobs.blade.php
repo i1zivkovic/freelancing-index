@@ -14,9 +14,9 @@
         <section class="job-browse section">
             <div class="container">
                 <div class="row">
-                        <div class="col-sm-12 text-center mb-5">
-                                <h3>Jobs</h3>
-                            </div>
+                    <div class="col-sm-12 text-center mb-5">
+                        <h3>Jobs</h3>
+                    </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
@@ -58,7 +58,19 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-8 col-md-12 col-xs-12">
+
+                        @if($jobs->count() == 0)
+                        <p class="text-center"><b>No jobs found!</b></p>
+                        @else
+                        <p>About <b>{{$jobs->total()}}</b>
+                            {{$jobs->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                            'results'}}
+                        </p>
+                        <hr>
+                        @endif
+
                         @foreach($jobs as $job)
                         <a class="job-listings" href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                             <div class="row">

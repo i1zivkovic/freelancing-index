@@ -16,9 +16,9 @@
         <div id="content">
             <div class="container">
                 <div class="row">
-                        <div class="col-sm-12 text-center mb-5">
-                                <h3>Posts</h3>
-                            </div>
+                    <div class="col-sm-12 text-center mb-5">
+                        <h3>Posts</h3>
+                    </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
@@ -60,6 +60,18 @@
 
                     <!-- Start Blog Posts -->
                     <div class="col-lg-8 col-md-12 col-xs-12">
+
+                        @if($posts->count() == 0)
+                        <p class="text-center"><b>No posts found!</b></p>
+                        @else
+                        <p>About <b>{{$posts->total()}}</b>
+                            {{$posts->total() % 10 == 1 && $posts->total() % 11 != 0 ? 'result' :
+                            'results'}}
+                        </p>
+                        <hr>
+                        @endif
+
+
                         <!-- Start Post -->
                         @foreach($posts as $post)
                         <div class="blog-post" id="row_{{$post->id}}">

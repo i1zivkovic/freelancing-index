@@ -4577,3 +4577,16 @@ div.job-listings .category-list span {
     border-bottom-right-radius: 0 !important;
     border-color: #ececec !important;
 }
+
+.community-users .manager-resumes-item {
+    border-left: 4px solid #f2f7fb;
+    transition: all 0.4s;
+    border-radius: 4px;
+}
+.community-users .manager-resumes-item:hover {
+    border-left: 4px solid #26ae61;
+}
+.community-users .manager-content {
+    background: white !important;
+    border-bottom: 1px solid #f1f1f1;
+}

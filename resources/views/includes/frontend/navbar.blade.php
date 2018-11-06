@@ -30,8 +30,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.getUsers')}}">Users</a></li>
-                                <li><a class="dropdown-item" href="browse-categories.html">Following</a></li>
-                                <li><a class="dropdown-item" href="browse-categories.html">My Followers</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.showFollowing')}}">Following</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.showFollowers')}}">My Followers</a></li>
                             </ul>
                         </li>
 

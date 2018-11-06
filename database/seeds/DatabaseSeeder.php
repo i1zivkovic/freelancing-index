@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(JobApplicationSeeder::class);
         $this->call(PostLikesSeeder::class);
         $this->call(PostCommentsSeeder::class);
+        $this->call(FollowSeeder::class);
     }
 }

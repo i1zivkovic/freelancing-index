@@ -22,8 +22,8 @@
                 </div>
                 @else
                 <div class="col-sm-12 text-center mb-5">
-                        <h3>My Job Ads</h3>
-                    </div>
+                    <h3>My Job Ads</h3>
+                </div>
                 <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
@@ -67,6 +67,15 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-12 col-xs-12">
+
+                    @if($jobs->count() > 0)
+                    <p>About <b>{{$jobs->total()}}</b>
+                        {{$jobs->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                        'results'}}
+                    </p>
+                    <hr>
+                    @endif
+
                     @foreach($jobs as $job)
                     <div class="job-listings">
                         <div class="row">

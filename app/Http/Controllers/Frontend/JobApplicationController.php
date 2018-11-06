@@ -181,7 +181,7 @@ class JobApplicationController extends Controller
             'job_application_state',
             'job.user'
             ])
-        ->get();
+        ->paginate(10);
 
 
            /*  dd($job_applications); */
