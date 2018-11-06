@@ -33,7 +33,8 @@
                                 <div id="collapseOne" class="panel-collapse collapse in show">
                                     <div class="panel-body">
 
-                                        {!! Form::open(['route' => ['frontend.followersFilter'], 'role' => 'form',
+                                        {!! Form::open(['route' => ['frontend.followingFilter'], 'role' => 'form',
+
                                         'autocomplete' => 'off',
                                         'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
                                         <div class="row">
@@ -60,7 +61,8 @@
 
                     <div class="col-sm-12">
                         @if($following->count() == 0)
-                        <p class="text-center"><b>You are not following anyone currently!</b></p>
+                        <p class=""><b>0</b> results</p>
+                        <hr>
                         @else
                         <p>About <b>{{$following->total()}}</b>
                             {{$following->total() % 10 == 1 && $following->total() % 11 != 0 ? 'result' :
@@ -75,7 +77,7 @@
                         <div class="manager-resumes-item">
                             <div class="manager-content">
                                 <a href="resume.html"><img class="resume-thumb" src="{{asset('uploads')}}/{{$follow->username}}/thumb/{{$follow->userProfile->image_url}}"
-                                    alt="PIC"></a>
+                                        alt="PIC"></a>
                                 <div class="manager-info">
                                     <div class="manager-name">
                                         <h4><a href="{{route('frontend.user.show',['slug' => $follow->slug])}}">{{$follow->userProfile->first_name}}

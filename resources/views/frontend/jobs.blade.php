@@ -62,7 +62,8 @@
                     <div class="col-lg-8 col-md-12 col-xs-12">
 
                         @if($jobs->count() == 0)
-                        <p class="text-center"><b>No jobs found!</b></p>
+                        <p class=""><b>0</b> results</p>
+                        <hr>
                         @else
                         <p>About <b>{{$jobs->total()}}</b>
                             {{$jobs->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :

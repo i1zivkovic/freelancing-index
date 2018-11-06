@@ -62,7 +62,8 @@
                     <div class="col-lg-8 col-md-12 col-xs-12">
 
                         @if($posts->count() == 0)
-                        <p class="text-center"><b>No posts found!</b></p>
+                        <p class=""><b>0</b> results</p>
+                        <hr>
                         @else
                         <p>About <b>{{$posts->total()}}</b>
                             {{$posts->total() % 10 == 1 && $posts->total() % 11 != 0 ? 'result' :

@@ -70,7 +70,7 @@
 
                     @if($jobs->count() > 0)
                     <p>About <b>{{$jobs->total()}}</b>
-                        {{$jobs->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                        {{$jobs->total() % 10 == 1 && $jobs->total() % 11 != 0 ? 'result' :
                         'results'}}
                     </p>
                     <hr>

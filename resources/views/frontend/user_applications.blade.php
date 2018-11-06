@@ -19,7 +19,8 @@
             <div class="col-lg-12 col-md-12 col-xs-12">
 
                 @if($job_applications->count() == 0)
-                <p class="text-center"><b>No job applications found!</b></p>
+                <p class=""><b>0</b> results</p>
+                        <hr>
                 @else
                 <p>About <b>{{$job_applications->total()}}</b>
                     {{$job_applications->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
@@ -53,7 +54,7 @@
                         </div>
                     </div>
                     @endforeach
-                        
+
                     <!-- Start Pagination -->
                     {!! $job_applications -> links()!!}
                         <!-- End Pagination -->

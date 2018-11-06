@@ -12,7 +12,7 @@
 */
 
 
-Auth::routes(['verify' => true]);
+Auth::routes(/* ['verify' => true] */);
 
 // ALLOWED ROUTES TO EVERYONE
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], function () {
@@ -23,7 +23,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], 
 
 
 // ROUTES ONLY FOR REGISTERED USERS WHICH HAVE FILLED BASE INFO
-Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['verified','auth','steps']], function () {
+Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => [/* 'verified', */'auth','steps']], function () {
 
     //HOME
     Route::get('/', 'HomeController@index')->name('home');
@@ -44,6 +44,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('follow-unfollow/{id}', 'CommunityController@follow_unfollow')->name('followUnfollow');
     Route::any('users-filter', 'CommunityController@users_filter')->name('usersFilter');
     Route::any('followers-filter', 'CommunityController@followers_filter')->name('followersFilter');
+    Route::any('following-filter', 'CommunityController@following_filter')->name('followingFilter');
+
 
 
     //AJAX
@@ -102,7 +104,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 // ROUTE USED TO FILL BASE INFO WITHOUT REDIRECT
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth']], function () {
     //PROFILE COMPLETION STEPS
-    Route::post('post-step-1', 'StepController@postStepOne')->name('postStepOne');
+    Route::any('post-step-1', 'StepController@postStepOne')->name('postStepOne');
 });
 
 

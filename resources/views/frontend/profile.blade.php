@@ -31,16 +31,20 @@
                     </ul>
                 </div>
             </div> --}}
+            <div class="justify-content-center mb-3 box " style="margin:auto;">
+                <img  class="img-fluid" src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}" alt="PIC">
+            </div>
+
 
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="inner-box my-resume">
                     <div class="author-resume">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="thumb">
+                              {{--   <div class="thumb">
                                     <img src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
                                         alt="PIC">
-                                </div>
+                                </div> --}}
                                 <div class="author-info">
                                     <h3>{{$user->userProfile->first_name}} {{$user->userProfile->last_name}}</h3>
                                     <p>

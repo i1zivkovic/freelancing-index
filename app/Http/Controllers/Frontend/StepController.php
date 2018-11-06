@@ -25,6 +25,7 @@ class StepController extends Controller
 
 
         if(!empty($r->file('image'))){
+           /*  $image = $this -> saveFiles($r->file('image')); */
             $image = $this->uploadImage($r->file('image'), Auth::user()->username);
             $profile->update(['image_url' => $image]);
         }
@@ -63,6 +64,9 @@ class StepController extends Controller
 
     public function uploadImage($file, $folder){
 
+        //
+        ini_set('memory_limit','-1');
+
         if (!is_dir(public_path().'/uploads/'.$folder)) {
             mkdir(public_path().'/uploads/'.$folder, 0777, true);
             mkdir(public_path().'/uploads/'.$folder.'/thumb', 0777, true);
@@ -74,13 +78,15 @@ class StepController extends Controller
         $file_name = time().'-'.$file->getClientOriginalName();
 
         $image = Image::make($file);
+        $image->orientate();
 
-        $image->resize(1920, 1280, function ($constraint) {
-            $constraint->aspectRatio();
+
+        $image->resize(130 , 130, function ($constraint) {
+           /*  $constraint->aspectRatio(); */
         })->save($destinationPath . $file_name);
 
-        $image->resize(47, 38, function ($constraint) {
-            $constraint->aspectRatio();
+        $image->resize(45, 50, function ($constraint) {
+            /* $constraint->aspectRatio(); */
         })->save($destinationPathThumb . $file_name);
 
         return $file_name;

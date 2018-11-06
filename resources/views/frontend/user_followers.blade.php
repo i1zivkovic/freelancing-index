@@ -59,7 +59,8 @@
 
                      <div class="col-sm-12">
                         @if($followers->count() == 0)
-                        <p class="text-center"><b>You currently have no followers!</b></p>
+                        <p class=""><b>0</b> results</p>
+                        <hr>
                         @else
                         <p>About <b>{{$followers->total()}}</b>
                             {{$followers->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :

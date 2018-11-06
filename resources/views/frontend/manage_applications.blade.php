@@ -47,7 +47,8 @@
                     </div>
                     <div class="col-lg-8 col-md-12 col-xs-12">
                         @if($job_applications->count() == 0)
-                        <p class="text-center"><b>Currently there are no applicants for your jobs!</b></p>
+                        <p class=""><b>0</b> results</p>
+                        <hr>
                         @else
                         <p>About <b>{{$job_applications->total()}}</b>
                             {{$job_applications->total() % 10 == 1 && $job_applications->total() % 11 != 0 ? 'result' :

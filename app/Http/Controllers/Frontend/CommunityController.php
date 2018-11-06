@@ -35,7 +35,7 @@ class CommunityController extends Controller
     }
 
     public function show_following (){
-         // get array of ids of people user is following 
+         // get array of ids of people user is following
          $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
 
         // get their data
@@ -214,6 +214,60 @@ class CommunityController extends Controller
 
         return view('frontend.user_followers', compact('followers', 'request'));
     }
+
+
+    /**
+     * Method used to filter users that user is following
+     * @param request Request objects, contains keywords and locations if there are any
+     */
+    public function following_filter(Request $request){
+
+        // get array of following ids
+        $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
+
+        $following = User::
+        whereIn('id', $following_ids)
+        // filter only verified users , instead it will throw error on slug/profile info/etc because it is set on 1st step..
+        ->where('email_verified_at', '<>',null)
+        // when there are keywords entered
+        ->when($request->input('q'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            // look for user with that username , no need for explode cause username is without spaces
+            $query->where('username', 'like', '%'.$request->input('q').'%');
+            // explode keywords
+            $keywords = explode(' ', $request->input('q'));
+            // for each keyword, check if it matches first name or last name
+                foreach ($keywords as $keyword) {
+                    $query->orWhereHas('userProfile', function ($query) use ($keyword){
+                        $query->where('first_name', 'like', '%'.$keyword.'%');
+                        $query->orWhere('last_name', 'like', '%'.$keyword.'%');
+                    });
+                }
+            });
+        })
+        // when there is input in location field
+        ->when($request->input('location'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+                //explode keywords
+            $locations = explode(' ', $request->input('location'));
+            // check if keyword matched city or country
+                foreach ($locations as $location) {
+                    $query->orWhereHas('userLocation', function ($query) use ($location){
+                    $query->where('city', 'like', '%'.$location.'%');
+                    $query->orWhere('country', 'like', '%'.$location.'%');
+                });
+                }
+            });
+        })
+        ->with([
+            'userProfile', 'userLocation', 'userSkills', 'followers'])
+        ->paginate(10);
+
+        /* dd($users); */
+
+        return view('frontend.user_following', compact('following', 'request'));
+    }
+
 
 
 

@@ -38,8 +38,8 @@ class UserController extends Controller
         $selectedSkills = UserSkill::where('user_id', Auth::id()) ->pluck('skill_id');
         $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
 
-        /* dd($user); */
-
+        /* dd($user);
+ */
         return view('frontend.profile_edit', compact('user', 'profile', 'selectedSkills', 'skills'));
     }
 }
