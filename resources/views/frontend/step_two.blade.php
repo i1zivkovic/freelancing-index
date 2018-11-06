@@ -44,7 +44,7 @@
 </section>
 <!-- Content section End -->
 
-
+@include('includes.frontend.loaderAndArrow')
 @stop
 
 @section('js')

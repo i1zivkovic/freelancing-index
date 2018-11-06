@@ -1,5 +1,8 @@
 @extends('layouts.frontend')
 
+@section('title', 'Verify mail')
+@section('description', "")
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -22,4 +25,5 @@
         </div>
     </div>
 </div>
+@include('includes.frontend.loaderAndArrow')
 @endsection

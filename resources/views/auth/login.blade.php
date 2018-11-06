@@ -57,4 +57,5 @@
         </div>
       </section>
       <!-- Content section End -->
+      @include('includes.frontend.loaderAndArrow')
 @endsection

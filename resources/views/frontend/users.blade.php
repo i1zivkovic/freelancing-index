@@ -74,8 +74,8 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <div class="manager-resumes-item">
                             <div class="manager-content">
-                                <a href="resume.html"><img class="resume-thumb" src="{{asset('img')}}/jobs/avatar-1.jpg"
-                                        alt=""></a>
+                                <a href="resume.html"><img class="resume-thumb" src="{{asset('uploads')}}/{{$user->username}}/thumb/{{$user->userProfile->image_url}}"
+                                        alt="PIC"></a>
                                 <div class="manager-info">
                                     <div class="manager-name">
                                         <h4><a href="{{route('frontend.user.show',['slug' => $user->slug])}}">{{$user->userProfile->first_name}}

@@ -38,8 +38,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="thumb">
-                                    <img src="{{asset('uploads')}}/{{$user->username}}/thumb/{{$user->userProfile->image_url}}"
-                                        alt="Profile Image">
+                                    <img src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
+                                        alt="PIC">
                                 </div>
                                 <div class="author-info">
                                     <h3>{{$user->userProfile->first_name}} {{$user->userProfile->last_name}}</h3>

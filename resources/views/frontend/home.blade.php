@@ -383,7 +383,7 @@
         <!-- Featured Section End -->
 
         <!-- Featured Listings Start -->
-        <section class="featured-lis section">
+       {{--  <section class="featured-lis section">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Top Hiring Users and Companies</h2>
@@ -468,7 +468,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Featured Listings End -->
 
         <!-- Listings Section Start -->
@@ -485,7 +485,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
-                                        <img src="{{asset('img')}}/features/img1.png" alt="">
+                                        <img src="{{asset('uploads')}}/{{$recentJob->user->username}}/thumb/{{$recentJob->user->userProfile->image_url}}" alt="PIC">
                                     </div>
                                     <div class="job-details">
                                         <h3>{{$recentJob->title}}</h3>

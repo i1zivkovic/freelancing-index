@@ -17,7 +17,7 @@
                     <div class="col-lg-8 col-md-6 col-xs-12">
                         <div class="breadcrumb-wrapper">
                             <div class="img-wrapper">
-                                <img src="{{asset('img')}}/about/company-logo.png" alt="">
+                                <img src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}" alt="PIC">
                             </div>
                             <div class="content">
                                 <h3 class="product-title">{{$job->title}}</h3>
