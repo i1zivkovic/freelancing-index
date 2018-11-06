@@ -141,10 +141,10 @@
                     <!-- Start counter -->
                     <div class="col-lg-3 col-md-6 col-xs-12">
                         <div class="counter-box">
-                            <div class="icon"><i class="lni-home"></i></div>
+                            <div class="icon"><i class="lni-pencil-alt"></i></div>
                             <div class="fact-count">
-                                <h3><span class="counter">{{$companyCount}}</span></h3>
-                                <p>Companies</p>
+                                <h3><span class="counter">{{$postCount}}</span></h3>
+                                <p>Posts</p>
                             </div>
                         </div>
                     </div>

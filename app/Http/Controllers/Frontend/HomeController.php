@@ -48,12 +48,14 @@ class HomeController extends Controller
 
         $userCount = User::count();
 
+        $postCount = Post::count();
+
         $jobApplicationCount = JobApplication::count();
 
         $companyCount = Company::count();
 
 
-        return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount','jobApplicationCount','companyCount'));
+        return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount','jobApplicationCount','postCount'));
     }
 
 
