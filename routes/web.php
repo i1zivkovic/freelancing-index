@@ -12,7 +12,7 @@
 */
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 // ALLOWED ROUTES TO EVERYONE
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.'], function () {
@@ -36,6 +36,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('post-step-2', 'StepController@postStepTwo')->name('postStepTwo');
 
 
+    //COMMUNITY
+    Route::get('users', 'CommunityController@index')->name('getUsers');
+
+
     //AJAX
     Route::get('skills/find', 'AjaxController@findSkill');
 
@@ -43,8 +47,13 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //PROFILE
     Route::get('profile/{slug}', 'UserController@show')->name('user.show');
     Route::get('profile-edit/{slug}', 'UserController@profile_edit')->name('profileEdit');
-    //PROFILE EXPERIENCE
-    Route::post('profile-experience', 'ProfileExperienceController@update')->name('profileExperience');
+    //PROFILE EDIT
+    Route::post('profile-experience', 'ProfileController@update_profile_experience')->name('profileExperience');
+    Route::post('profile-education', 'ProfileController@update_profile_education')->name('profileEducation');
+    Route::post('profile-info', 'ProfileController@update_profile_info')->name('profileInfo');
+    Route::post('account-info', 'ProfileController@update_account_info')->name('accountInfo');
+    Route::post('skills-info', 'ProfileController@skills_update')->name('skillsInfo');
+    Route::post('socials-info', 'ProfileController@socials_update')->name('socialsInfo');
 
     //POSTS
     Route::resource('posts', 'PostController');
@@ -67,8 +76,6 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('job-likes/{id}', 'JobLikeController@likeUnlikeHandler')->name('jobLikeUnlike');
     //JOB COMMENTS
     Route::resource('job-comments', 'JobCommentController');
-
-
     //JOB APPLICATIONS
     Route::resource('job-applications', 'JobApplicationController');
     Route::get('user-applications', 'JobApplicationController@userApplications')->name('getUserApplications');
@@ -79,7 +86,6 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //CONTACT
     Route::get('contact', 'ContactController@index')->name('contact');
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
-
 
 
     // PASSWORD CHANGE

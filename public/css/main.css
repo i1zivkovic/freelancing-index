@@ -4565,3 +4565,15 @@ div.job-listings .category-list span {
     padding-bottom: 0px !important;
 
 }
+
+
+
+/*  INPUT GROUP */
+
+.input-group-prepend>.input-group-text {
+    background: transparent;
+    border-radius: 1.25rem !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-color: #ececec !important;
+}

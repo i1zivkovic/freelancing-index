@@ -13,9 +13,9 @@
 <div class="section user-info">
     <div class="container">
         <div class="row">
-                <div class="col-sm-12 text-center mb-5">
-                        <h3>Profile</h3>
-                    </div>
+            <div class="col-sm-12 text-center mb-5">
+                <h3>Profile</h3>
+            </div>
             {{-- <div class="col-lg-4 col-md-12 col-xs-12">
                 <div class="right-sideabr">
                     <h4>Profile</h4>
@@ -31,8 +31,6 @@
                     </ul>
                 </div>
             </div> --}}
-
-        <a href="{{route('frontend.profileEdit', ['slug' => Auth::user()->slug])}}" class="btn btn-common">Edit profile</a>
 
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="inner-box my-resume">
@@ -135,13 +133,13 @@
                         <h4>{{$experience->job_title}}</h4>
                         <h5>{{$experience->company_name}}</h5>
                         <p>
-                            <span class="address"><i class="lni-map-marker"></i>{{$experience->job_location_city ?
+                            <span class="address">{{$experience->job_location_city ?
                                 $experience->job_location_city: 'Unknown city'}} , {{$experience->job_location_country
                                 ?
                                 $experience->job_location_country: 'Unkown
                                 country'}}</span>
                         </p>
-                        <span class="date"><i class="lni-calendar"></i>
+                        <span class="date">
                             {{\Carbon\Carbon::parse($experience->start_date)->format('d/m/Y')}} -
                             {{\Carbon\Carbon::parse($experience->end_date)->format('d/m/Y')}}</span>
                         <p>{{$experience->job_description}}</p>
@@ -154,9 +152,9 @@
                         <h3>Education</h3>
                         @foreach($profile->profileEducation as $education)
                         <h4> {{$education->institution_name}}</h4>
-                        <p><i class="lni-book" title="Major"></i> {{$education->major}}</p>
-                        <p><i class="lni-graduation" title="Degree"></i> {{$education->degree}}</p>
-                        <span class="date"><i class="lni-calendar"></i>
+                        <p> {{$education->major}}</p>
+                        <p>{{$education->degree}}</p>
+                        <span class="date">
                             {{\Carbon\Carbon::parse($education->start_date)->format('d/m/Y')}} -
                             {{\Carbon\Carbon::parse($education->end_date)->format('d/m/Y')}} </span>
                         @endforeach
@@ -202,8 +200,7 @@
                                         <div class="post-content">
                                             <h3 class="post-title"><a href="#!">Test title</a></h3>
                                             <div class="meta">
-                                                <span class="meta-part"><a><i
-                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
                                                 <span class="meta-part"><i class="lni-comments-alt"></i>
                                                     3 Comments</span>
                                                 <span class="meta-part"><i class="lni-heart-filled"></i>
@@ -231,8 +228,7 @@
                                         <div class="post-content">
                                             <h3 class="post-title"><a href="#!">Test title</a></h3>
                                             <div class="meta">
-                                                <span class="meta-part"><a><i
-                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
                                                 <span class="meta-part"><i class="lni-comments-alt"></i>
                                                     3 Comments</span>
                                                 <span class="meta-part"><i class="lni-heart-filled"></i>
@@ -260,8 +256,7 @@
                                         <div class="post-content">
                                             <h3 class="post-title"><a href="#!">Test title</a></h3>
                                             <div class="meta">
-                                                <span class="meta-part"><a><i
-                                                            class="lni-user"></i> i1zivkovic</a></span>
+                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
                                                 <span class="meta-part"><i class="lni-comments-alt"></i>
                                                     3 Comments</span>
                                                 <span class="meta-part"><i class="lni-heart-filled"></i>
@@ -276,8 +271,8 @@
                                 </div>
                             </div>
                             <div class="col-12 text-center mt-4">
-                                    <a href="#!" class="btn btn-common">See all posts</a>
-                                </div>
+                                <a href="#!" class="btn btn-common">See all posts</a>
+                            </div>
                         </section>
                         <!-- blog Section End -->
                     </div>

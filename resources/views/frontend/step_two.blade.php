@@ -54,7 +54,7 @@
     $('#skill_list').select2({
 
         width: '100%',
-        placeholder: "Choose tags...",
+        placeholder: "Choose skills...",
         minimumInputLength: 2,
         ajax: {
             delay: 300,

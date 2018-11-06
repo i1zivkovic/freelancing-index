@@ -14,23 +14,11 @@ class BusinessCategoriesSeeder extends Seeder
     {
         //
         BusinessCategory::create([
-            'name' => 'IT',
+            'name' => 'Graphic Design',
         ]);
           //
           BusinessCategory::create([
-            'name' => 'Communcations',
-        ]);
-          BusinessCategory::create([
-            'name' => 'Civil Engineering',
-        ]);
-          BusinessCategory::create([
-            'name' => 'Food',
-        ]);
-          BusinessCategory::create([
-            'name' => 'Animals',
-        ]);
-          BusinessCategory::create([
-            'name' => 'Technology',
+            'name' => 'Programming',
         ]);
     }
 }

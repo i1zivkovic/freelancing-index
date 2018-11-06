@@ -21,8 +21,8 @@ class CreateProfileEducationsTable extends Migration
             $table->string('major', 100);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('degree',100)->nullable();
-            $table->string('description',500)->nullable();
+            $table->string('degree',100);
+            $table->string('description', 4000)->nullable();
             $table->timestamps();
         });
     }

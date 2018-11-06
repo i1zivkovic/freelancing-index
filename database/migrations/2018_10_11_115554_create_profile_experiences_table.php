@@ -23,9 +23,7 @@ class CreateProfileExperiencesTable extends Migration
             $table->string('job_title',100);
             $table->string('job_description',4000);
             $table->string('job_location_city',100)->nullable();
-            $table->string('job_location_state',100)->nullable();
             $table->string('job_location_country',100)->nullable();
-            $table->boolean('is_remote')->default(0);
             $table->timestamps();
         });
     }

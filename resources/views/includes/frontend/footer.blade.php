@@ -38,7 +38,7 @@
                 <div class="widget">
                   <h3 class="block-title">Address and info</h3>
                   <ul class="contact-list">
-                    <li><i class="lni-phone-handset"></i> <span>+385-99-3403-646</span></li>
+                    <li><i class="lni-phone-handset"></i> <span>+385993403646</span></li>
                     <li><i class="lni-envelope"></i> <a href="mailto:ivanzivkovic1601@gmail.com">ivanzivkovic1601@gmail.com</a></li>
                     <li><i class="lni-map-marker"></i> <a href="https://goo.gl/maps/Fg7uLZpLHWt">Vij. Ivana Meštrovića 74, 31000 Osijek.</a></li>
                   </ul>

@@ -26,12 +26,25 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
+                                <i class="fas fa-user-tie mr-2"></i> Community
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('frontend.getUsers')}}">Users</a></li>
+                                <li><a class="dropdown-item" href="browse-categories.html">Following</a></li>
+                                <li><a class="dropdown-item" href="browse-categories.html">My Followers</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 <i class="fas fa-user-tie mr-2"></i> Work
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Find A Job</a></li>
                                 <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li>
-                            <li><a class="dropdown-item" href="{{route('frontend.getUserApplications')}}">My Applications</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.getUserApplications')}}">My
+                                        Applications</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -43,10 +56,12 @@
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Post A Job Ad</a></li>
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Job Ads</a></li>
-                               {{--  <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li> --}}
+                                {{-- <li><a class="dropdown-item" href="{{route('login')}}">My Jobs</a></li> --}}
                                 @else
-                                <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My Job Ads</a></li>
-                                 <li><a class="dropdown-item" href="{{route('frontend.getManageApplications')}}">Manage Applications</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.myJobs',['slug' => Auth::user()->slug])}}">My
+                                        Job Ads</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.getManageApplications')}}">Manage
+                                        Applications</a></li>
                                 @endguest
 
                             </ul>
@@ -62,7 +77,8 @@
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Posts</a></li>
                                 @else
-                                <li><a class="dropdown-item" href="{{route('frontend.myPosts',['slug' => Auth::user()->slug])}}">My Posts</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.myPosts',['slug' => Auth::user()->slug])}}">My
+                                        Posts</a></li>
                                 @endguest
                             </ul>
                         </li>
@@ -80,9 +96,10 @@
                                 <i class="fas fa-user mr-2"></i>{{ Auth::user()->username}}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('frontend.user.show',['slug' => Auth::user()->slug])}}">My Profile</a></li>
-                    {{--             <li><a class="dropdown-item" href="manage-jobs.html">Jobs History</a></li>
-                                <li><a class="dropdown-item" href="manage-jobs.html">Applications History</a></li> --}}
+                                <li><a class="dropdown-item" href="{{route('frontend.user.show',['slug' => Auth::user()->slug])}}">My
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.profileEdit', ['slug' => Auth::user()->slug])}}">Edit
+                                        Profile</a></li>
 
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

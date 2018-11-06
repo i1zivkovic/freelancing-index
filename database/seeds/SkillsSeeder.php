@@ -14,22 +14,31 @@ class SkillsSeeder extends Seeder
     {
         //
         Skill::create([
-            'name' => 'designer',
+            'name' => 'Design',
         ]);
           Skill::create([
-            'name' => 'anuglarjs',
+            'name' => 'AngularJS',
         ]);
           Skill::create([
-            'name' => 'wordpress',
+            'name' => 'Wordpress',
         ]);
           Skill::create([
-            'name' => 'php',
+            'name' => 'PHP',
         ]);
           Skill::create([
-            'name' => 'laravel',
+            'name' => 'Laravel',
         ]);
           Skill::create([
-            'name' => 'nodejs',
+            'name' => 'HTML5',
+        ]);
+          Skill::create([
+            'name' => 'CSS3',
+        ]);
+          Skill::create([
+            'name' => 'Illustrator',
+        ]);
+          Skill::create([
+            'name' => 'Adobe Photoshop',
         ]);
     }
 }

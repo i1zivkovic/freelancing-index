@@ -57,6 +57,11 @@
                 <div class="input-icon">
                     <i class="lni-unlock"></i>
                     <input placeholder="Confirm password" id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    @if ($errors->has('password_confirmation'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                    </span>
+                @endif
                 </div>
                 </div>
                 <button class="btn btn-common log-btn mt-3">Register</button>

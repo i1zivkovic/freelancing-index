@@ -23,30 +23,34 @@ class UsersSeeder extends Seeder
             'slug' => 'i1zivkovic-'.time(),
             'email' => 'i1zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
+            'email_verified_at' => '2018-11-03 20:08:20',
             'is_active' => 1,
         ]);
-        $user = User::create([
+         User::create([
             'role_id' => 2,
             'username' => 'i2zivkovic',
             'slug' => 'i2zivkovic-'.time(),
             'email' => 'i2zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
+            'email_verified_at' => '2018-11-03 20:08:20',
             'is_active' => 1,
         ]);
-        $user = User::create([
+       User::create([
             'role_id' => 2,
             'username' => 'i3zivkovic',
             'slug' => 'i3zivkovic-'.time(),
             'email' => 'i3zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
+            'email_verified_at' => '2018-11-03 20:08:20',
             'is_active' => 1,
         ]);
-        $user = User::create([
+        User::create([
             'role_id' => 2,
             'username' => 'i4zivkovic',
             'slug' => 'i4zivkovic-'.time(),
             'email' => 'i4zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
+            'email_verified_at' => '2018-11-03 20:08:20',
             'is_active' => 1,
         ]);
 
