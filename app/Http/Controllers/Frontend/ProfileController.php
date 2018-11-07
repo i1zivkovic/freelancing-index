@@ -37,7 +37,6 @@ class ProfileController extends Controller
                 $rules['job_location_country.' .$index] = 'max:100';
                 $rules['job_location_city.' .$index] = 'max:100';
                 $rules['start_date.' .$index] = 'date|required';
-                $rules['end_date.' .$index] = 'date';
             }
         }
 
@@ -46,7 +45,7 @@ class ProfileController extends Controller
 
         // validate
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'experiences'));
         }
 
         // delete existing entries
@@ -77,23 +76,18 @@ class ProfileController extends Controller
 
     // method used to update profile education
     public function update_profile_education(Request $request) {
-
         // get all data from request
         $data = $request->all();
-
         // check if inputs exist
         if(!empty($request->input('institution_name'))){
-
             // since it will be array, loop through each
             foreach($data['institution_name'] as $index => $institution_name){
-
                 // create rules
                 $rules['institution_name.' .$index] = 'max:100|required';
                 $rules['major.' .$index] = 'max:100|required';
                 $rules['degree.' .$index] = 'max:100|required';
                 $rules['description.' .$index] = 'max:4000|required';
                 $rules['start_date.' .$index] = 'date|required';
-                $rules['end_date.' .$index] = 'date';
             }
         }
 
@@ -102,8 +96,7 @@ class ProfileController extends Controller
 
         // validate
         if ($validator->fails()) {
-            dd($validator);
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'education'));
         }
 
         // delete existing entries
@@ -149,7 +142,7 @@ class ProfileController extends Controller
 
             // check if validation succeeds
             if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
+                return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'profile-info'));
 
             }
 
@@ -186,7 +179,7 @@ class ProfileController extends Controller
 
         // check if validation succeeds
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'account-info'));
         }
 
 

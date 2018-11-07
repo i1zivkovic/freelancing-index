@@ -512,7 +512,6 @@
                             @foreach($profile->profileExperience as $profile_experience)
                             <div class="row mb-3">
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12  mb-3">
-                                    <h6>({{$loop->iteration}})</h6>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
@@ -575,7 +574,6 @@
                             @foreach(old('company_name') as $key => $company_name)
                             <div class="row mb-3">
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12  mb-3">
-                                    <h6>({{$loop->iteration}})</h6>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">

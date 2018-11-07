@@ -146,7 +146,11 @@
                         </p>
                         <span class="date">
                             {{\Carbon\Carbon::parse($experience->start_date)->format('d/m/Y')}} -
-                            {{\Carbon\Carbon::parse($experience->end_date)->format('d/m/Y')}}</span>
+                            @if($experience->end_date)
+                            {{\Carbon\Carbon::parse($experience->end_date)->format('d/m/Y')}}
+                            @else
+                            <i>ongoing</i>
+                            @endif</span>
                         <p>{{$experience->job_description}}</p>
                         <br>
                         @endforeach
@@ -165,7 +169,11 @@
                         <p>{{$education->degree}}</p>
                         <span class="date">
                             {{\Carbon\Carbon::parse($education->start_date)->format('d/m/Y')}} -
-                            {{\Carbon\Carbon::parse($education->end_date)->format('d/m/Y')}} </span>
+                            @if($education->end_date)
+                            {{\Carbon\Carbon::parse($education->end_date)->format('d/m/Y')}}
+                            @else
+                            <i>ongoing</i>
+                            @endif </span>
                         @endforeach
                         @else
                         <i>Not educations added</i>
