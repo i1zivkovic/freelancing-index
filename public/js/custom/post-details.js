@@ -56,7 +56,7 @@ function deleteComment(comment_id) {
         }
     });
     $.ajax({
-        url: 'post-comments/' + comment_id,
+        url: '/post-comments/' + comment_id,
         type: 'DELETE',
         dataType: 'JSON',
             // if comment is deleted, display message and reload page
@@ -132,7 +132,7 @@ function deletePost(post_id) {
     });
 
     $.ajax({
-        url: 'posts/' + post_id,
+        url: '/posts/' + post_id,
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {
@@ -226,7 +226,7 @@ function likeUnlikeAjax(post_id, action) {
     });
 
     $.ajax({
-        url: 'post-likes/' + post_id,
+        url: '/post-likes/' + post_id,
         type: 'POST',
         dataType: 'JSON',
         data: {

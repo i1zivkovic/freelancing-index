@@ -115,17 +115,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Is remote</label>
-                                <div class="search-category-container">
-                                    <label class="styled-select">
-                                        <select class="dropdown-product selectpicker" name="is_remote">
-                                            <option value="1" selected>Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                     <label class="control-label">Upload File</label>
                                     <div class="custom-file mb-3">
                                             <input type="file" class="custom-file-input" id="file" name="file">

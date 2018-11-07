@@ -17,12 +17,13 @@
                     <div class="col-lg-8 col-md-6 col-xs-12">
                         <div class="breadcrumb-wrapper">
                             <div class="img-wrapper">
-                                <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}" alt="PIC">
+                                <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}"
+                                    alt="PIC">
                             </div>
                             <div class="content">
                                 <h3 class="product-title">{{$job->title}}</h3>
                                 <p class="brand"><a href="{{route('frontend.user.show',['slug' => $job->user->slug])}}">{{$job->user->username}}</a></p>
-                                <div class="tags">
+                                <div class="tags job-metadata">
                                     <span><i class="lni-map-marker"></i> {{$job->job_location_city}},
                                         {{$job->job_location_country}}</span>
                                     <span><i class="lni-calendar"></i> Posted
@@ -32,9 +33,20 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-xs-12">
+                        @if($job->job_status_id == 1)
+                        <div class="month-price bg-primary">
+                            <div class="price ">{{$job->job_status->name}}</div>
+                        </div>
+                        @elseif($job->job_status_id == 2)
                         <div class="month-price">
                             <div class="price">{{$job->job_status->name}}</div>
                         </div>
+                        @else
+                        <div class="month-price bg-danger">
+                            <div class="price">{{$job->job_status->name}}</div>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -95,9 +107,10 @@
                                         /project
                                         @endif
                                     </p>
-                                    {{-- If user hasn't already applied and is not owner of the job --}}
+
+                                    {{-- If user hasn't already applied, is not owner of the job and job status is 'Active'--}}
                                     @if(($job->user_id != Auth::user()->id) &&
-                                    !($job->job_applications->contains('user_id',Auth::id())))
+                                    !($job->job_applications->contains('user_id',Auth::id())) && $job->job_status_id == 1)
                                     <hr>
                                     <a class="btn btn-common" href="{{route('frontend.job-applications.show', ['id' => $job->id])}}">
                                         Apply
@@ -195,7 +208,7 @@
                                     aria-controls="comments" aria-selected="true">Comments
                                     ({{$job->job_comments->count()}})</a>
                             </li>
-                       {{--      <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" id="likes-tab" data-toggle="tab" href="#likes" role="tab"
                                     aria-controls="likes" aria-selected="false">Likes
                                     ({{$job->job_likes->count()}})</a>
@@ -280,7 +293,8 @@
                                                                 {{'@'.$job_application->username}}</a></h4>
                                                         <p>{{$job_application->comment}}</p>
                                                         <span class="comment-date">{{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</span>
-                                                        @if(Auth::user() && ($job->user_id == Auth::user()->id) && ($job_application->job_application_state == 'Waiting'))
+                                                        @if(Auth::user() && ($job->user_id == Auth::user()->id) &&
+                                                        ($job_application->job_application_state == 'Waiting'))
                                                         <hr>
                                                         <a href="#!" class="accept-application" onclick="actOnJobApplicationAction({{$job_application->id}}, 2, {{$job->id}})">
                                                             <i class="fas fa-check"></i>
@@ -289,7 +303,8 @@
                                                         <a href="#!" class="reject-application" onclick="actOnJobApplicationAction({{$job_application->id}}, 3, {{$job->id}})">
                                                             <i class="fas fa-times text-danger"></i>
                                                         </a>
-                                                        @elseif (Auth::user() && ($job->user_id == Auth::user()->id) && ($job_application->job_application_state != 'Waiting'))
+                                                        @elseif (Auth::user() && ($job->user_id == Auth::user()->id) &&
+                                                        ($job_application->job_application_state != 'Waiting'))
                                                         <hr>
                                                         <p>
                                                             {{$job_application->job_application_state}}
@@ -303,7 +318,7 @@
                                     </div>
                                 </div>
                             </div>
-{{--                             <div class="tab-pane" id="likes" role="tabpanel" aria-labelledby="likes-tab">
+                            {{-- <div class="tab-pane" id="likes" role="tabpanel" aria-labelledby="likes-tab">
                                 <div class="mb-5">
                                     <div id="comments">
                                         <ol class="comments-list likes-list">

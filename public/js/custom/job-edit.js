@@ -27,7 +27,7 @@ $(document).ready(function () {
         minimumInputLength: 2,
         ajax: {
             delay: 300,
-            url: 'skills/find',
+            url: '/skills/find',
             dataType: 'json',
             data: function (params) {
                 return {
@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
         });
         $.ajax({
-            url: 'delete-job-file/' + file_id,
+            url: '/delete-job-file/' + file_id,
             type: 'DELETE',
             dataType: 'JSON',
             success: function (data) {

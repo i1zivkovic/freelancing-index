@@ -363,7 +363,7 @@
     margin-bottom: 20px;
   }
   .page-header .month-price {
-    float: left;
+    /* float: left; */       /* IVAN */
   }
   .page-header .breadcrumb-wrapper .img-wrapper img {
     width: 70%;

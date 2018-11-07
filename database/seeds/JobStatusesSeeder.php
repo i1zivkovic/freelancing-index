@@ -12,20 +12,16 @@ class JobStatusesSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // Active for applications
         JobStatus::create([
             'name' => 'Active',
         ]);
-          //
+          // Job is done
           JobStatus::create([
             'name' => 'Done',
-        ]);
-          //
+        ]); // Job is temporarily canceled
           JobStatus::create([
-            'name' => 'In Progress',
-        ]);
-          JobStatus::create([
-            'name' => 'Removed',
+            'name' => 'Unavailable',
         ]);
     }
 }

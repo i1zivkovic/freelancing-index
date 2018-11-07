@@ -24,7 +24,6 @@ class CreateJobsTable extends Migration
             $table->string('slug',500);
             $table->decimal('offer', 10,2);
             $table->boolean('is_per_hour');
-            $table->boolean('is_remote');
             $table->string('job_location_country',200)->nullable();
             $table->string('job_location_city',100)->nullable();
             $table->timestamps();

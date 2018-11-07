@@ -17,10 +17,7 @@ class CreateLocationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('zip')->nullable();
             $table->string('city',100)->nullable();
-            $table->string('state',100)->nullable();
-            $table->string('street',200)->nullable();
             $table->string('country',200)->nullable();
             $table->timestamps();
         });

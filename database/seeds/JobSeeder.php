@@ -20,7 +20,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-graphic-designer-to-some-responsive-website-design-1234313335',
             'offer' => '20€',
             'is_per_hour' => 1,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',
@@ -35,7 +34,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-a-front-end-developer-to-code-me-a-website-functionality-using-angular-5-1234313335',
             'offer' => '30€',
             'is_per_hour' => 1,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',
@@ -50,7 +48,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-1234313335.',
             'offer' => '200€',
             'is_per_hour' => 0,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',
@@ -65,7 +62,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-12343133345.',
             'offer' => '200€',
             'is_per_hour' => 0,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',
@@ -80,7 +76,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-12343133365.',
             'offer' => '200€',
             'is_per_hour' => 0,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',
@@ -95,7 +90,6 @@ class JobSeeder extends Seeder
             'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-12343133375.',
             'offer' => '200€',
             'is_per_hour' => 0,
-            'is_remote' => 1,
             'job_status_id' => 1,
 
             'job_location_city' => 'Vinkovci',

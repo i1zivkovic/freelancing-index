@@ -44,7 +44,7 @@ $(".delete-job").click(function (e) {
     })
 });
 
-// FUNCTION TO DELETE POST
+// FUNCTION TO DELETE JOB
 function deleteJob(job_id) {
     $.ajaxSetup({
         headers: {
@@ -53,7 +53,7 @@ function deleteJob(job_id) {
     });
 
     $.ajax({
-        url: 'jobs/' + job_id,
+        url: '/jobs/' + job_id,
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {

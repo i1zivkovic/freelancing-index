@@ -413,7 +413,7 @@ button:focus {
 .page-header .month-price {
     background: #26ae61;
     padding: 12px 30px;
-    float: right;
+   /*  float: right; */
     text-align: center;
     color: #fff;
     border-radius: 4px;
@@ -2577,7 +2577,7 @@ button:focus {
 }
 
 .my-resume .author-resume .author-info {
-    margin-left: 150px;
+    margin-left: 0px;
 }
 
 .my-resume .author-resume .author-info h3 {
@@ -4601,4 +4601,11 @@ div.job-listings .category-list span {
 
 * {
     word-break:  break-word !important;
+}
+
+
+/* JOB METADATA */
+
+.page-header .breadcrumb-wrapper .content .job-metadata > span {
+    display: block !important;
 }

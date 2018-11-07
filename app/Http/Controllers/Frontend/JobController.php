@@ -214,6 +214,8 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
 
+        /* dd($request); */
+
          if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
 
             // Validation rules

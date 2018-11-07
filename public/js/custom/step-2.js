@@ -7,7 +7,7 @@ $('#skill_list').select2({
     minimumInputLength: 2,
     ajax: {
         delay: 300,
-        url: 'skills/find',
+        url: '/skills/find',
         dataType: 'json',
         data: function (params) {
             return {

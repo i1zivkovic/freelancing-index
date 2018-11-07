@@ -80,10 +80,7 @@ class UsersSeeder extends Seeder
 
          Location::create([
             'user_id' => $user->id,
-            'zip' => 31000,
             'city' => 'Osijek',
-            'state' => 'Osječko-Baranjska',
-            'street' => 'Vij.Ivana Meštrovića 74',
             'country' => 'Croatia'
         ]);
     }

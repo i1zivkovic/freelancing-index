@@ -22,11 +22,14 @@
                 <div class="inner-box my-resume">
                     <div class="author-resume">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="thumb">
                                     <img class="img-fluid" src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
                                         alt="PIC">
                                 </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
                                 <div class="author-info">
                                     <h3>{{$user->userProfile->first_name}} {{$user->userProfile->last_name}}</h3>
                                     <p>
@@ -46,17 +49,12 @@
 
                                     </p>
                                     <p>
-                                        <span class="address"><i class="lni-map-marker"></i>{{$user->userLocation ?
-                                            $user->userLocation->city .', '. $user->userLocation->country: 'No location
-                                            added'}}</span>
-                                    </p>
-                                    <p>
                                         <span><i class="lni-phone"></i> {{$user->userProfile->contact_number ?
                                             $user->userProfile->contact_number : 'No number added' }}</span>
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="author-info">
                                     <p>&nbsp;</p>
                                     <p><i class="lni-user"></i> {{$user->username}}</p>
@@ -173,6 +171,18 @@
                         <i>Not educations added</i>
                         @endif
 
+                    </div>
+                    <div class="location item">
+                        <h3>Location</h3>
+                        @if( $user->userLocation['city']  ||  $user->userLocation['country'] )
+                        <div class="col-md-12">
+                            <div id="conatiner-map">
+                                    <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q={{$user->userLocation->city}}%2{{$user->userLocation->country}}&t=&z=7&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            </div>
+                        </div>
+                        @else
+                        <i>No location addded</i>
+                        @endif
                     </div>
                 </div>
             </div>

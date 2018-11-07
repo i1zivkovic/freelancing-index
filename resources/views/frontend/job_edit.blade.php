@@ -96,7 +96,7 @@
                                     @endif
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Offer</label>
+                                <label class="control-label">Offer ($)</label>
                                 <input type="text" class="form-control {{ $errors->has('offer') ? ' is-invalid' : '' }}" placeholder="" name="offer" required value="{{$job->offer}}">
                                 @if ($errors->has('offer'))
                                 <span class="invalid-feedback" role="alert">
@@ -115,10 +115,10 @@
                                 </div>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="control-label">Is remote</label>
+                                <label class="control-label">Job status</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
-                                        {!! Form::select('is_remote', [1 => 'Yes', 0 => 'No'], $job->is_remote,
+                                        {!! Form::select('job_status_id', [1 => 'Active', 2 => 'Done', 3 => 'Unavailable'], $job->job_status,
                                         ['class' => 'dropdown-product selectpicker']) !!}
                                     </label>
                                 </div>
@@ -127,9 +127,6 @@
                                 <label class="control-label">Upload File (will create new or overwrite existing)</label>
                                 <div class="custom-file mb-3">
                                     <input type="file" class="custom-file-input" id="file" name="file">
-                                   {{--  <span class="help-block"> <i>Uploading a file will create new file or overwrite if
-                                            one
-                                            already exists.</i></span> --}}
                                     <label class="custom-file-label form-control" for="file" id="file-label">
                                         Choose file...
                                     </label>
@@ -143,6 +140,8 @@
                                         download>{{$job->job_files->path}}</a> <a href="#!" class="text-danger" id="delete-file"
                                         data-id="{{$job->job_files->id}}"><i class="lni-trash"></i></a></p>
                             </div>
+                            @else
+                            <p><i>No files uploaded</i></p>
                             @endif
                             </div>
                             <hr>

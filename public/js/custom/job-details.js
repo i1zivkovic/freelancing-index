@@ -64,7 +64,7 @@ function deleteComment(comment_id) {
         }
     });
     $.ajax({
-        url: 'job-comments/' + comment_id,
+        url: '/job-comments/' + comment_id,
         type: 'DELETE',
         dataType: 'JSON',
         // if comment is deleted, display message and reload page
@@ -146,7 +146,7 @@ function deleteJob(job_id) {
     });
 
     $.ajax({
-        url: 'jobs/' + job_id,
+        url: '/jobs/' + job_id,
         type: 'DELETE',
         dataType: 'JSON',
         // if job is deleted, display success message and redirect user
@@ -253,7 +253,7 @@ function likeUnlikeAjax(job_id, action) {
     });
 
     $.ajax({
-        url: 'job-likes/' + job_id,
+        url: '/job-likes/' + job_id,
         type: 'POST',
         dataType: 'JSON',
         data: {
@@ -353,7 +353,7 @@ function jobApplicationHandlerAjax(application_id, application_state_id) {
     });
 
     $.ajax({
-        url: 'job-applications/' + application_id,
+        url: '/job-applications/' + application_id,
         type: 'PUT',
         dataType: 'JSON',
         data: {

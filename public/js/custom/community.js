@@ -50,7 +50,7 @@ function followUnfollowAjax(user_id, action, event) {
     });
 
     $.ajax({
-        url: 'follow-unfollow/' + user_id,
+        url: '/follow-unfollow/' + user_id,
         type: 'POST',
         dataType: 'JSON',
         data: {
