@@ -26,7 +26,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <i class="fas fa-user-tie mr-2"></i> Community
+                                <i class="fas fa-users"></i> Community
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.getUsers')}}">Users</a></li>
@@ -42,7 +42,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.index')}}">Find A Job</a></li>
-                                <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li>
+                              {{--   <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li> --}}
                                 <li><a class="dropdown-item" href="{{route('frontend.getUserApplications')}}">My
                                         Applications</a></li>
                             </ul>
@@ -73,7 +73,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.posts.create')}}">Create New Post</a></li>
-                                <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">All Posts</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.posts.index')}}">Feed</a></li>
+                                <li><a class="dropdown-item" href="{{route('frontend.posts.explore')}}">Explore</a></li>
                                 @guest
                                 <li><a class="dropdown-item" href="{{route('login')}}">My Posts</a></li>
                                 @else

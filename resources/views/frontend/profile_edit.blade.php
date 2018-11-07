@@ -124,6 +124,14 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="">
+                                        {{ Form::checkbox('notify_applications', '1', Auth::user()->notify_applications) }}
+                                    <label class="form-check-label" for="notify_applications">
+                                        Notify applications (e-mail)
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-xs-12 text-center">
@@ -708,8 +716,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-instagram"></i></span>
                                     </div>
-                                    <input type="text" name="instagram" class="form-control" placeholder="instagram" aria-label="instagram"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ?   Auth::user()->userSocial->instagram : '' }}">
+                                    <input type="text" name="instagram" class="form-control" placeholder="instagram"
+                                        aria-label="instagram" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ?   Auth::user()->userSocial->instagram : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -717,8 +725,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-github"></i></span>
                                     </div>
-                                    <input type="text" name="github" class="form-control" placeholder="github" aria-label="github"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->github : '' }}">
+                                    <input type="text" name="github" class="form-control" placeholder="github"
+                                        aria-label="github" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->github : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -726,8 +734,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-linkedin"></i></span>
                                     </div>
-                                    <input type="text" name="linkedin" class="form-control" placeholder="linkedin" aria-label="linkedin"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->linkedin : '' }}">
+                                    <input type="text" name="linkedin" class="form-control" placeholder="linkedin"
+                                        aria-label="linkedin" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->linkedin : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -735,8 +743,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-facebook"></i></span>
                                     </div>
-                                    <input type="text" name="facebook" class="form-control" placeholder="facebook" aria-label="facebook"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->facebook : '' }}">
+                                    <input type="text" name="facebook" class="form-control" placeholder="facebook"
+                                        aria-label="facebook" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->facebook : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -744,8 +752,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-twitter"></i></span>
                                     </div>
-                                    <input type="text" name="twitter" class="form-control" placeholder="twitter" aria-label="twitter"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->twitter : '' }}">
+                                    <input type="text" name="twitter" class="form-control" placeholder="twitter"
+                                        aria-label="twitter" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->twitter : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
@@ -753,8 +761,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-google-plus"></i></span>
                                     </div>
-                                    <input type="text" name="google_plus" class="form-control" placeholder="google_plus" aria-label="google_plus"
-                                        aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->google_plus : '' }}">
+                                    <input type="text" name="google_plus" class="form-control" placeholder="google_plus"
+                                        aria-label="google_plus" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->google_plus : '' }}">
                                 </div>
                             </div>
                         </div>

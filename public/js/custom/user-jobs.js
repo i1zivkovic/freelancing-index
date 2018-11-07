@@ -53,7 +53,7 @@ function deleteJob(job_id) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/jobs/' + job_id,
+        url: 'jobs/' + job_id,
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {

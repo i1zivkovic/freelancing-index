@@ -26,7 +26,7 @@ $(document).ready(function () {
         minimumInputLength: 2,
         ajax: {
             delay: 300,
-            url: 'http://localhost:8000/skills/find',
+            url: 'skills/find',
             dataType: 'json',
             data: function (params) {
                 return {

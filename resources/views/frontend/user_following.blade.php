@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'My Followers')
+@section('title', 'Following')
 @section('description', "")
 
 @section('css')
@@ -76,7 +76,7 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <div class="manager-resumes-item">
                             <div class="manager-content">
-                                <a href="resume.html"><img class="resume-thumb" src="{{asset('uploads')}}/{{$follow->username}}/thumb/{{$follow->userProfile->image_url}}"
+                                <a href="resume.html"><img class="resume-thumb img-fluid" src="{{asset('uploads')}}/{{$follow->username}}/{{$follow->userProfile->image_url}}"
                                         alt="PIC"></a>
                                 <div class="manager-info">
                                     <div class="manager-name">

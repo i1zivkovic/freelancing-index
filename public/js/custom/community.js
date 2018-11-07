@@ -50,7 +50,7 @@ function followUnfollowAjax(user_id, action, event) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/follow-unfollow/' + user_id,
+        url: 'follow-unfollow/' + user_id,
         type: 'POST',
         dataType: 'JSON',
         data: {
@@ -68,7 +68,7 @@ function followUnfollowAjax(user_id, action, event) {
             toast({
                 type: 'error',
                 title: 'Oops...',
-                text:  error.responseJSON.error ? error.responseJSON.error : 'An error has occured. Please contact our administrator (ivanzivkovic1601@gmail.com).' 
+                text:  error.responseJSON.error ? error.responseJSON.error : 'An error has occured. Please contact our administrator (ivanzivkovic1601@gmail.com).'
             });
 
             console.log(action);

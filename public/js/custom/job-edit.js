@@ -27,7 +27,7 @@ $(document).ready(function () {
         minimumInputLength: 2,
         ajax: {
             delay: 300,
-            url: 'http://localhost:8000/skills/find',
+            url: 'skills/find',
             dataType: 'json',
             data: function (params) {
                 return {
@@ -49,7 +49,7 @@ $(document).ready(function () {
         confirmButtonClass: 'btn btn-success',
         cancelButtonClass: 'btn btn-danger mr-3',
         buttonsStyling: false,
-    })
+    });
 
     // CLICK EVENT ON COMMENT
     $("#delete-file").click(function (e) {
@@ -70,9 +70,9 @@ $(document).ready(function () {
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     onOpen: () => {
-                        swal.showLoading()
+                        swal.showLoading();
                     }
-                })
+                });
                 deleteFile(id);
             } else if (
                 // Read more about handling dismissals
@@ -82,9 +82,9 @@ $(document).ready(function () {
                     'Cancelled',
                     'Your file is safe :)',
                     'error'
-                )
+                );
             }
-        })
+        });
     });
 
     // FUNCTION TO DLETE COMMENT
@@ -95,7 +95,7 @@ $(document).ready(function () {
             }
         });
         $.ajax({
-            url: 'http://localhost:8000/delete-job-file/' + file_id,
+            url: 'delete-job-file/' + file_id,
             type: 'DELETE',
             dataType: 'JSON',
             success: function (data) {

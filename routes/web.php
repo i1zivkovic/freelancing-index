@@ -66,8 +66,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //POSTS
     Route::resource('posts', 'PostController');
     Route::get('posts/my-posts/{slug}', 'PostController@getMyPosts')->name('myPosts');
+    Route::get('posts-explore', 'PostController@explore')->name('posts.explore');
     Route::any('posts-filter', 'PostController@postPostFilter')->name('postsFilter');
     Route::any('my-posts-filter', 'PostController@postMyPostFilter')->name('myPostsFilter');
+    Route::any('explore-filter', 'PostController@postPostExploreFilter')->name('postExploreFilter');
     //POST LIKES
     Route::post('post-likes/{id}', 'PostLikeController@likeUnlikeHandler')->name('postLikeUnlike');
     //POST COMMENTS

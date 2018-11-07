@@ -12,7 +12,7 @@ const swalWithBootstrapButtons = swal.mixin({
     confirmButtonClass: 'btn btn-success',
     cancelButtonClass: 'btn btn-danger mr-3',
     buttonsStyling: false,
-})
+});
 
 /**
  * Click handler for 'delete-comment' icon
@@ -36,9 +36,9 @@ $(".delete-comment").click(function (e) {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 onOpen: () => {
-                    swal.showLoading()
+                    swal.showLoading();
                 }
-            })
+            });
             deleteComment(id);
         } else if (
             // Read more about handling dismissals
@@ -48,9 +48,9 @@ $(".delete-comment").click(function (e) {
                 'Cancelled',
                 'Your comment is safe :)',
                 'error'
-            )
+            );
         }
-    })
+    });
 });
 
 /**
@@ -64,7 +64,7 @@ function deleteComment(comment_id) {
         }
     });
     $.ajax({
-        url: 'http://localhost:8000/job-comments/' + comment_id,
+        url: 'job-comments/' + comment_id,
         type: 'DELETE',
         dataType: 'JSON',
         // if comment is deleted, display message and reload page
@@ -117,9 +117,9 @@ $(".delete-job").click(function (e) {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 onOpen: () => {
-                    swal.showLoading()
+                    swal.showLoading();
                 }
-            })
+            });
             deleteJob(id);
         } else if (
             // Read more about handling dismissals
@@ -146,7 +146,7 @@ function deleteJob(job_id) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/jobs/' + job_id,
+        url: 'jobs/' + job_id,
         type: 'DELETE',
         dataType: 'JSON',
         // if job is deleted, display success message and redirect user
@@ -253,7 +253,7 @@ function likeUnlikeAjax(job_id, action) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/job-likes/' + job_id,
+        url: 'job-likes/' + job_id,
         type: 'POST',
         dataType: 'JSON',
         data: {
@@ -320,7 +320,7 @@ function actOnJobApplicationAction(application_id, application_state_id) {
                 onOpen: () => {
                     swal.showLoading();
                 }
-            })
+            });
             jobApplicationHandlerAjax(application_id,application_state_id);
         }
         // if pressed cancel button
@@ -353,7 +353,7 @@ function jobApplicationHandlerAjax(application_id, application_state_id) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/job-applications/' + application_id,
+        url: 'job-applications/' + application_id,
         type: 'PUT',
         dataType: 'JSON',
         data: {

@@ -80,9 +80,9 @@
                     <div class="job-listings">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                <div class="job-company-logo">
-                                    <img src="{{asset('uploads')}}/{{$job->user->username}}/thumb/{{$job->user->userProfile->image_url}}" alt="PIC">
-                                </div>
+                               {{--  <div class="job-company-logo">
+                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}" alt="PIC">
+                                </div> --}}
                                 <div class="job-details">
                                     <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                                         <h3>{{$job->title}}</h3>

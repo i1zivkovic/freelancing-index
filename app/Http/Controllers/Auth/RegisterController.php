@@ -72,7 +72,7 @@ class RegisterController extends Controller
             'slug' => $slug.'-'.time(),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-
+            'notify_applications' => 1
         ]);
     }
 

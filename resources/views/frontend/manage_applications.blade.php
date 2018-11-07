@@ -64,7 +64,7 @@
                             <div class="manager-content">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
-                                        <a href="#!"><img class="resume-thumb" src="{{asset('uploads')}}/{{$job_application->user->username}}/thumb/{{$job_application->user->userProfile->image_url}}" alt="PIC"></a>
+                                        <a href="#!"><img class="resume-thumb img-fluid" src="{{asset('uploads')}}/{{$job_application->user->username}}/{{$job_application->user->userProfile->image_url}}" alt="PIC"></a>
                                         <div class="manager-info">
                                             <div class="manager-name">
                                                 <h4> <a href="{{route('frontend.user.show',['id' => $job_application->user->slug])}}">

@@ -5,7 +5,7 @@
 
 @section('css')
 {{-- --}}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{!!Html::style(asset('css/select2.min.css'))!!}
 @stop
 
 @section('content')
@@ -160,7 +160,7 @@
         @include('includes.frontend.loaderAndArrow')
         @section('js')
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+        {!!Html::script(asset('js/select2.min.js'))!!}
 
         {!!Html::script(asset('js/custom/job-edit.js'))!!}
 

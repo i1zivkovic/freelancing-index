@@ -168,7 +168,6 @@ class ProfileController extends Controller
     // method used to update base user info
     public function update_account_info (Request $request) {
 
-
          // Validation rules
          $rules = [
             'username' => 'required|string|max:20|min:5|unique:users,username, '.Auth::id() ,
@@ -180,6 +179,8 @@ class ProfileController extends Controller
             $rules['password'] = 'required|string|min:6|confirmed';
         }
 
+        $notify_applications = $request->get('notify_applications');
+
         // create validator with given rules and check request
         $validator = Validator::make($request->all(), $rules);
 
@@ -188,11 +189,12 @@ class ProfileController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+
         // get the user
         $user = User::findOrFail(Auth::id());
 
         // update it
-        $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password'))]);
+        $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password')), 'notify_applications' => $notify_applications ? $notify_applications : 0]);
 
         $active_tab = 'account-info';
           // redirect

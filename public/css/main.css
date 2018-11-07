@@ -1820,6 +1820,8 @@ button:focus {
     padding-right: 15px;
     padding-left: 15px;
     text-align: center;
+    height: 60px;
+    width: 60px;
 }
 
 .job-listings .job-details h3 {
@@ -2705,10 +2707,10 @@ button:focus {
 }
 
 .manager-resumes-item .manager-content .resume-thumb {
-    max-width: 64px;
+    max-width: 40px;
     width: auto;
     margin-right: 30px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     float: left;
 }
 
@@ -2908,6 +2910,11 @@ Categories All Page Style
 
 .all-categories ul li a:hover {
     color: #26ae61;
+}
+
+
+.custom-file-input {
+    cursor:pointer !important;
 }
 
 .custom-file-label:focus {
@@ -4589,4 +4596,9 @@ div.job-listings .category-list span {
 .community-users .manager-content {
     background: white !important;
     border-bottom: 1px solid #f1f1f1;
+}
+
+
+* {
+    word-break:  break-word !important;
 }

@@ -5,7 +5,7 @@
 
 @section('css')
 {{-- --}}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{!!Html::style(asset('css/select2.min.css'))!!}
 @stop
 
 @section('content')
@@ -49,30 +49,10 @@
 
 @section('js')
 {{-- --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script>
-    $('#skill_list').select2({
+{!!Html::script(asset('js/select2.min.js'))!!}
 
-        width: '100%',
-        placeholder: "Choose skills...",
-        minimumInputLength: 2,
-        ajax: {
-            delay: 300,
-            url: 'skills/find',
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    q: $.trim(params.term)
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        }
-    });
 
-</script>
+    {!!Html::script(asset('js/custom/step-2.js'))!!}
+
+
 @stop

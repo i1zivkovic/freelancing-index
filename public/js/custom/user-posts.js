@@ -52,7 +52,7 @@ function deletePost(post_id) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/posts/' + post_id,
+        url: 'posts/' + post_id,
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {

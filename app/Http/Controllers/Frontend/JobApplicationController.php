@@ -38,7 +38,7 @@ class JobApplicationController extends Controller
                 $job_slug = Job::select('slug')->findOrFail($job_id);
                 $job_owner_mail = Job::with([
                     'user' => function($query) {
-                        $query->select('email', 'id');
+                        $query->select('email', 'id', 'notify_applications');
                     }
                     ])
                     ->findOrFail($job_id);
@@ -61,6 +61,8 @@ class JobApplicationController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors($validator)->withInput();
             }
+
+                //create job application
                 $jobApplication = new JobApplication;
                 $jobApplication->user_id = $user_id;
                 $jobApplication->job_id = $job_id;
@@ -68,13 +70,14 @@ class JobApplicationController extends Controller
                 $jobApplication->job_application_state_id = 1;
                 $jobApplication->save();
 
-                // send e-mail
-                Mail::send('e-mails.job_application', ['slug' => $job_slug, 'user_slug' => Auth::user()->slug], function($msg) use ($mail_data){
-                    $msg->from(Auth::user()->email, 'TheHunt');
-                    $msg->subject('Job Application');
-                    $msg->to($mail_data['user_email']);
-                });
-
+                // send e-mail if user has set notifications to true
+                if($job_owner_mail->user->notify_applications) {
+                    Mail::send('e-mails.job_application', ['slug' => $job_slug, 'user_slug' => Auth::user()->slug], function($msg) use ($mail_data){
+                        $msg->from(Auth::user()->email, 'TheHunt');
+                        $msg->subject('Job Application');
+                        $msg->to($mail_data['user_email']);
+                    });
+                }
                 return back()->with('success', 'You have successfully appllied to this job!');
             }
     }

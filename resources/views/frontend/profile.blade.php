@@ -16,24 +16,6 @@
             <div class="col-sm-12 text-center mb-5">
                 <h3>Profile</h3>
             </div>
-            {{-- <div class="col-lg-4 col-md-12 col-xs-12">
-                <div class="right-sideabr">
-                    <h4>Profile</h4>
-                    <ul class="list-item">
-                        <li><a href="resume.html">Info</a></li>
-                        <li><a href="bookmarked.html">Bookmarked Jobs</a></li>
-                        <li><a href="bookmarked.html">Bookmarked Posts</a></li>
-                        <li><a href="notifications.html">Notifications <span class="notinumber">2</span></a></li>
-                        <li><a href="manage-applications.html">Manage Applications</a></li>
-                        <li><a href="job-alerts.html">Job Alerts</a></li>
-                        <li><a href="{{route('frontend.changePassword')}}">Change Password</a></li>
-                        <li><a href="index.html">Sing Out</a></li>
-                    </ul>
-                </div>
-            </div> --}}
-            <div class="justify-content-center mb-3 box " style="margin:auto;">
-                <img  class="img-fluid" src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}" alt="PIC">
-            </div>
 
 
             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -41,17 +23,21 @@
                     <div class="author-resume">
                         <div class="row">
                             <div class="col-md-6">
-                              {{--   <div class="thumb">
-                                    <img src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
+                                <div class="thumb">
+                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
                                         alt="PIC">
-                                </div> --}}
+                                </div>
                                 <div class="author-info">
                                     <h3>{{$user->userProfile->first_name}} {{$user->userProfile->last_name}}</h3>
                                     <p>
+                                        @if($profile->gender)
                                         @if($profile->gender == 'm')
                                         <i class="fas fa-mars"></i> Male
                                         @else
                                         <i class="fas fa-venus"></i> Female
+                                        @endif
+                                        @else
+                                        {{-- --}}
                                         @endif
                                     </p>
                                     <p>
@@ -61,11 +47,12 @@
                                     </p>
                                     <p>
                                         <span class="address"><i class="lni-map-marker"></i>{{$user->userLocation ?
-                                            $user->userLocation->city .', '. $user->userLocation->country: 'Unkown
-                                            location'}}</span>
+                                            $user->userLocation->city .', '. $user->userLocation->country: 'No location
+                                            added'}}</span>
                                     </p>
                                     <p>
-                                        <span><i class="lni-phone"></i> {{$user->userProfile->contact_number}}</span>
+                                        <span><i class="lni-phone"></i> {{$user->userProfile->contact_number ?
+                                            $user->userProfile->contact_number : 'No number added' }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -74,15 +61,24 @@
                                     <p>&nbsp;</p>
                                     <p><i class="lni-user"></i> {{$user->username}}</p>
                                     <p class=""><i class="lni-envelope"></i> {{$user->email}}</p>
-                                    <p class=""><i class="lni-link"></i> <a href="{{$user->userProfile->website_url}}"
-                                            target="_blank">{{$user->userProfile->website_url}}</a></p>
+                                    <p class=""><i class="lni-link"></i>
+                                        @if($user->userProfile->website_url)
+                                        <a href="{{$user->userProfile->website_url}}" target="_blank">{{$user->userProfile->website_url}}</a>
+                                        @else
+                                        No website added
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="about-me item">
                         <h3>About Me</h3>
+                        @if($user->userProfile->about_me)
                         <p>{{$user->userProfile->about_me}} </p>
+                        @else
+                        <i>No description added</i>
+                        @endif
                     </div>
                     <div class="socials item">
                         <h3>Socials</h3>
@@ -113,11 +109,14 @@
                                     class="lni-github"></i></a>
                             @endif
                         </div>
+                        @else
+                        <i>No socials added</i>
                         @endif
                     </div>
                     <div class="skills item">
                         <h3>Skills</h3>
                         <p class="">
+                            @if($user->userSkills->count() > 0)
                             @foreach($user->userSkills as $skill)
                             @if($loop->last)
                             {{$skill->name}}
@@ -129,10 +128,14 @@
                             @if(!$user->userSkills)
                             No skills added
                             @endif
+                            @else
+                            <i>No skills added</i>
+                            @endif
                         </p>
                     </div>
                     <div class="work-experence item">
                         <h3>Work Experience</h3>
+                        @if($profile->profileExperience->count() > 0)
                         @foreach($profile->profileExperience as $experience)
                         <h4>{{$experience->job_title}}</h4>
                         <h5>{{$experience->company_name}}</h5>
@@ -149,11 +152,15 @@
                         <p>{{$experience->job_description}}</p>
                         <br>
                         @endforeach
+                        @else
+                        <i>No experiences added</i>
+                        @endif
 
                     </div>
                     <div class="education item">
 
                         <h3>Education</h3>
+                        @if($profile->profileEducation->count() > 0)
                         @foreach($profile->profileEducation as $education)
                         <h4> {{$education->institution_name}}</h4>
                         <p> {{$education->major}}</p>
@@ -162,6 +169,9 @@
                             {{\Carbon\Carbon::parse($education->start_date)->format('d/m/Y')}} -
                             {{\Carbon\Carbon::parse($education->end_date)->format('d/m/Y')}} </span>
                         @endforeach
+                        @else
+                        <i>Not educations added</i>
+                        @endif
 
                     </div>
                 </div>
@@ -170,123 +180,7 @@
     </div>
 </div>
 <!-- End Content -->
-{{--
-<section class="profile-tabs">
-    <!-- Start Content -->
-    <div class="container">
-        <div class="row">
 
-            <!-- Start Blog Posts -->
-            <div class="col-lg-12 col-md-12 col-xs-12">
-                <ul class="nav nav-tabs  mb-1" id="profile-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="portfolio-tab" data-toggle="tab" href="#portfolio" role="tab"
-                            aria-controls="posts" aria-selected="false">Portfolio</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="profile-tab-content">
-                    <div class="tab-pane active" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
-                        <!-- Posts Section -->
-                        <section id="blog" class="section">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                                    <div class="blog-post">
-                                        <!-- Post thumb -->
-                                        <div class="post-thumb">
-                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
-                                                    height="200px" alt=""></a>
-                                            <div class="hover-wrap">
-                                            </div>
-                                        </div>
-                                        <!-- End Post post-thumb -->
-
-                                        <!-- Post Content -->
-                                        <div class="post-content">
-                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
-                                            <div class="meta">
-                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
-                                                <span class="meta-part"><i class="lni-comments-alt"></i>
-                                                    3 Comments</span>
-                                                <span class="meta-part"><i class="lni-heart-filled"></i>
-                                                    5 Likes</span>
-                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
-                                            </div>
-                                            <p>This is a test description</p>
-                                        </div>
-                                        <!-- Post Content -->
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                                    <div class="blog-post">
-                                        <!-- Post thumb -->
-                                        <div class="post-thumb">
-                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
-                                                    height="200px" alt=""></a>
-                                            <div class="hover-wrap">
-                                            </div>
-                                        </div>
-                                        <!-- End Post post-thumb -->
-
-                                        <!-- Post Content -->
-                                        <div class="post-content">
-                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
-                                            <div class="meta">
-                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
-                                                <span class="meta-part"><i class="lni-comments-alt"></i>
-                                                    3 Comments</span>
-                                                <span class="meta-part"><i class="lni-heart-filled"></i>
-                                                    5 Likes</span>
-                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
-                                            </div>
-                                            <p>This is a test description</p>
-                                        </div>
-                                        <!-- Post Content -->
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
-                                    <div class="blog-post">
-                                        <!-- Post thumb -->
-                                        <div class="post-thumb">
-                                            <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg"
-                                                    height="200px" alt=""></a>
-                                            <div class="hover-wrap">
-                                            </div>
-                                        </div>
-                                        <!-- End Post post-thumb -->
-
-                                        <!-- Post Content -->
-                                        <div class="post-content">
-                                            <h3 class="post-title"><a href="#!">Test title</a></h3>
-                                            <div class="meta">
-                                                <span class="meta-part"><a><i class="lni-user"></i> i1zivkovic</a></span>
-                                                <span class="meta-part"><i class="lni-comments-alt"></i>
-                                                    3 Comments</span>
-                                                <span class="meta-part"><i class="lni-heart-filled"></i>
-                                                    5 Likes</span>
-                                                <span class="meta-part"><i class="lni-calendar"></i>21/7/2018</span>
-                                            </div>
-                                            <p>This is a test description</p>
-                                        </div>
-                                        <!-- Post Content -->
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center mt-4">
-                                <a href="#!" class="btn btn-common">See all posts</a>
-                            </div>
-                        </section>
-                        <!-- blog Section End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-</section> --}}
 
 
 @include('includes.frontend.loaderAndArrow')

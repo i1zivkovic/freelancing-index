@@ -9,6 +9,7 @@ use App\Post;
 use App\PostComment;
 use App\PostLike;
 use App\User;
+use App\Follow;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -16,20 +17,40 @@ class PostController extends Controller
 
       /**
      * Display a listing of the resource.
-     *
+     * User feed
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
 
+        $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
+
         $posts = Post::
-        withCount('post_comments','post_likes')
+        whereIn('user_id', $following_ids)
+        ->withCount('post_comments','post_likes')
         ->with([
             'user',
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
 
         return view('frontend.posts', compact('posts'));
+    }
+
+      /**
+     * Display a listing of the resource.
+     *  Explore
+     * @return \Illuminate\Http\Response
+     */
+    public function explore()
+    {
+
+        $posts = Post::withCount('post_comments','post_likes')
+        ->with([
+            'user',
+        ]) -> orderBy('created_at','desc') -> paginate(5);
+
+
+        return view('frontend.explore', compact('posts'));
     }
 
     /**
@@ -225,11 +246,46 @@ class PostController extends Controller
 
     }
 
-
     /**
-     * Filter for posts
+     * Filter for user feed posts
      */
     public function postPostFilter(Request $request){
+
+        $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
+
+        $posts = Post::whereIn('user_id', $following_ids)
+        ->when($request->input('q'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $query->where('title', 'like', '%'.$request->input('q').'%');
+            });
+        })
+        ->when($request->input('username'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+
+            $username =  $request->input('username');
+            $user = User::where('username', '=', $username)->first();
+                    $query->orWhere('user_id', '=', $user->id);
+            });
+        })
+        ->with([
+        'user' => function($query){
+            $query->select('id', 'username');
+        }])
+        ->withCount(['post_likes', 'post_comments'])
+        ->with('user')
+        ->orderBy('created_at','desc')
+        ->paginate(5);
+/*
+        dd($posts); */
+
+        return view('frontend.posts', compact('posts', 'request'));
+    }
+
+    /**
+     * Filter for posts (explore()
+     */
+    public function postPostExploreFilter(Request $request){
+
         $posts = Post::when($request->input('q'), function($query) use ($request) {
             return $query->where(function ($query) use ($request) {
             $query->where('title', 'like', '%'.$request->input('q').'%');
@@ -248,16 +304,18 @@ class PostController extends Controller
             $query->select('id', 'username');
         }])
         ->withCount(['post_likes', 'post_comments'])
+        ->with('user')
         ->orderBy('created_at','desc')
         ->paginate(5);
 /*
         dd($posts); */
 
-        return view('frontend.posts', compact('posts', 'request'));
+        return view('frontend.explore', compact('posts', 'request'));
     }
 
+
     /**
-     * Filter for posts
+     * Filter for my posts
      */
     public function postMyPostFilter(Request $request){
         $posts = Post::

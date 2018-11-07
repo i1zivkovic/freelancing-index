@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Posts')
+@section('title', 'Explore')
 @section('description', "")
 
 @section('css')
@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-center mb-5">
-                        <h3>Feed</h3>
+                        <h3>Explore</h3>
                     </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
@@ -32,7 +32,7 @@
                                 <div id="collapseOne" class="panel-collapse collapse in show">
                                     <div class="panel-body">
 
-                                        {!! Form::open(['route' => ['frontend.postsFilter'], 'role' => 'form',
+                                        {!! Form::open(['route' => ['frontend.postExploreFilter'], 'role' => 'form',
                                         'autocomplete' => 'off',
                                         'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
                                         <div class="row">

@@ -8,7 +8,7 @@ const swalWithBootstrapButtons = swal.mixin({
     confirmButtonClass: 'btn btn-success',
     cancelButtonClass: 'btn btn-danger mr-3',
     buttonsStyling: false,
-})
+});
 
 
 // CLICK EVENT ON COMMENT
@@ -31,9 +31,9 @@ $(".delete-comment").click(function (e) {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 onOpen: () => {
-                    swal.showLoading()
+                    swal.showLoading();
                 }
-            })
+            });
             deleteComment(id);
         } else if (
             // Read more about handling dismissals
@@ -43,9 +43,9 @@ $(".delete-comment").click(function (e) {
                 'Cancelled',
                 'Your comment is safe :)',
                 'error'
-            )
+            );
         }
-    })
+    });
 });
 
 // FUNCTION TO DLETE COMMENT
@@ -56,7 +56,7 @@ function deleteComment(comment_id) {
         }
     });
     $.ajax({
-        url: 'http://localhost:8000/post-comments/' + comment_id,
+        url: 'post-comments/' + comment_id,
         type: 'DELETE',
         dataType: 'JSON',
             // if comment is deleted, display message and reload page
@@ -106,9 +106,9 @@ $(".delete-post").click(function (e) {
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 onOpen: () => {
-                    swal.showLoading()
+                    swal.showLoading();
                 }
-            })
+            });
             deletePost(id);
         } else if (
             // Read more about handling dismissals
@@ -118,9 +118,9 @@ $(".delete-post").click(function (e) {
                 'Cancelled',
                 'Your post is safe :)',
                 'error'
-            )
+            );
         }
-    })
+    });
 });
 
 // FUNCTION TO DELETE POST
@@ -132,7 +132,7 @@ function deletePost(post_id) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/posts/' + post_id,
+        url: 'posts/' + post_id,
         type: 'DELETE',
         dataType: 'JSON',
         success: function (data) {
@@ -226,7 +226,7 @@ function likeUnlikeAjax(post_id, action) {
     });
 
     $.ajax({
-        url: 'http://localhost:8000/post-likes/' + post_id,
+        url: 'post-likes/' + post_id,
         type: 'POST',
         dataType: 'JSON',
         data: {
