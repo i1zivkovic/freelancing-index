@@ -124,8 +124,7 @@ class JobApplicationController extends Controller
                 $job_application_state_id = $request->get('application_state_id');
                 $job_application_state_name = ($job_application_state_id == "2") ? 'accepted' : 'rejected';
 
-                $job_application->job_application_state_id = (int)$job_application_state_id;
-                $job_application->save();
+                $job_application->update(['job_application_state_id' =>  (int)$job_application_state_id]);
 
                 $return = array(
                     'success' => 'You have successfully '.$job_application_state_name.' this job application',

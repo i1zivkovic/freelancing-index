@@ -84,9 +84,25 @@
                                 <div id="collapseFour" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <p>
-                                            Only 1.
+                                            Only 1 so far.
                                             <br>
                                              Any editing that includes new file upload will overwrite the old one.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                                            How to turn off e-mail notifications about job applications?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>
+                                          You can go to the 'Edit Profile' page which is located in dropdown once you hover over you username in navbar. Once there, navigate to the 'Account info' tab and uncheck 'Notify applications (e-mail)'.
                                         </p>
                                     </div>
                                 </div>
@@ -157,6 +173,22 @@
                                     <div class="panel-body">
                                         <p>
                                             We're in a process of creating a pateron page or donations. Once done, you can help us out that way.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix6">
+                                            How can I connect with other users?
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSix6" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>
+                                           You can simply go to 'Users' page under the 'Community' dropdown and search for other users. There you can either follow or unfollow them.
                                         </p>
                                     </div>
                                 </div>

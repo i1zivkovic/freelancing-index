@@ -27,7 +27,11 @@
                                     <span><i class="lni-map-marker"></i> {{$job->job_location_city}},
                                         {{$job->job_location_country}}</span>
                                     <span><i class="lni-calendar"></i> Posted
-                                        {{\Carbon\Carbon::parse($job->created_at)->format('d/m/Y')}}</span>
+                                        {{\Carbon\Carbon::parse($job->created_at)->format('d/m/Y')}}
+                                        @if($job->created_at != $job->updated_at)
+                                        <small>- edited</small>
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -108,9 +112,11 @@
                                         @endif
                                     </p>
 
-                                    {{-- If user hasn't already applied, is not owner of the job and job status is 'Active'--}}
+                                    {{-- If user hasn't already applied, is not owner of the job and job status is
+                                    'Active'--}}
                                     @if(($job->user_id != Auth::user()->id) &&
-                                    !($job->job_applications->contains('user_id',Auth::id())) && $job->job_status_id == 1)
+                                    !($job->job_applications->contains('user_id',Auth::id())) && $job->job_status_id ==
+                                    1)
                                     <hr>
                                     <a class="btn btn-common" href="{{route('frontend.job-applications.show', ['id' => $job->id])}}">
                                         Apply
@@ -125,7 +131,7 @@
                                     ['frontend.job-applications.destroy', $job->id],'id' => 'removeApplicationForm',
                                     'class' => 'form-ad']) !!}
                                     @csrf
-                                    <button type="submit" class="btn btn-common">Remove Application</button>
+                                    <button type="submit" class="btn btn-common">Cancel Application</button>
                                     {!!Form::close()!!}
                                     @endif
                                     @if(Auth::user() && ($job->user_id == Auth::user()->id))
@@ -154,10 +160,15 @@
                                 <div class="widghet">
                                     <h3>Job Location</h3>
                                     <div class="maps">
+
+                                        @if($job['job_location_city'] || $job['job_location_country'])
                                         <div id="map" class="map-full">
                                             <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q={{$job->job_location_city}}%2C%20c{{$job->job_location_country}}&t=&z=13&ie=UTF8&iwloc=&output=embed"
                                                 frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                                         </div>
+                                        @else
+                                        <i>No location added</i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="widghet">
@@ -193,7 +204,7 @@
             <!-- Start Content -->
             <div class="container">
                 <div class="row">
-                    <!-- Start Blog Posts -->
+                    <!-- Start Job Details-->
                     <div class="col-lg-12 col-md-12 col-xs-12">
 
 
@@ -208,41 +219,40 @@
                                     aria-controls="comments" aria-selected="true">Comments
                                     ({{$job->job_comments->count()}})</a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" id="likes-tab" data-toggle="tab" href="#likes" role="tab"
-                                    aria-controls="likes" aria-selected="false">Likes
-                                    ({{$job->job_likes->count()}})</a>
-                            </li> --}}
                         </ul>
                         <div class="tab-content" id="myTabContent">
+                            {{-- Comments --}}
                             <div class="tab-pane" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-                                <!-- Start Comment Area -->
+
                                 <div id="comments">
+                                    {{-- Start comment area --}}
                                     <ol class="comments-list">
                                         @foreach($job->job_comments as $job_comment)
                                         <li id="row_{{$job_comment->id}}">
                                             <div class="media">
                                                 <div class="info-body">
                                                     <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $job_comment->slug])}}">{{$job_comment->first_name}}
-                                                            {{$job_comment->last_name}} -
-                                                            {{'@'.$job_comment->username}}</a></h4>
-                                                    <p>{{$job_comment->comment}}</p>
-                                                    {{-- <form>
-                                                        <div class="form-group">
-                                                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                                                aria-describedby="emailHelp" placeholder="Enter email">
-                                                        </div>
-                                                    </form> --}}
-                                                    <span class="comment-date">{{\Carbon\Carbon::parse($job_comment->created_at)->format('d/m/Y')}}</span>
+                                                            {{$job_comment->last_name}}</a></h4>
+                                                    <p id="job_comment_{{$job_comment->id}}">{{$job_comment->comment}}</p>
+                                                    <div id="comment_input_wrapper_{{$job_comment->id}}">
+                                                    </div>
+                                                    <span class="comment-date" id="job_comment_date_{{$job_comment->id}}">
+                                                        {{\Carbon\Carbon::parse($job_comment->updated_at)->format('d/m/Y')}}
+                                                        @if($job_comment->updated_at != $job_comment->created_at)
+                                                        <small>- edited</small>
+                                                        @endif
+                                                    </span>
                                                     @if(Auth::user() && ($job_comment->user_id == Auth::user()->id))
                                                     <hr>
-                                                    <a href="#">
-                                                        <i class="lni-pencil"></i>
-                                                    </a>
-                                                    &nbsp;
-                                                    <a href="#" class="delete-comment" data-id="{{$job_comment->id}}">
-                                                        <i class="lni-trash"></i>
-                                                    </a>
+                                                    <div id="comment_actions_{{$job_comment->id}}">
+                                                        <a href="#" class="edit-comment mr-1" data-id="{{$job_comment->id}}">
+                                                            <i class="lni-pencil"></i>
+                                                        </a>
+
+                                                        <a href="#" class="delete-comment" data-id="{{$job_comment->id}}">
+                                                            <i class="lni-trash"></i>
+                                                        </a>
+                                                    </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -250,6 +260,8 @@
                                         </li>
                                         @endforeach
                                     </ol>
+                                    {{-- End comment area --}}
+
                                     <!-- Start Respond Form -->
                                     <div id="respond" class="mb-5">
                                         <h2 class="respond-title">Leave a comment</h2>
@@ -280,6 +292,9 @@
                                     <!-- End Respond Form -->
                                 </div>
                             </div>
+                            {{-- End comments --}}
+
+                            {{-- Applications --}}
                             <div class="tab-pane active" id="applications" role="tabpanel" aria-labelledby="applications-tab">
                                 <div class="mb-5">
                                     <div id="comments">
@@ -289,8 +304,7 @@
                                                 <div class="media">
                                                     <div class="info-body">
                                                         <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $job_application->slug])}}">{{$job_application->first_name}}
-                                                                {{$job_application->last_name}} -
-                                                                {{'@'.$job_application->username}}</a></h4>
+                                                                {{$job_application->last_name}}</a></h4>
                                                         <p>{{$job_application->comment}}</p>
                                                         <span class="comment-date">{{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</span>
                                                         @if(Auth::user() && ($job->user_id == Auth::user()->id) &&
@@ -318,26 +332,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="tab-pane" id="likes" role="tabpanel" aria-labelledby="likes-tab">
-                                <div class="mb-5">
-                                    <div id="comments">
-                                        <ol class="comments-list likes-list">
-                                            @foreach($job->job_likes as $job_like)
-                                            <li id="row_{{$job_like->id}}">
-                                                <div class="media">
-                                                    <div class="info-body">
-                                                        <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $job_like->slug])}}">{{$job_like->first_name}}
-                                                                {{$job_like->last_name}} - {{'@'.$job_like->username}}</a></h4>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div> --}}
+                            {{-- End applications --}}
                         </div>
                     </div>
+                    {{-- END JOB DETAILS --}}
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ use App\Profile;
 use App\User;
 use App\UserSkill;
 use App\Social;
+use Image;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -126,6 +127,7 @@ class ProfileController extends Controller
     public function update_profile_info (Request $request) {
 
 
+
              // Validation rules
              $rules = [
                 'gender' => 'required|max:1',
@@ -148,9 +150,21 @@ class ProfileController extends Controller
 
             // if validation is successful, get the profile
             $profile = Profile::where('user_id', Auth::id())->firstOrFail();
-            // update profile
-            $profile->update($request->all());
 
+            // check for uploaded file
+            if(!empty($request->file('image_url'))){
+                if($profile->image_url) {
+                 $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/'.$profile->image_url;
+                 if( file_exists($fileCheck) ) {
+                unlink($fileCheck);
+                  }
+                 }
+            $file = $this->uploadImage($request->file('image_url'), Auth::user()->username);
+            $profile->update(['image_url' => $file]);
+              }
+
+            // update profile
+            $profile->update($request->except('image_url'));
             $active_tab = 'profile-info';
 
              // redirect
@@ -245,6 +259,29 @@ class ProfileController extends Controller
     }
 
 
+
+    //method used to upload profile image
+    public function uploadImage($file, $folder){
+
+        //
+        ini_set('memory_limit','-1');
+
+        if (!is_dir(public_path().'/uploads/'.$folder)) {
+            mkdir(public_path().'/uploads/'.$folder, 0777, true);
+        }
+
+        $destinationPath = public_path().'/uploads/'.$folder.'/';
+
+        $file_name = time().'-'.$file->getClientOriginalName();
+
+        $image = Image::make($file);
+        $image->orientate();
+
+
+        $image->save($destinationPath . $file_name);
+
+        return $file_name;
+    }
 
 
 

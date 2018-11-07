@@ -27,10 +27,10 @@
                   <h3 class="block-title">Follow us on social networks</h3>
                   <p>That way you can keep up with the latest news and you help us a lot.</p>
                   <ul class="mt-3 footer-social">
-                    <li><a class="facebook" href="#"><i class="lni-facebook-filled"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="lni-twitter-filled"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="lni-linkedin-fill"></i></a></li>
-                    <li><a class="google-plus" href="#"><i class="lni-google-plus"></i></a></li>
+                    <li><a class="facebook" href="https://www.facebook.com/i1zivkovic"><i class="lni-facebook-filled"></i></a></li>
+                    <li><a class="twitter" href="https://twitter.com/zikaa1234"><i class="lni-twitter-filled"></i></a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/ivan-%C5%BEivkovi%C4%87-a3a17b150/"><i class="lni-linkedin-fill"></i></a></li>
+                    <li><a class="google-plus" href="https://plus.google.com/115975631602255992448"><i class="lni-google-plus"></i></a></li>
                   </ul>
                 </div>
               </div>

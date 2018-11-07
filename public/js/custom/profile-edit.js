@@ -1,3 +1,17 @@
+ // listener for file input
+ $('#image_url').change(function (e) {
+    if (e.target.files[0]) {
+        $('#image_url_label').html(e.target.files[0].name);
+    } else {
+        $('#image_url_label').html('Choose profile image..');
+    }
+
+});
+
+
+
+/* .---------------------------------------------------------------------------------------------------------------------------------- */
+
 $('#skill_list').select2({
 
     width: '100%',

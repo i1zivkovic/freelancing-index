@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="">
-                                        {{ Form::checkbox('notify_applications', '1', Auth::user()->notify_applications) }}
+                                    {{ Form::checkbox('notify_applications', '1', Auth::user()->notify_applications) }}
                                     <label class="form-check-label" for="notify_applications">
                                         Notify applications (e-mail)
                                     </label>
@@ -250,6 +250,23 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group">
+                                    <label class="control-label">Choose a profile image</label>
+                                    <div class="custom-file mb-3">
+                                        <input type="file" class="custom-file-input" id="image_url" name="image_url" value="{{old('image_url')}}">
+                                        <label class="custom-file-label form-control" for="file" id="image_url_label">Choose
+                                            profile
+                                            image...</label>
+                                        @if ($errors->has('image_url'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('image_url') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
 

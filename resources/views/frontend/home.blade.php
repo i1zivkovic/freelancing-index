@@ -20,7 +20,7 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <div class="contents text-center">
                             <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
-                            <p>Are you a freelancer looking for a full-time job or maybe you want to earn some money by
+                            <p>Are you a freelancer looking for a job or you want to earn some money by
                                 doing something you're good at? <br>Maybe you're a recuriter that needs the right people to
                                do a job for you? <br>We got you covered!</p>
                         </div>
@@ -84,8 +84,8 @@
                                 <i class="lni-user"></i>
                             </span>
                             <h4>Create an Account</h4>
-                            <p>First step is to create account.<br> Fill out necessary info so that
-                                users or companies know a little more about you.</p>
+                            <p>First step is to create an account.<br> Fill out necessary info so that other
+                                users know a little more about you.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -95,7 +95,7 @@
                             </span>
                             <h4>Search Jobs</h4>
                             <p>You can search jobs from our database and find the ones that you like.
-                                Simply apply to the job, fill out a form and user/company will receive your
+                                Simply apply to the job, fill out a form and job owner will receive your
                                 application.</p>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
 
 
         <!-- Listings Section Start -->
-        <section id="job-listings" class="section bg-cyan">
+        <section id="job-listings" class="section">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Recent Job Post</h2>
@@ -299,8 +299,7 @@
                                         {{$recentPost->post_comments_count}} Comments</span>
                                     <span class="meta-part"><i class="lni-heart-filled"></i>
                                         {{$recentPost->post_likes_count}} Likes</span>
-                                    <span class="meta-part"><i class="lni-calendar"></i>{{$recentPost->created_at->format('d/m/Y
-                                        H:i:s')}}</span>
+                                    <span class="meta-part"><i class="lni-calendar"></i>{{$recentPost->created_at->format('d/m/Y')}}</span>
                                 </div>
                                 <p>{{ str_limit($recentPost->description, $limit = 100, $end = '...') }}</p>
                                 {{-- <a href="posts/{{$recentPost->slug}}" class="btn btn-common">Read More</a> --}}
@@ -330,8 +329,7 @@
                                 <div class="download-text">
                                     <h4>Mobile apps coming soon!</h4>
                                     <p>We are currently in process of developing Android, iOS and Winows Phone apps.<br>
-                                        Be sure to subscribe to our newsletter so that you know when they go live and
-                                        can start using them.</p>
+                                        Every user registered will receive an e-mail once they go live so be sure to check you mailbox.</p>
                                 </div>
                             </div>
                         </div>
