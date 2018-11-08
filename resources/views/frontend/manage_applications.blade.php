@@ -74,7 +74,8 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 text-right">
-                                        <p>{{\Carbon\Carbon::createFromTimeStamp(strtotime($job_application->created_at))->diffForHumans()}}</p>
+                                        {{-- <p>{{\Carbon\Carbon::createFromTimeStamp(strtotime($job_application->created_at))->diffForHumans()}}</p> --}}
+                                        <p>{{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</p>
                                     </div>
                                 </div>
 

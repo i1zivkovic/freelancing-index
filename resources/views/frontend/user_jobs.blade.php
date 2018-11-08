@@ -24,7 +24,7 @@
                 <div class="col-sm-12 text-center mb-5">
                     <h3>My Job Ads</h3>
                 </div>
-                <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
+                <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-xs-12">
 
                     @if($jobs->count() > 0)
                     <p>About <b>{{$jobs->total()}}</b>
@@ -143,7 +143,7 @@
                                         <i class="lni-pencil"></i>
                                     </a></span>
                                 &nbsp;
-                                <span><a href="#" class="delete-job" data-id="{{$job->id}}">
+                                <span><a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
                                         <i class="lni-trash"></i>
                                     </a></span>
                                 @endif

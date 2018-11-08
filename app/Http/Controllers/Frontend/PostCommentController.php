@@ -53,6 +53,37 @@ class PostCommentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // check the length of comment first so it doesn't query database if it is valid
+        if(!(strlen($request->get('comment')) > 1000)) {
+            // if there exists comment that the logged in user has posted with given id
+            if(PostComment::where([['user_id', Auth::id()], ['id', $id]])->exists()) {
+                // get the comment and update the 'comment' property
+                $comment = PostComment::where([['id', $id], ['user_id', Auth::id()]])->firstOrFail();
+                $comment->update(['comment' => $request->get('comment')]);
+                // return OK response
+                $return = array(
+                    'success' => 'Your comment has been successfully updated!'
+                );
+                return response()->json($return, 200);
+            }
+            // if there is no comment with given id that the logged in user posted
+            else
+            {
+                // return error
+                $return = array(
+                    'error' => 'This comment does not exist in database!'
+                );
+                return response()->json($return, 400);
+            }
+        }
+        // if the comment is too long
+        else {
+            // return error
+            $return = array(
+                'error' => 'Your comment is too long! Maximum is 1000 characters and your has '.strlen($request->get('comment'))
+            );
+            return response()->json($return, 400);
+        }
     }
 
     /**

@@ -35,7 +35,7 @@
                                     <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $post->user->slug])}}"><i
                                                 class="lni-user"></i> By {{$post->user->username}}</a></span>
                                     <span class="meta-part"><i class="lni-calendar"></i>
-                                        {{$post->created_at->format('m/d/Y H:i:s')}}</span>
+                                        {{$post->updated_at->format('m/d/Y')}}</span>
                                 </div>
                                 <p>{{$post->description}}</p>
                                 @if(Auth::user() && ($post->user_id == Auth::user()->id))
@@ -44,23 +44,10 @@
                                     <i class="lni-pencil"></i>
                                 </a>
                                 &nbsp;
-                                <a href="#" class="delete-post" data-id="{{$post->id}}">
+                                <a href="#" class="delete-post text-danger" data-id="{{$post->id}}">
                                     <i class="lni-trash"></i>
                                 </a>
                                 @endif
-                                {{-- <div class="share-social">
-                                    <span>Share This Job:</span>
-                                    <div class="social-link">
-                                        <a class="MagNews" target="_blank" data-original-title="twitter" href="#"
-                                            data-toggle="tooltip" data-placement="top"><i class="lni-twitter-filled"></i></a>
-                                        <a class="facebook" target="_blank" data-original-title="facebook" href="#"
-                                            data-toggle="tooltip" data-placement="top"><i class="lni-facebook-filled"></i></a>
-                                        <a class="google" target="_blank" data-original-title="google-plus" href="#"
-                                            data-toggle="tooltip" data-placement="top"><i class="lni-google-plus"></i></a>
-                                        <a class="linkedin" target="_blank" data-original-title="linkedin" href="#"
-                                            data-toggle="tooltip" data-placement="top"><i class="lni-linkedin-fill"></i></a>
-                                    </div>
-                                </div> --}}
                             </div>
                             <!-- Post Content -->
                         </div>
@@ -116,17 +103,26 @@
                                             <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $comment->slug])}}">{{$comment->first_name}}
                                                     {{$comment->last_name}}</a></h4>
                                             <hr>
-                                            <p>{{$comment->comment}}</p>
-                                            <span class="comment-date">{{$comment->created_at->format('d/m/Y H:i:s')}}</span>
+                                            <p id="post_comment_{{$comment->id}}">{{$comment->comment}}</p>
+                                            <div id="comment_input_wrapper_{{$comment->id}}">
+                                            </div>
+                                            <span class="comment-date" id="post_comment_date_{{$comment->id}}">
+                                                {{$comment->created_at->format('d/m/Y')}}
+                                                @if($comment->updated_at != $comment->created_at)
+                                                <small>- edited</small>
+                                                @endif
+                                            </span>
+
                                             @if(Auth::user() && ($comment->user_id == Auth::user()->id))
                                             <hr>
-                                            <a href="#">
-                                                <i class="lni-pencil"></i>
-                                            </a>
-                                            &nbsp;
-                                            <a href="#" class="delete-comment" data-id="{{$comment->id}}">
-                                                <i class="lni-trash"></i>
-                                            </a>
+                                            <div id="comment_actions_{{$comment->id}}">
+                                                <a href="#" class="edit-comment mr-1" data-id="{{$comment->id}}">
+                                                    <i class="lni-pencil"></i>
+                                                </a>
+                                                <a href="#" class="delete-comment text-danger" data-id="{{$comment->id}}">
+                                                    <i class="lni-trash"></i>
+                                                </a>
+                                            </div>
                                             @endif
                                         </div>
                                     </div>

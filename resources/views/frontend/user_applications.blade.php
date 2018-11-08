@@ -40,7 +40,7 @@
 
                             <div class="col-md-4 text-center">
                                 <p><i class="far fa-calendar-alt"></i>
-                                    {{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</p>
+                                    {{\Carbon\Carbon::parse($job_application->updated_at)->format('d/m/Y')}}</p>
                             </div>
                             <div class="col-md-4 text-right">
                                 @if ($job_application->job_application_state->state == 'Rejected')

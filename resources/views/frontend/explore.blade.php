@@ -19,7 +19,7 @@
                     <div class="col-sm-12 text-center mb-5">
                         <h3>Explore</h3>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
+                    <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -59,7 +59,7 @@
 
 
                     <!-- Start Blog Posts -->
-                    <div class="col-lg-8 col-md-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
 
                         @if($posts->count() == 0)
                         <p class=""><b>0</b> results</p>

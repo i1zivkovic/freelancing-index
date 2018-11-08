@@ -29,7 +29,7 @@
                     <h3>My Posts</h3>
                 </div>
 
-                <div class="col-lg-4 col-md-12 col-xs-12 mb-2">
+                <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -64,7 +64,7 @@
                 </div>
 
                 <!-- Start Blog Posts -->
-                <div class="col-lg-8 col-md-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-xs-12">
 
                      @if($posts->count() > 0)
                         <p>About <b>{{$posts->total()}}</b>
@@ -90,7 +90,7 @@
                             <h3 class="post-title"><a href="{{route('frontend.posts.show',['slug' => $post->slug])}}">{{$post->title}}</a></h3>
                             <div class="meta">
                                 <span class="meta-part"><i class="lni-calendar"></i>
-                                    {{$post->created_at->format('d/m/Y H:i:s')}}</span>
+                                    {{$post->updated_at->format('d/m/Y')}}</span>
                                 <span class="meta-part"><i class="lni-heart-filled"></i>
                                     {{$post->post_likes_count}} Likes</span>
                                 <span class="meta-part"><i class="lni-comments-alt"></i>
@@ -105,7 +105,7 @@
                                 <i class="lni-pencil"></i>
                             </a>
                             &nbsp;
-                            <a href="#" class="delete-post" data-id="{{$post->id}}">
+                            <a href="#" class="delete-post text-danger" data-id="{{$post->id}}">
                                 <i class="lni-trash"></i>
                             </a>
                             @endif

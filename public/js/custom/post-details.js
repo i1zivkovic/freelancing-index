@@ -10,6 +10,150 @@ const swalWithBootstrapButtons = swal.mixin({
     buttonsStyling: false,
 });
 
+/* ----------------------------------------- COMMENT UPDATE ------------------------------------------------------------------- */
+
+
+// listener on the edit-comment icon
+$(".edit-comment").click(function (e) {
+    // prevent default
+    e.preventDefault();
+    // get comment id
+    var id = $(this).data('id');
+    // call edit function
+    editActions.edit(id);
+});
+
+
+// methods used to handle editing comment wrapped in object
+var editActions = {
+
+    /**
+     * Method used to handle 'edit' click
+     * @param {number} id Comment Id
+     */
+    edit: function (id) {
+        // hide elements
+        $('#post_comment_' + id).hide(); // post comment
+        $('#post_comment_date_' + id).hide(); // post comment date
+        $('#comment_actions_' + id + ' a').hide(); // comment actions (update, delete)
+        // append the accepnt and close icons with given id
+        $('#comment_actions_' + id).append(
+            `<div id="comment_edit_actions_${id}">
+                        <a href="#" class="mr-1" id="accept_comment_edit_${id}" data-id="${id}">
+                         <i class="lni-check-mark-circle"></i>
+                        </a>
+                         <a href="#" class="text-danger" id="close_comment_edit_${id}" data-id="${id}">
+                         <i class="lni-close"></i>
+                        </a>
+                        </div>`
+        );
+
+        // get current comment text
+        var comment = $('#post_comment_' + id).text();
+
+        // append text-area with given id and insert comment value
+        $("#comment_input_wrapper_" + id).append(
+            '<textarea id="comment-edit-textarea-' + id +
+            '" class="form-control" name="comment-edit" cols="45" rows="2" placeholder="" required> ' +
+            comment + ' </textarea> ');
+
+        // set the listener for canceling comment edit
+        $("#close_comment_edit_" + id).click(function (e) {
+            // prevent default
+            e.preventDefault();
+            // get comment id
+            var id = $(this).data('id');
+            // call cancel_edit method
+            editActions.cancel_edit(id);
+        });
+
+        // set the listener for accpeting the comment change
+        $("#accept_comment_edit_" + id).click(function (e) {
+            // prevent default
+            e.preventDefault();
+            // get comment id
+            var id = $(this).data('id');
+            // call the accept edit method
+            editActions.accept_edit(id);
+        });
+    },
+
+    /**
+     * Method used to cancel editing
+     * @param {number} id Comment Id
+     */
+    cancel_edit: function (id) {
+        // show
+        $('#post_comment_' + id).show(); // comment
+        $('#post_comment_date_' + id).show(); // date
+        $('#comment_actions_' + id + ' a').show(); // actions (update, delete)
+        //remove appended actions (accent, cancel)
+        $('#comment_edit_actions_' + id).remove();
+        //remove the textarea
+        $('#comment-edit-textarea-' + id).remove();
+    },
+    /**
+     * Method used to accept editing changes
+     * @param {number} id Comment Id
+     */
+    accept_edit: function (id) {
+        // get comment text
+        var new_comment = $('#comment-edit-textarea-' + id).val();
+        // call ajax method to update comment
+        updateComment(id, new_comment);
+    }
+}
+
+
+/**
+ * Method used to update comment
+ * @param {number} comment_id Id of the comment
+ * @param {string} comment Comment text
+ */
+function updateComment(comment_id, comment) {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $("input[name=_token]").val()
+        }
+    });
+    $.ajax({
+        url: '/post-comments/' + comment_id,
+        type: 'PUT',
+        dataType: 'JSON',
+        data: {
+            comment: comment
+        },
+        // if comment is updated, display message and reload page
+        success: function (data) {
+            console.log(data);
+            swalWithBootstrapButtons({
+                type: 'success',
+                title: 'Comment updated.',
+                text: '' + data.success,
+                confirmButtonText: 'Ok',
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.value) {
+                    location.reload();
+                }
+            });
+        },
+        // if error happens, display error message
+        error: function (error) {
+            swalWithBootstrapButtons({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error,
+            });
+        }
+    });
+
+}
+
+
+/* ----------------------------------------- COMMENT DELETE ------------------------------------------------------------------- */
 
 // CLICK EVENT ON COMMENT
 $(".delete-comment").click(function (e) {
@@ -84,7 +228,8 @@ function deleteComment(comment_id) {
         }
     });
 }
-/* ---------------------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------- POST DELETE ------------------------------------------------------------------- */
 
 
 // CLICK EVENT ON POST DELETE
@@ -160,7 +305,7 @@ function deletePost(post_id) {
     });
 }
 
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
+/* ----------------------------------------- LIKE/UNLIKE HANDLER ------------------------------------------------------------------- */
 
 // Toast swal mixin
 const toast = swal.mixin({

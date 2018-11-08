@@ -140,7 +140,7 @@
                                         <i class="lni-pencil"></i>
                                     </a>
                                     &nbsp;
-                                    <a href="#" class="delete-job" data-id="{{$job->id}}">
+                                    <a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
                                         <i class="lni-trash"></i>
                                     </a>
                                     @endif
@@ -249,7 +249,7 @@
                                                             <i class="lni-pencil"></i>
                                                         </a>
 
-                                                        <a href="#" class="delete-comment" data-id="{{$job_comment->id}}">
+                                                        <a href="#" class="delete-comment text-danger" data-id="{{$job_comment->id}}">
                                                             <i class="lni-trash"></i>
                                                         </a>
                                                     </div>
@@ -306,7 +306,7 @@
                                                         <h4 class="name"><a href="{{route('frontend.user.show',['slug' => $job_application->slug])}}">{{$job_application->first_name}}
                                                                 {{$job_application->last_name}}</a></h4>
                                                         <p>{{$job_application->comment}}</p>
-                                                        <span class="comment-date">{{\Carbon\Carbon::parse($job_application->created_at)->format('d/m/Y')}}</span>
+                                                        <span class="comment-date">{{\Carbon\Carbon::parse($job_application->updated_at)->format('d/m/Y')}}</span>
                                                         @if(Auth::user() && ($job->user_id == Auth::user()->id) &&
                                                         ($job_application->job_application_state == 'Waiting'))
                                                         <hr>

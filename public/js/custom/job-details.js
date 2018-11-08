@@ -47,7 +47,7 @@ var editActions = {
                         <a href="#" class="mr-1" id="accept_comment_edit_${id}" data-id="${id}">
                          <i class="lni-check-mark-circle"></i>
                         </a>
-                         <a href="#" id="close_comment_edit_${id}" data-id="${id}">
+                         <a href="#" class="text-danger" id="close_comment_edit_${id}" data-id="${id}">
                          <i class="lni-close"></i>
                         </a>
                         </div>`
@@ -129,7 +129,7 @@ function updateComment(comment_id, comment) {
         data: {
             comment: comment
         },
-        // if comment is deleted, display message and reload page
+        // if comment is updated, display message and reload page
         success: function (data) {
             console.log(data);
             swalWithBootstrapButtons({
