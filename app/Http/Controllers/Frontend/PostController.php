@@ -16,15 +16,16 @@ class PostController extends Controller
 {
 
       /**
-     * Display a listing of the resource.
+     * Display a listing of the posts.
      * User feed
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-
+        // get the array of ids from a users that a logged in user is following
         $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
 
+        // get the posts from those users
         $posts = Post::
         whereIn('user_id', $following_ids)
         ->withCount('post_comments','post_likes')
@@ -32,29 +33,29 @@ class PostController extends Controller
             'user',
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
-
+        // return view with posts
         return view('frontend.posts', compact('posts'));
     }
 
       /**
-     * Display a listing of the resource.
+     * Display a explore posts.
      *  Explore
      * @return \Illuminate\Http\Response
      */
     public function explore()
     {
-
+        // get all posts with pagination
         $posts = Post::withCount('post_comments','post_likes')
         ->with([
             'user',
         ]) -> orderBy('created_at','desc') -> paginate(5);
 
-
+        // return view
         return view('frontend.explore', compact('posts'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new post.
      *
      * @return \Illuminate\Http\Response
      */
@@ -64,7 +65,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created post in database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -99,14 +100,14 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified post.
      *
-     * @param  int  $id
+     * @param  int  $slug Post slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
-
+        // get the post from the slug
         $post = Post::
         where('slug',$slug)
         ->withCount('post_likes')
@@ -119,34 +120,38 @@ class PostController extends Controller
             }
         ]) -> firstOrFail();
 
+        // return view with data
         return view('frontend.post_details', compact('post'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified post.
      *
-     * @param  int  $id
+     * @param  int  $id id of the post
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+        // if there exists a post with given user id and post id
         if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
         {
-
+            //get it
          $post = Post::where('id',$id)->firstOrFail();
+         //return view
          return view('frontend.post_edit', compact('post'));
 
         }
+        //else redirect to 404 page
          else {
             return abort(404);
         }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post in database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request object containing info about the new post data
+     * @param  int  $id id of the job
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -186,30 +191,30 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified post from database.
      *
-     * @param  int  $id
+     * @param  int  $id Id of the post
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        //get the logged in user id
         $userId = Auth::id();
 
+        // if there exists a post with given user id and post id
         if( Post::where([['user_id', $userId], ['id', $id]])->exists() )
         {
 
-            // Delete post
+            // Delete post and all othere data will be deleted too that has relation
         Post::findOrFail($id)->delete();
-            // Delete comments
-        PostComment::where('post_id', $id)->delete();
-            // Delete likes
-        PostLike::where('post_id',$id)->delete();
+
+        //return ok
         $return = array(
             'success' => 'You have successfully deleted this post!'
         );
         return response()->json($return, 200);
         }
+        //else return error
         else {
             $return = array(
                 'error' => 'This post does not exist in database!'
@@ -221,19 +226,14 @@ class PostController extends Controller
 
 
     /**
-     * Get all posts for specified user id.
+     * Get all posts for specified user slug.
      *
-     * @param  int  $id
+     * @param  int  $slug Logged in user slug
      * @return \Illuminate\Http\Response
      */
     public function getMyPosts($slug)
     {
-
-
-        $postCount = Post::
-        where('user_id', Auth::id())
-        ->count();
-
+        // get the posts
         $posts = Post::
         where('user_id', Auth::id())
         ->withCount('post_comments','post_likes')
@@ -241,18 +241,22 @@ class PostController extends Controller
             'user',
         ]) -> paginate(5);
 
-        return view('frontend.user_posts', compact('posts','postCount'));
+        //return view with data
+        return view('frontend.user_posts', compact('posts'));
 
 
     }
 
     /**
      * Filter for user feed posts
+     * @param Request $request Request object containing data about filter
      */
     public function postPostFilter(Request $request){
 
+        //get the array of the users that currently logged in user is following
         $following_ids = Follow::where('follower_id',Auth::id())->select('user_id')->get();
 
+        // get filtered posts from those users
         $posts = Post::whereIn('user_id', $following_ids)
         ->when($request->input('q'), function($query) use ($request) {
             return $query->where(function ($query) use ($request) {
@@ -275,14 +279,14 @@ class PostController extends Controller
         ->with('user')
         ->orderBy('created_at','desc')
         ->paginate(5);
-/*
-        dd($posts); */
 
+        // return view
         return view('frontend.posts', compact('posts', 'request'));
     }
 
     /**
      * Filter for posts (explore()
+     * @param Request $request Request object containing data about filter
      */
     public function postPostExploreFilter(Request $request){
 
@@ -307,8 +311,6 @@ class PostController extends Controller
         ->with('user')
         ->orderBy('created_at','desc')
         ->paginate(5);
-/*
-        dd($posts); */
 
         return view('frontend.explore', compact('posts', 'request'));
     }

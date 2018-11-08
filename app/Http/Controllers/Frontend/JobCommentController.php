@@ -14,44 +14,43 @@ class JobCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request object containing info about job comment
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // set rules and check them
+
+        // set rules
         $rules = [
             'comment' => 'required|max:1000',
             'job_id' => 'required|exists:jobs,id',
         ];
 
+        // create validator
         $validator = Validator::make($request->all(), $rules);
 
+        // check for errors
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
         // if rules are asserted, create new comment
-        $comment = new JobComment;
-        $comment->comment = $request->comment;
-        $comment->user_id = Auth::id();
-        $comment->job_id = $request->job_id;
+        JobComment::create($request->all());
 
-        $comment->save();
-
+        // redirect back to the job
         return redirect()->to('jobs/'.$request->job_slug);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the job comment.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request object containing the info about comment
+     * @param  int  $id id of the comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // check the length of comment first so it doesn't query database if it is valid
+        // check the length of comment first so it doesn't query database if it is not valid
         if(!(strlen($request->get('comment')) > 1000)) {
             // if there exists comment that the logged in user has posted with given id
             if(JobComment::where([['user_id', Auth::id()], ['id', $id]])->exists()) {
@@ -85,13 +84,14 @@ class JobCommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified comment.
      *
-     * @param  int  $id
+     * @param  int  $id id of the comment
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        // id of the logged in user
         $userId = Auth::id();
 
         // if there is job comment that matches these conditionals

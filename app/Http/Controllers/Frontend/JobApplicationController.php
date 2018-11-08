@@ -15,9 +15,9 @@ class JobApplicationController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created job application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request containing info abour application
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

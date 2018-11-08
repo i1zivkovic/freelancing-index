@@ -271,6 +271,7 @@
                                         @csrf
                                         <input type="hidden" value="{{$job->id}}" name="job_id">
                                         <input type="hidden" value="{{$job->slug}}" name="job_slug">
+                                        <input type="hidden" value="{{Auth::id()}}" name="user_id">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">

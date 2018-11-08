@@ -66,6 +66,7 @@ class ProfileController extends Controller
             ]);
         }
 
+        // set active tab
         $active_tab = 'experiences';
 
         // redirect with success
@@ -115,7 +116,7 @@ class ProfileController extends Controller
                 'major' => $data['major'][$key]
             ]);
         }
-
+            // set active tab
         $active_tab = 'education';
 
         // redirect
@@ -165,6 +166,8 @@ class ProfileController extends Controller
 
             // update profile
             $profile->update($request->except('image_url'));
+
+            // set active tab
             $active_tab = 'profile-info';
 
              // redirect
@@ -202,7 +205,7 @@ class ProfileController extends Controller
 
         // update it
         $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password')), 'notify_applications' => $notify_applications ? $notify_applications : 0]);
-
+        // set active tab
         $active_tab = 'account-info';
           // redirect
           return redirect()->route('frontend.profileEdit', ['slug' => $user->slug])->with(array('account_success' => 'Account info updated successfully!', 'active-tab' => $active_tab));
@@ -238,7 +241,7 @@ class ProfileController extends Controller
         // bulk insert
         UserSkill::insert($arr);
 
-
+        // set active tab
          $active_tab = 'skills';
           // redirect
           return redirect()->route('frontend.profileEdit', ['slug' => Auth::user()->slug])->with(array('skills_success' => 'Skills updated successfully!', 'active-tab' => $active_tab));

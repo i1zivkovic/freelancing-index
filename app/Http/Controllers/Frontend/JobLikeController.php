@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class JobLikeController extends Controller
 {
+    /**
+     * Method used to handle likes/unlikes
+     * @param $id Id of the job
+     * @param $request contains info about the action (like, unlike)
+     */
     public function likeUnlikeHandler(Request $request, $id)
     {
         $action = $request->get('action');
