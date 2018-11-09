@@ -11,14 +11,14 @@ use Illuminate\Http\Request;
 
 class PostLikeController extends Controller
 {
+     /**
+     * Method used to handle likes/unlikes
+     * @param $id Id of the post
+     * @param $request contains info about the action (like, unlike)
+     */
     public function likeUnlikeHandler(Request $request, $id)
     {
         $action = $request->get('action');
-        /* return [
-            'status' => 1,
-            'jobId' => $id,
-            'userId' => Auth::id()
-            ]; */
 
         switch ($action) {
             // CASE LIKE

@@ -14,12 +14,16 @@ use Carbon\Carbon;
 class StepController extends Controller
 {
 
-
+    // method used to get the step one view
     public function getStepOne(){
 
         return view('frontend.step_one');
     }
 
+    /**
+     * method used to store data from step one
+     * @param Request $r request object containing data from step one form
+     *  */ 
     public function postStepOne(Request $r){
 
 
@@ -41,30 +45,41 @@ class StepController extends Controller
                 return back()->withErrors($validator)->withInput();
             }
 
+            // update or create profile
         $profile = Profile::updateOrCreate(['user_id' => Auth::id()], $r->all());
 
 
+        // if there is image set in file input
         if(!empty($r->file('image'))){
-           /*  $image = $this -> saveFiles($r->file('image')); */
             $image = $this->uploadImage($r->file('image'), Auth::user()->username);
             $profile->update(['image_url' => $image]);
         }
 
+        // return step two view
         return redirect(route('frontend.getStepTwo'));
 
     }
 
+    // method used to get step two view
     public function getStepTwo(){
         return view('frontend.step_two');
     }
 
+    /**
+     * method used to store data from step two
+     * @param Request $r request object containing data from step two form
+     *  */ 
     public function postStepTwo(Request $r){
+
+
         $arr = [];
         $skills = $r->skill_list;
 
+        // if there are no skills set, redirect to user profile
         if(empty($skills))
             return redirect(route('frontend.user.show',Auth::user()->slug));
 
+        // else store them in db
         $now = Carbon::now();
         $user_id = Auth::id();
         $skills_exist = UserSkill::where('user_id', $user_id)->exists();
@@ -79,21 +94,26 @@ class StepController extends Controller
 
         UserSkill::insert($arr);
 
+        // redirect to the user
         return redirect(route('frontend.user.show',Auth::user()->slug));
     }
 
+    /**
+     * Method used to upload profile image
+     * @param $file File 
+     * @param $folder Foler name
+     */
     public function uploadImage($file, $folder){
 
-        //
+        // remove memory limit
         ini_set('memory_limit','-1');
 
+        // if there is no folder, create one with all permissions
         if (!is_dir(public_path().'/uploads/'.$folder)) {
             mkdir(public_path().'/uploads/'.$folder, 0777, true);
-          /*   mkdir(public_path().'/uploads/'.$folder.'/thumb', 0777, true); */
         }
 
         $destinationPath = public_path().'/uploads/'.$folder.'/';
-       /*  $destinationPathThumb = public_path().'/uploads/'.$folder.'/thumb/'; */
 
         $file_name = time().'-'.$file->getClientOriginalName();
 
@@ -101,14 +121,10 @@ class StepController extends Controller
         $image->orientate();
 
 
-        $image->/* resize(130 , 130, function ($constraint) {
-            $constraint->aspectRatio();
-        })-> */save($destinationPath . $file_name);
-/*
-        $image->resize(45, 50, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPathThumb . $file_name); */
+        $image->save($destinationPath . $file_name);
 
+
+        // return file name
         return $file_name;
     }
 }

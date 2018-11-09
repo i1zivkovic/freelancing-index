@@ -58,8 +58,6 @@
     {!! Html::script(asset('js/jquery.slicknav.js')) !!}
     {!! Html::script(asset('js/jquery.counterup.min.js')) !!}
     {!! Html::script(asset('js/waypoints.min.js')) !!}
-    {!! Html::script(asset('js/form-validator.min.js')) !!}
-    {!! Html::script(asset('js/contact-form-script.js')) !!}
     {!! Html::script(asset('js/main.js')) !!}
 
     @yield('js')

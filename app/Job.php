@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/** Job model with relation functions */
 class Job extends Model
 {
     //

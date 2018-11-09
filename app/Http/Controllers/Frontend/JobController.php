@@ -18,14 +18,14 @@ use Validator;
 class JobController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display jobs.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-
+        
+        // get the jobs with other info
         $jobs = Job:: with([
             'user',
             'job_skills',
@@ -34,28 +34,28 @@ class JobController extends Controller
         ->withCount(['job_likes', 'job_comments'])
         -> orderBy('created_at','desc') -> paginate(5);
 
-        /* dd($jobs); */
-
+        // return job view with jobs data
         return view('frontend.jobs', compact('jobs'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new job.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
-
+        // get the business categories since there are only two
         $businessCategories = BusinessCategory::pluck('name','id');
+
+        // return view with data
         return view('frontend.job_create', compact('businessCategories'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created job in database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request object containing info about new job
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -107,7 +107,7 @@ class JobController extends Controller
             $job->job_files()->create(['path' => $file]);
         }
 
-        // redirect
+        // redirect back to job
         return redirect()->to('jobs/'.$job->slug);
     }
 
@@ -119,31 +119,35 @@ class JobController extends Controller
      */
     public function uploadFile($file, $folder){
 
+        // if folder does not exists, create one with all persmissions
         if (!is_dir(public_path().'/uploads/'.$folder)) {
             mkdir(public_path().'/uploads/'.$folder, 0777, true);
         }
 
+        // get the destination path
         $destinationPath = public_path().'/uploads/'.$folder.'/';
 
+        // get the file name and create new one with timestamp
         $file_name = time().'-'.$file->getClientOriginalName();
 
+        // move files / create file in $folder
         $file->move($destinationPath, $file_name);
 
+        // return file
         return $file_name;
     }
 
 
 
     /**
-     * Display the specified resource.
+     * Display the specified job details.
      *
-     * @param  int  $id
+     * @param  int  $slug Job slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
-        //
-
+        // get the specific job with other data
         $job = Job::
         where('slug',$slug)
         ->withCount('job_likes')
@@ -152,11 +156,6 @@ class JobController extends Controller
             'job_skills',
             'job_business_categories',
             'job_status',
-          /*   'job_likes'  => function($query) {
-                $query -> join('users', 'job_likes.user_id', 'users.id');
-                $query -> join('profiles', 'users.id', 'profiles.user_id');
-                $query -> select('job_likes.*', 'users.username', 'users.slug','profiles.first_name', 'profiles.last_name')->orderBy('job_likes.created_at','DESC');
-            }, */
             'job_applications' => function($query) {
                 $query -> join('users', 'job_applications.user_id', 'users.id');
                 $query -> join('profiles', 'users.id', 'profiles.user_id');
@@ -170,34 +169,37 @@ class JobController extends Controller
             }
         ]) -> firstOrFail();
 
-           /*  dd($job); */
-
+        // return job details with with given job data
         return view('frontend.job_details', compact('job'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified job.
      *
-     * @param  int  $id
+     * @param  int  $id Id of the job
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        // if there exists job that currently logged in user is owner of
         if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
+            //get it
               $job = Job::
             where('id',$id)
             ->with('job_files')
             ->firstOrFail();
 
+            // get the stored data used for select 2 autocomplete
              $selectedCategories = JobBusinessCategory::where('job_id', $id) ->pluck('business_category_id');
              $businessCategories = BusinessCategory::pluck('name','id');
 
             $selectedSkills = JobSkill::where('job_id', $id) ->pluck('skill_id');
             $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
 
+            // return edit view with data
             return view('frontend.job_edit', compact('job','businessCategories', 'selectedCategories', 'selectedSkills', 'skills'));
         }
+        // if there does not exist that job or user is wrong, return error page
         else {
             return abort(404);
         }
@@ -205,20 +207,19 @@ class JobController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified job in database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request object containing info about the job
      * @param  int  $id Job ID
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
 
-        /* dd($request); */
-
+            // if there exists job that currently logged in user is owner of
          if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
 
-            // Validation rules
+            // set validation rules
          $rules = [
             'title' => 'required|max:200|min:10',
             'job_location_country' => 'max:200|min:2',
@@ -254,7 +255,7 @@ class JobController extends Controller
             $job->job_files()->updateOrCreate([], ['path'=>$file]);
          }
 
-         //....
+         //create relations
          $arrCategories = [];
          $arrSkills= [];
          $categories = $request->business_category_id;
@@ -268,17 +269,18 @@ class JobController extends Controller
              array_push($arrSkills, ['skill_id' => $skills[$i], 'job_id' => $id, 'created_at' => $now, 'updated_at' => $now]);
          }
 
+         // store them
          JobBusinessCategory::where('job_id', $id)->delete();
          JobBusinessCategory::insert($arrCategories);
 
          JobSkill::where('job_id', $id)->delete();
          JobSkill::insert($arrSkills);
 
-
+         //redirect back to job
         return redirect()->to('jobs/'.$job->slug);
 
+        // if there does not exist that job or user is wrong, return error page
         } else {
-
             return abort(404);
 
         }
@@ -287,35 +289,29 @@ class JobController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified job from database.
      *
-     * @param  int  $id
+     * @param  int  $id id of the job
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        // get the logged in user id
         $userId = Auth::id();
-
+            // if there exists job that currently logged in user is owner of
             if( Job::where([['user_id', $userId], ['id', $id]])->exists() )
             {
-                // Delete Job
+            // Delete Job and all other data that has relation with it will be deleted (cascade)
             Job::findOrFail($id)->delete();
-                // Delete comments
-            JobComment::where('job_id', $id)->delete();
-                // Delete likes
-            JobLike::where('job_id',$id)->delete();
-                // Delete job business categories
-            JobBusinessCategory::where('job_id',$id)->delete();
-                // Delete job skills
-            JobSkill::where('job_id',$id)->delete();
-                // Delete job files
-            JobFile::where('job_id',$id)->delete();
+
+            // return ok status, because ajax 
             $return = array(
                 'success' => 'You have successfully deleted this job!'
             );
             return response()->json($return, 200);
             }
+
+            // return error
             else {
                 $return = array(
                     'error' => 'This job does not exist in database!'
@@ -326,6 +322,10 @@ class JobController extends Controller
     }
 
 
+    /**
+     * Method which returns filtered jobs
+     * @param Request $request Request object containing info about filter
+     */
     public function postJobsFilter(Request $request){
 
         $jobs = Job::
@@ -378,6 +378,10 @@ class JobController extends Controller
         return view('frontend.jobs', compact('jobs', 'request'));
     }
 
+     /**
+     * Method which returns filtered user jobs
+     * @param Request $request Request object containing info about filter
+     */
     public function postMyJobsFilter(Request $request){
 
         $jobs = Job::
@@ -435,15 +439,11 @@ class JobController extends Controller
     /**
      * Get all posts for specified user id.
      *
-     * @param  string  $slug
+     * @param  string  $slug User slug
      * @return \Illuminate\Http\Response
      */
     public function getMyJobs($slug)
     {
-
-        $jobCount = Job::
-        where('user_id', Auth::id())
-        ->count();
 
         $jobs = Job::
         where('user_id', Auth::id())
@@ -452,7 +452,7 @@ class JobController extends Controller
             'user',
         ]) -> orderBy('created_at','desc')-> paginate(5);
 
-        return view('frontend.user_jobs', compact('jobs','jobCount'));
+        return view('frontend.user_jobs', compact('jobs'));
     }
 
 

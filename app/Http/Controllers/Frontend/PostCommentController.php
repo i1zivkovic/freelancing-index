@@ -13,46 +13,43 @@ class PostCommentController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comment in database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request object containing info about the comment
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
+        //set rulesw
         $rules = [
             'comment' => 'required|max:1000',
             'post_id' => 'required|exists:posts,id',
         ];
-
+        //create validator
         $validator = Validator::make($request->all(), $rules);
-
+        //check for erros
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        /* dd($request); */
-        $comment = new PostComment;
-        $comment->comment = $request->comment;
-        $comment->user_id = Auth::id();
-        $comment->post_id = $request->post_id;
+        // if there are no errors, create comment
+        PostComment::create($request->all());
 
-        $comment->save();
-
+        //return to the job
         return redirect()->to('posts/'.$request->post_slug);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post comment in database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request object containing info about the comment
+     * @param  int  $id Id of the post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+
         // check the length of comment first so it doesn't query database if it is valid
         if(!(strlen($request->get('comment')) > 1000)) {
             // if there exists comment that the logged in user has posted with given id
@@ -87,24 +84,28 @@ class PostCommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified post comment from database.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-
+        //get logged in user id
         $userId = Auth::id();
 
+        // if there exists comment with given user_id and post id
         if( PostComment::where([['user_id', $userId], ['id', $id]])->exists() )
         {
+        //delete it
         PostComment::findOrFail($id)->delete();
+        //return OK
         $return = array(
             'success' => 'Comment has been successfully deleted!'
         );
         return response()->json($return, 200);
         }
+        //else return error
         else {
             $return = array(
                 'error' => 'This comment does not exist in database!'

@@ -11,11 +11,12 @@ use Auth;
 
 class CommunityController extends Controller
 {
-    //
+    // Method used to fetch users
     public function index() {
 
         // paginate users
         $users = User::with(['userProfile', 'userLocation', 'userSkills', 'followers'])
+        // if they have confirmed their e-mail
         ->where('email_verified_at', '<>',null)
         ->paginate(10);
 
@@ -31,7 +32,7 @@ class CommunityController extends Controller
         $followers = User::whereIn('id', $followers_ids)->with(['userProfile', 'userLocation', 'userSkills', 'followers'])->paginate(10);
 
         return view('frontend.user_followers', compact('followers'));
-        dd($followers);
+       
     }
 
     public function show_following (){
@@ -42,13 +43,13 @@ class CommunityController extends Controller
          $following = User::whereIn('id', $following_ids)->with(['userProfile', 'userLocation', 'userSkills', 'followers'])->paginate(10);
 
         return view('frontend.user_following', compact('following'));
-         dd($followers);
+     
     }
 
 
     /**
      * Method used to follow or unfollow user
-     * @param request action
+     * @param request contains info about action
      * @param id Id of the user being followed
      */
     public function follow_unfollow(Request $request, $id){

@@ -15,13 +15,13 @@ class HomeController extends Controller
 {
 
     /**
-     * Show the application dashboard.
+     * Show the application home page
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-
+        //get recent posts
         $recentPosts = Post::
         withCount('post_likes', 'post_comments')
         ->with([
@@ -30,7 +30,7 @@ class HomeController extends Controller
             }
         ]) ->orderBy('created_at','DESC')->take(3)->get();
 
-
+        //get recent jobs
         $recentJobs = Job::with([
             'job_skills',
             'job_business_categories',
@@ -42,30 +42,25 @@ class HomeController extends Controller
         /* ->select('id','slug','user_id', 'title', 'description','offer', 'is_per_hour', 'job_location_city','job_location_country','is_remote')  *///
         ->take(4)->get();
 
-       /*  dd($recentJobs); */
-
+       /* Get counts */
         $jobCount = Job::count();
-
         $userCount = User::count();
-
         $postCount = Post::count();
-
         $jobApplicationCount = JobApplication::count();
-
         $companyCount = Company::count();
 
-
+            // return home page with counts and recent data
         return view('frontend.home', compact('recentPosts','recentJobs','jobCount','userCount','jobApplicationCount','postCount'));
     }
 
 
-
+    // return FAQ page
     public function faq() {
         return view('frontend.faq');
     }
 
 
-
+    // return ABOUT page
     public function about() {
         return view('frontend.about');
     }

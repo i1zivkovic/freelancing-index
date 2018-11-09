@@ -4,9 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/** Job application model with relation functions */
 class JobApplication extends Model
 {
-    //
+
     protected $fillable = ['job_id','user_id', 'comment', 'job_application_state_id'];
 
 

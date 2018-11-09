@@ -11,7 +11,8 @@ use Auth;
 class AjaxController extends Controller
 {
     /**
-     * @param Request $request
+     * Method used for select 2 autocomplete (skills)
+     * @param Request $request contains info about searched skills
      * @return \Illuminate\Http\JsonResponse
      */
     public function findSkill(Request $request)
@@ -34,6 +35,10 @@ class AjaxController extends Controller
     }
 
 
+    /**
+     * Method used to delete file from job
+     * @param id id of the file 
+     */
     public function deleteJobFile($id) {
 
         $job_file = JobFile::findOrFail($id);

@@ -13,7 +13,10 @@ use Auth;
 class UserController extends Controller
 {
 
-    // my profile
+    /**
+     * Method used to show profile
+     * @param $slug user slug
+     */
     public function show($slug){
         $user = User::
         where('slug', $slug)
@@ -27,7 +30,10 @@ class UserController extends Controller
 
 
 
-    // profile edit
+    /**
+     * Method used to show edit view for specific user
+     * @param $lug user slug
+     */
     public function profile_edit($slug) {
 
         $user = User::

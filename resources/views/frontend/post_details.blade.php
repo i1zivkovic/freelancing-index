@@ -138,6 +138,7 @@
                                 @csrf
                                 <input type="hidden" value="{{$post->id}}" name="post_id">
                                 <input type="hidden" value="{{$post->slug}}" name="post_slug">
+                                <input type="hidden" value="{{Auth::id()}}" name="user_id">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
