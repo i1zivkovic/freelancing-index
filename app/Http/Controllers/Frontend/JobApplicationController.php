@@ -131,6 +131,9 @@ class JobApplicationController extends Controller
                     'verb' => $job_application_state_name
                 );
                 return response()->json($return, 200);
+
+
+
             }
             // if the owner id does not match the currently logged in user_id
             else {

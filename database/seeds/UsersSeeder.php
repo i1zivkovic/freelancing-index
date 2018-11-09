@@ -24,8 +24,6 @@ class UsersSeeder extends Seeder
             'email' => 'i1zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => '2018-11-03 20:08:20',
-            'is_active' => 1,
-            'notify_applications' => 1
         ]);
          User::create([
             'role_id' => 2,
@@ -34,8 +32,6 @@ class UsersSeeder extends Seeder
             'email' => 'i2zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => '2018-11-03 20:08:20',
-            'is_active' => 1,
-            'notify_applications' => 1
         ]);
        User::create([
             'role_id' => 2,
@@ -44,8 +40,6 @@ class UsersSeeder extends Seeder
             'email' => 'i3zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => '2018-11-03 20:08:20',
-            'is_active' => 1,
-            'notify_applications' => 1
         ]);
         User::create([
             'role_id' => 2,
@@ -54,8 +48,6 @@ class UsersSeeder extends Seeder
             'email' => 'i4zivkovic@outlook.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => '2018-11-03 20:08:20',
-            'is_active' => 1,
-            'notify_applications' => 1
         ]);
 
          UserSkill::create([

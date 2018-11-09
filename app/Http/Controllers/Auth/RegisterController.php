@@ -71,8 +71,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'slug' => $slug.'-'.time(),
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'notify_applications' => 1
+            'password' => Hash::make($data['password'])
         ]);
     }
 

@@ -124,11 +124,19 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="">
                                     {{ Form::checkbox('notify_applications', '1', Auth::user()->notify_applications) }}
                                     <label class="form-check-label" for="notify_applications">
                                         Notify applications (e-mail)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="">
+                                    {{ Form::checkbox('notify_application_status', '1', Auth::user()->notify_application_status) }}
+                                    <label class="form-check-label" for="notify_applications_status">
+                                        Notify me about application status change
                                     </label>
                                 </div>
                             </div>

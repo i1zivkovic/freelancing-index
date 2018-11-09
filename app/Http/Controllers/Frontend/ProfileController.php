@@ -187,6 +187,7 @@ class ProfileController extends Controller
         }
 
         $notify_applications = $request->get('notify_applications');
+        $notify_application_status = $request->get('notify_application_status');
 
         // create validator with given rules and check request
         $validator = Validator::make($request->all(), $rules);
@@ -201,7 +202,7 @@ class ProfileController extends Controller
         $user = User::findOrFail(Auth::id());
 
         // update it
-        $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password')), 'notify_applications' => $notify_applications ? $notify_applications : 0]);
+        $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password')), 'notify_applications' => $notify_applications ? $notify_applications : 0, 'notify_application_status' => $notify_application_status ? $notify_application_status : 0]);
 
         $active_tab = 'account-info';
           // redirect
