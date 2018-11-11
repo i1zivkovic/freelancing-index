@@ -10,6 +10,9 @@ use App\PostComment;
 use App\PostLike;
 use App\User;
 use App\Follow;
+use App\PostFile;
+use File;
+use Validator;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -67,34 +70,38 @@ class PostController extends Controller
     /**
      * Store a newly created post in database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request object containing info and data about post
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-/*
-        dd($request); */
 
-       /*  $rules = [
-            'title' => 'required|max:1000',
-            'post_id' => 'required|exists:posts,id',
+        // Validation rules
+        $rules = [
+            'title' => 'required|max:150|min:10',
+            'description' => 'max:1000|min:50',
+            'file' => 'required'
         ];
 
+        // make validator
         $validator = Validator::make($request->all(), $rules);
 
+        // check if validation success
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
-        } */
+        }
 
-        /* dd($request); */
-        $post = new Post;
-        $post->title = $request->title;
-        $post->user_id = Auth::id();
-        $post->description = $request->description;
-        $post->slug = str_slug($request->title, '-').time();
+         // create post
+         $post = Post::create($request->except(['file'])+['slug' => str_slug($request->title, '-').time(), 'user_id' => Auth::id()]);
 
-        $post->save();
 
+          // upload file if exists
+        if(!empty($request->file('file'))){
+            $file = $this->uploadFile($request->file('file'), Auth::user()->username, $post->id);
+            $post->post_files()->create(['path' => $file]);
+        }
+
+        // redirect to post
         return redirect()->to('posts/'.$post->slug);
 
     }
@@ -102,7 +109,7 @@ class PostController extends Controller
     /**
      * Display the specified post.
      *
-     * @param  int  $slug Post slug
+     * @param  string  $slug Post slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -132,13 +139,19 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        // if there exists a post with given user id and post id
-        if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
+        // if there exists a post with given post id
+        if( Post::where([['id', $id]])->exists())
         {
             //get it
-         $post = Post::where('id',$id)->firstOrFail();
-         //return view
-         return view('frontend.post_edit', compact('post'));
+            $post = Post::findOrFail($id);
+
+            // if the user that is making the request is not the owner
+            if($post->user_id != Auth::id()) {
+                // show 403 error
+                return abort(403);
+            }
+            //return view
+            return view('frontend.post_edit', compact('post'));
 
         }
         //else redirect to 404 page
@@ -151,40 +164,69 @@ class PostController extends Controller
      * Update the specified post in database.
      *
      * @param  \Illuminate\Http\Request  $request object containing info about the new post data
-     * @param  int  $id id of the job
+     * @param  int  $id id of the post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
 
-        /*  $rules = [
-             'title' => 'required|max:1000',
-             'post_id' => 'required|exists:posts,id',
-         ];
+         // if there exists post  with given id
+         if( Post::where([['id', $id]])->exists() ) {
+             //get the post
+            $post = Post::findOrFail($id);
 
-         $validator = Validator::make($request->all(), $rules);
+             // if the user that is making the request is not the owner
+             if($post->user_id != Auth::id()) {
+                // show 403 page
+                return abort(403);
+            }
+            // else if the user is owner
+            else {
+                // Validation rules
+                $rules = [
+                    'title' => 'required|max:150|min:10',
+                    'description' => 'max:1000|min:50',
+                    'file' => 'required'
+                ];
 
-         if ($validator->fails()) {
-             return back()->withErrors($validator)->withInput();
-         } */
+                // make validator
+                $validator = Validator::make($request->all(), $rules);
 
-         /* dd($request); */
+                // check if validation success
+                if ($validator->fails()) {
+                    return back()->withErrors($validator)->withInput();
+                }
 
+                 // update all field except file
+                 $post->update($request->except(['file'])+['slug'=> str_slug($request->title, '-').time()]);
 
-         if( Post::where([['user_id', Auth::id()], ['id', $id]])->exists())
-         {
+                 // if file is uploaded
+                if(!empty($request->file('file'))){
+                    // and there is already url in database for that post
+                    if(!empty($post->post_files)) {
+                        // get the path
+                        $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id.'/'.$post->post_files->path;
+                    if( file_exists($fileCheck) ) {
+                        //delete file
+                        unlink($fileCheck);
+                        //delete folder
+                        File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id);
+                    }
+                }
+                    //create new file and folder
+                    $file = $this->uploadFile($request->file('file'), Auth::user()->username, $post->id);
+                    // update or create post_file relation
+                    $post->post_files()->updateOrCreate([], ['path'=>$file]);
+                }
 
-         $post = Post::find($id);
-         $post->title = $request->title;
-         $post->description = $request->description;
-         $post->slug = str_slug($request->title, '-').time();
+                 //redirect back to post
+                return redirect()->to('posts/'.$post->slug);
+            }
 
-         $post->save();
-
-
-         return redirect()->to('posts/'.$post->slug);
          }
+         // if there is no post with given id
          else {
+             // return 404 page
              return abort(404);
          }
 
@@ -201,20 +243,49 @@ class PostController extends Controller
         //get the logged in user id
         $userId = Auth::id();
 
-        // if there exists a post with given user id and post id
-        if( Post::where([['user_id', $userId], ['id', $id]])->exists() )
+        // if there exists a post with given  post id
+        if( Post::where([['id', $id]])->exists() )
         {
+            // get the post
+            $post = Post::findOrFail($id);
+
+            // if the user that is making the request is not the owner
+            if($post->user_id != Auth::id()) {
+                // show 403 error
+                $return = array(
+                    'error' => 'You are not allowed to execute this action!'
+                );
+                return response()->json($return, 400);
+            }
+
+
+             // get the post file id
+             $post_file_id = PostFile::where('post_id', $id)->select('id')->firstOrFail();
+
+             // if there is file
+             if($post_file_id) {
+                 // get the path
+                 $filePath = public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id.'/'.$post->post_files->path;
+
+                 // check for file  and delete folder/file if exists
+                 if( file_exists($filePath)) {
+                     //delete file
+                     unlink($filePath);
+                     //delete folder
+                      File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id);
+                 }
+             }
 
             // Delete post and all othere data will be deleted too that has relation
-        Post::findOrFail($id)->delete();
+            $post->delete();
 
-        //return ok
-        $return = array(
-            'success' => 'You have successfully deleted this post!'
-        );
-        return response()->json($return, 200);
-        }
-        //else return error
+            //return ok
+            $return = array(
+                'success' => 'You have successfully deleted this post!'
+            );
+            return response()->json($return, 200);
+            }
+            //else return error
         else {
             $return = array(
                 'error' => 'This post does not exist in database!'
@@ -223,12 +294,10 @@ class PostController extends Controller
         }
     }
 
-
-
     /**
-     * Get all posts for specified user slug.
+     * Get all posts (paginate) for specified user )slug).
      *
-     * @param  int  $slug Logged in user slug
+     * @param  string  $slug Logged in user slug
      * @return \Illuminate\Http\Response
      */
     public function getMyPosts($slug)
@@ -239,7 +308,7 @@ class PostController extends Controller
         ->withCount('post_comments','post_likes')
         ->with([
             'user',
-        ]) -> paginate(5);
+        ]) ->orderBy('updated_at','DESC') -> paginate(5);
 
         //return view with data
         return view('frontend.user_posts', compact('posts'));
@@ -318,6 +387,7 @@ class PostController extends Controller
 
     /**
      * Filter for my posts
+     * @param Request $request Request object containing info about filters
      */
     public function postMyPostFilter(Request $request){
         $posts = Post::
@@ -334,11 +404,38 @@ class PostController extends Controller
         ->withCount(['post_likes', 'post_comments'])
         ->orderBy('created_at','desc')
         ->paginate(5);
-/*
-        dd($posts); */
 
         return view('frontend.user_posts', compact('posts', 'request'));
     }
+
+
+
+    /**
+     * Method used to upload files
+     * @param $file file
+     * @param $username username of the logged in user
+     * @param $post_id Id of the post
+     */
+    public function uploadFile($file, $username, $post_id){
+
+        // if folder does not exists, create one with all persmissions
+        if (!is_dir(public_path().'/uploads/'.$username.'/posts/'.$post_id)) {
+            mkdir(public_path().'/uploads/'.$username.'/posts/'.$post_id, 0777, true);
+        }
+
+        // get the destination path
+        $destinationPath = public_path().'/uploads/'.$username.'/posts/'.$post_id.'/';
+
+        // get the file name and create new one with timestamp
+        $file_name = time().'-'.$file->getClientOriginalName();
+
+        // move files / create file in $folder
+        $file->move($destinationPath, $file_name);
+
+        // return file
+        return $file_name;
+    }
+
 
 
 }

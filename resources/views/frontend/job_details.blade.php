@@ -96,7 +96,7 @@
                                     Attached file
                                 </h5>
                                 @if ($job->job_files)
-                                <p id="file-info"> <a href="{{asset('uploads')}}/{{$job->user->username}}/{{$job->job_files->path}}"
+                                <p id="file-info"> <a href="{{asset('uploads')}}/{{$job->user->username}}/jobs/{{$job->id}}/{{$job->job_files->path}}"
                                         download>{{$job->job_files->path}}</a>
                                     @else
                                     <i>No files uploaded</i>

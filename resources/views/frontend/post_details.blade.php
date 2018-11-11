@@ -20,13 +20,6 @@
                     <div class="col-lg-8 col-md-12 col-xs-12">
                         <!-- Start Post -->
                         <div class="blog-post">
-                            <!-- Post thumb -->
-                            <div class="post-thumb">
-                                <img class="img-fluid" src="{{asset('img')}}/blog/blog1.jpg" alt="">
-                                <div class="hover-wrap">
-                                </div>
-                            </div>
-                            <!-- End Post post-thumb -->
 
                             <!-- Post Content -->
                             <div class="post-content">
@@ -38,6 +31,13 @@
                                         {{$post->updated_at->format('m/d/Y')}}</span>
                                 </div>
                                 <p>{{$post->description}}</p>
+                                <br>
+                                @if ($post->post_files)
+                                <p id="file-info"> <a href="{{asset('uploads')}}/{{$post->user->username}}/posts/{{$post->id}}/{{$post->post_files->path}}"
+                                        download>{{$post->post_files->path}}</a>
+                                    @else
+                                    <i>No files uploaded</i>
+                                    @endif
                                 @if(Auth::user() && ($post->user_id == Auth::user()->id))
                                 <hr>
                                 <a href="{{route('frontend.posts.edit',['id' => $post->id])}}">
@@ -60,9 +60,9 @@
                         <div class="sideber">
                             <div class="widghet">
                                 <h3>Share This Post</h3>
-                                <div class="share-job">
+                                <div class="share-post">
                                     <div class="form-group">
-                                        <input type="text" name="share_link" class="form-control" value="http://localhost:8000/jobs/{{$post->slug}}"
+                                        <input type="text" name="share_link" class="form-control" value="http://localhost:8000/posts/{{$post->slug}}"
                                             style="color: #9a9a9a !important;">
                                         <div class="clearfix"></div>
                                     </div>

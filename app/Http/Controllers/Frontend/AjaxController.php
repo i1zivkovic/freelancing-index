@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Skill;
 use App\PostComment;
 use App\JobFile;
+use App\Job;
+use File;
 use Auth;
 
 class AjaxController extends Controller
@@ -37,21 +39,44 @@ class AjaxController extends Controller
 
     /**
      * Method used to delete file from job
-     * @param id id of the file 
+     * @param $request request object
      */
-    public function deleteJobFile($id) {
+    public function deleteJobFile(Request $request) {
 
-        $job_file = JobFile::findOrFail($id);
+
+        // id of the file
+        $file_id = $request['file_id'];
+
+        $job_file = JobFile::findOrFail($file_id);
+
+        $job = Job::findOrFail($job_file->job_id);
+
+        // check if file exists
         if ($job_file->exists()) {
-            unlink(public_path().'/uploads/'.Auth::user()->username.'/'.$job_file->path);
+
+            // if file exists but the user is not thw owner of the job
+            if($job->user_id != Auth::id()) {
+                $return = array(
+                    'error' => 'You are not allowed to execute this action!'
+                );
+                return response()->json($return, 403);
+            }
+
+            //delete file
+            unlink(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job_file->job_id.'/'.$job_file->path);
+            //delete folder
+            File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job_file->job_id);
+            // delete from DB
             $job_file->delete();
-            return [
-                'status' => 1
-            ];
+            $return = array(
+                'success' => 'You have successfully deleted this file!'
+            );
+            return response()->json($return, 200);
         }else {
-            return [
-                'status' => 0
-            ];
+            $return = array(
+                'error' => 'Error deleting while file!'
+            );
+            return response()->json($return, 404);
         }
     }
 }

@@ -14,6 +14,7 @@ use App\JobLike;
 use App\JobFile;
 use Carbon\Carbon;
 use App\Skill;
+use File;
 use Validator;
 class JobController extends Controller
 {
@@ -24,7 +25,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        
+
         // get the jobs with other info
         $jobs = Job:: with([
             'user',
@@ -103,7 +104,7 @@ class JobController extends Controller
 
         // upload file if exists
         if(!empty($request->file('file'))){
-            $file = $this->uploadFile($request->file('file'), Auth::user()->username);
+            $file = $this->uploadFile($request->file('file'), Auth::user()->username, $job->id);
             $job->job_files()->create(['path' => $file]);
         }
 
@@ -117,15 +118,15 @@ class JobController extends Controller
      * @param $file file
      * @param $folder name of the folder
      */
-    public function uploadFile($file, $folder){
+    public function uploadFile($file, $username, $job_id){
 
         // if folder does not exists, create one with all persmissions
-        if (!is_dir(public_path().'/uploads/'.$folder)) {
-            mkdir(public_path().'/uploads/'.$folder, 0777, true);
+        if (!is_dir(public_path().'/uploads/'.$username.'/jobs/'.$job_id)) {
+            mkdir(public_path().'/uploads/'.$username.'/jobs/'.$job_id, 0777, true);
         }
 
         // get the destination path
-        $destinationPath = public_path().'/uploads/'.$folder.'/';
+        $destinationPath = public_path().'/uploads/'.$username.'/jobs/'.$job_id.'/';
 
         // get the file name and create new one with timestamp
         $file_name = time().'-'.$file->getClientOriginalName();
@@ -142,7 +143,7 @@ class JobController extends Controller
     /**
      * Display the specified job details.
      *
-     * @param  int  $slug Job slug
+     * @param  string  $slug Job slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -181,13 +182,18 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        // if there exists job that currently logged in user is owner of
-        if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
+        // if there exists job
+        if( Job::where([['id', $id]])->exists() ) {
             //get it
               $job = Job::
             where('id',$id)
             ->with('job_files')
             ->firstOrFail();
+
+            // if the logged in user is not the owner, return 403
+            if($job->user_id != Auth::id()) {
+                return abort(403);
+            }
 
             // get the stored data used for select 2 autocomplete
              $selectedCategories = JobBusinessCategory::where('job_id', $id) ->pluck('business_category_id');
@@ -217,64 +223,73 @@ class JobController extends Controller
     {
 
             // if there exists job that currently logged in user is owner of
-         if( Job::where([['user_id', Auth::id()], ['id', $id]])->exists() ) {
+         if( Job::where([['id', $id]])->exists() ) {
 
-            // set validation rules
-         $rules = [
-            'title' => 'required|max:200|min:10',
-            'job_location_country' => 'max:200|min:2',
-            'job_location_city' => 'max:100|min:2',
-            'description' => 'max:1000|min:50',
-            'offer' => 'required|numeric',
-        ];
+            // find the specific job
+            $job = Job::with('job_files')
+                ->findOrFail($id);
 
-        // create validator with given rules and check request
-        $validator = Validator::make($request->all(), $rules);
+                // if the logged in user is not the owner
+                if($job->user_id != Auth::id()) {
+                    return abort(403);
+                }
 
-        // check if validation succeeds
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+                // set validation rules
+            $rules = [
+                'title' => 'required|max:200|min:10',
+                'job_location_country' => 'max:200|min:2',
+                'job_location_city' => 'max:100|min:2',
+                'description' => 'max:1000|min:50',
+                'offer' => 'required|numeric',
+            ];
 
-         // find the specific job
-         $job = Job::with('job_files')
-         ->findOrFail($id);
+            // create validator with given rules and check request
+            $validator = Validator::make($request->all(), $rules);
 
-        // update all field except categories and skills
-        $job->update($request->except(['business_category_id','skills_list'])+['slug'=> str_slug($request->title, '-').time()]);
-
-        // check for uploaded file
-        if(!empty($request->file('file'))){
-            if(!empty($job->job_files)) {
-                 $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/'.$job->job_files->path;
-            if( file_exists($fileCheck) ) {
-                unlink($fileCheck);
+            // check if validation succeeds
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
             }
-         }
-            $file = $this->uploadFile($request->file('file'), Auth::user()->username);
-            $job->job_files()->updateOrCreate([], ['path'=>$file]);
-         }
 
-         //create relations
-         $arrCategories = [];
-         $arrSkills= [];
-         $categories = $request->business_category_id;
-         $skills = $request->skill_list;
-         $now = Carbon::now();
 
-         for ($i = 0; $i < count($categories); $i++) {
-             array_push($arrCategories, ['business_category_id' => $categories[$i], 'job_id' => $id, 'created_at' => $now, 'updated_at' => $now]);
-         }
-         for ($i = 0; $i < count($skills); $i++) {
-             array_push($arrSkills, ['skill_id' => $skills[$i], 'job_id' => $id, 'created_at' => $now, 'updated_at' => $now]);
-         }
+            // update all field except categories and skills
+            $job->update($request->except(['business_category_id','skills_list'])+['slug'=> str_slug($request->title, '-').time()]);
 
-         // store them
-         JobBusinessCategory::where('job_id', $id)->delete();
-         JobBusinessCategory::insert($arrCategories);
+            // check for uploaded file
+            if(!empty($request->file('file'))){
+                if(!empty($job->job_files)) {
+                    $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id.'/'.$job->job_files->path;
+                if( file_exists($fileCheck) ) {
+                    //delete file
+                    unlink($fileCheck);
+                    //delete folder
+                    File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id);
+                }
+            }
+                $file = $this->uploadFile($request->file('file'), Auth::user()->username, $job->id);
+                $job->job_files()->updateOrCreate([], ['path'=>$file]);
+            }
 
-         JobSkill::where('job_id', $id)->delete();
-         JobSkill::insert($arrSkills);
+            //create relations
+            $arrCategories = [];
+            $arrSkills= [];
+            $categories = $request->business_category_id;
+            $skills = $request->skill_list;
+            $now = Carbon::now();
+
+            for ($i = 0; $i < count($categories); $i++) {
+                array_push($arrCategories, ['business_category_id' => $categories[$i], 'job_id' => $id, 'created_at' => $now, 'updated_at' => $now]);
+            }
+            for ($i = 0; $i < count($skills); $i++) {
+                array_push($arrSkills, ['skill_id' => $skills[$i], 'job_id' => $id, 'created_at' => $now, 'updated_at' => $now]);
+            }
+
+            // store them
+            JobBusinessCategory::where('job_id', $id)->delete();
+            JobBusinessCategory::insert($arrCategories);
+
+            JobSkill::where('job_id', $id)->delete();
+            JobSkill::insert($arrSkills);
 
          //redirect back to job
         return redirect()->to('jobs/'.$job->slug);
@@ -298,19 +313,46 @@ class JobController extends Controller
     {
         // get the logged in user id
         $userId = Auth::id();
-            // if there exists job that currently logged in user is owner of
-            if( Job::where([['user_id', $userId], ['id', $id]])->exists() )
-            {
-            // Delete Job and all other data that has relation with it will be deleted (cascade)
-            Job::findOrFail($id)->delete();
+            // if there exists job
+            if( Job::where([['id', $id]])->exists() ) {
 
-            // return ok status, because ajax 
-            $return = array(
-                'success' => 'You have successfully deleted this job!'
-            );
-            return response()->json($return, 200);
+            // get the job
+            $job = Job::findOrFail($id);
+
+                // if the user is not the owner
+                if($job->user_id != Auth::id()) {
+                    $return = array(
+                        'error' => 'You are not allowed to execute this action!'
+                    );
+                    return response()->json($return, 403);
+                }
+
+                // get the job file id
+                $job_file_id = JobFile::where('job_id', $id)->select('id')->firstOrFail();
+
+                    // if there is file
+                    if($job_file_id) {
+                        // get the path
+                        $filePath = public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id.'/'.$job->job_files->path;
+
+                        // check for file  and delete folder/file if exists
+                        if( file_exists($filePath)) {
+                            //delete file
+                            unlink($filePath);
+                            //delete folder
+                             File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id);
+                        }
+                    }
+
+                    // delete job afterwards so we can use realtion to get the file in the 'if' before
+                    $job->delete();
+
+                    // return ok status, because ajax
+                    $return = array(
+                        'success' => 'You have successfully deleted this job!'
+                    );
+                    return response()->json($return, 200);
             }
-
             // return error
             else {
                 $return = array(

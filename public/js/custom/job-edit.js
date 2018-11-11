@@ -95,31 +95,35 @@ $(document).ready(function () {
             }
         });
         $.ajax({
-            url: '/delete-job-file/' + file_id,
+            url: '/delete-job-file',
             type: 'DELETE',
             dataType: 'JSON',
+            data: {
+                file_id: file_id
+            },
             success: function (data) {
                 console.log(data);
-                if (data.status == 1) {
-                    swalWithBootstrapButtons({
-                        type: 'success',
-                        title: 'File deleted',
-                        text: 'You have successfully delete your file.',
-                        confirmButtonText: 'Ok',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    });
-                } else {
-                    swalWithBootstrapButtons({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'An error has accured while trying to delete the file!',
-                    });
-                }
+                // Display success message
+                swalWithBootstrapButtons({
+                    type: 'success',
+                    title: 'Result:',
+                    text: '' + data.success,
+                    confirmButtonText: 'Ok',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then(result => {
+                    if(result) {
+                        $('#file-info').html('<i>No files uploaded</i>');
+                    }
+                });
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
+            error: function (error) {
+              // Display error message
+            swalWithBootstrapButtons({
+                type: 'error',
+                title: 'Oops...',
+                text: '' + error.responseJSON.error,
+            });
             }
         });
     }

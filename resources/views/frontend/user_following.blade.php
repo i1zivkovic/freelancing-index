@@ -76,7 +76,7 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         <div class="manager-resumes-item">
                             <div class="manager-content">
-                                <a href="resume.html"><img class="resume-thumb img-fluid" src="{{asset('uploads')}}/{{$follow->username}}/{{$follow->userProfile->image_url}}"
+                                <a href="{{route('frontend.user.show',['slug' => $follow->slug])}}"><img class="resume-thumb img-fluid" src="{{asset('uploads')}}/{{$follow->username}}/{{$follow->userProfile->image_url}}"
                                         alt="PIC"></a>
                                 <div class="manager-info">
                                     <div class="manager-name">

@@ -97,5 +97,61 @@ class JobSeeder extends Seeder
 
             'job_location_country' =>  'Croatia'
         ]);
+        $job = Job::create([
+            'user_id' => 2,
+            'title' => 'Looking for a backe-end developer to blabla a PS design into responsive website user 2.',
+            'description' => 'Hi. My name is Ivan and I"m looking for a graphic designer to design me a website. The website is about a job portal. For more info contact me through e-mail.',
+            'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-user-2-12343133375.',
+            'offer' => '200€',
+            'is_per_hour' => 0,
+            'job_status_id' => 1,
+
+            'job_location_city' => 'Vinkovci',
+
+
+            'job_location_country' =>  'Croatia'
+        ]);
+        $job = Job::create([
+            'user_id' => 2,
+            'title' => 'Looking for a backe-end developer to blabla a PS design into responsive website user 22.',
+            'description' => 'Hi. My name is Ivan and I"m looking for a graphic designer to design me a website. The website is about a job portal. For more info contact me through e-mail.',
+            'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-user-22-12343133375.',
+            'offer' => '200€',
+            'is_per_hour' => 0,
+            'job_status_id' => 1,
+
+            'job_location_city' => 'Vinkovci',
+
+
+            'job_location_country' =>  'Croatia'
+        ]);
+        $job = Job::create([
+            'user_id' => 2,
+            'title' => 'Looking for a backe-end developer to blabla a PS design into responsive website user 23.',
+            'description' => 'Hi. My name is Ivan and I"m looking for a graphic designer to design me a website. The website is about a job portal. For more info contact me through e-mail.',
+            'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-user-23-12343133375.',
+            'offer' => '200€',
+            'is_per_hour' => 0,
+            'job_status_id' => 1,
+
+            'job_location_city' => 'Vinkovci',
+
+
+            'job_location_country' =>  'Croatia'
+        ]);
+        $job = Job::create([
+            'user_id' => 2,
+            'title' => 'Looking for a backe-end developer to blabla a PS design into responsive website user 24.',
+            'description' => 'Hi. My name is Ivan and I"m looking for a graphic designer to design me a website. The website is about a job portal. For more info contact me through e-mail.',
+            'slug' => 'looking-for-a-front-end-developer-to-recreate-a-ps-design-into-responsive-website-user-24-12343133375.',
+            'offer' => '200€',
+            'is_per_hour' => 0,
+            'job_status_id' => 1,
+
+            'job_location_city' => 'Vinkovci',
+
+
+            'job_location_country' =>  'Croatia'
+        ]);
     }
 }

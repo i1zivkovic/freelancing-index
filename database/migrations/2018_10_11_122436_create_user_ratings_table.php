@@ -15,8 +15,10 @@ class CreateUserRatingsTable extends Migration
     {
         Schema::create('user_ratings', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('recruiter_id');
+            $table->foreign('recruiter_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('freelancer_id');
+            $table->foreign('freelancer_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('job_id');
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->string('comment',1000);

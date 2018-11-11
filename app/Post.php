@@ -20,5 +20,8 @@ class Post extends Model
         return $this->hasMany('App\PostLike');
     }
 
+    public function post_files() {
+        return $this->hasOne('App\PostFile');
+    }
 
 }

@@ -45,6 +45,14 @@
                               {{--   <li><a class="dropdown-item" href="browse-categories.html">Browse Categories</a></li> --}}
                                 <li><a class="dropdown-item" href="{{route('frontend.getUserApplications')}}">My
                                         Applications</a></li>
+                                 @guest
+                                 <li><a class="dropdown-item" href="{{route('login')}}">My
+                                    Ratings</a></li>
+                                 @else
+                                <li><a class="dropdown-item" href="{{route('frontend.user-ratings.show', ['slug' => Auth::user()->slug])}}">My
+                                        Ratings</a></li>
+                                @endguest
+
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

@@ -10,7 +10,7 @@
 <br>
 <p><b>Subject: </b>Job Application Response</p>
 <br>
-<p><b>Message: </b>Your application for job: <a href=""><!-- {{JOB}} --></a> has been <!-- {{ APPLICATIO STATUS}} -->.</a></p>
+<p><b>Message: </b>Your application for job: <a href="http://localhost:8000/jobs/{{$job_slug->slug}}">{{$job_slug->slug}}</a> has been {{$job_application_state->state}}.</a></p>
 <br>
 </body>
 </html>

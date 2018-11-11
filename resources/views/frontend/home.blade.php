@@ -280,14 +280,6 @@
 
                     <div class="col-lg-4 col-md-6 col-xs-12 blog-item">
                         <div class="blog-post">
-                            <!-- Post thumb -->
-                            <div class="post-thumb">
-                                <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg" height="200px"
-                                        alt=""></a>
-                                <div class="hover-wrap">
-                                </div>
-                            </div>
-                            <!-- End Post post-thumb -->
 
                             <!-- Post Content -->
                             <div class="post-content">

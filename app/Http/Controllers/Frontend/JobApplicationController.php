@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Mail;
+use App\User;
 use App\Job;
 use Carbon\Carbon;
 use App\JobApplication;
+use App\JobApplicationState;
 
 class JobApplicationController extends Controller
 {
@@ -36,15 +38,16 @@ class JobApplicationController extends Controller
                 // get the data used to store application and e-mail
                 $comment = $request->get('comment');
                 $job_slug = Job::select('slug')->findOrFail($job_id);
-                $job_owner_mail = Job::with([
+                $recruiter_mail = Job::with([
                     'user' => function($query) {
                         $query->select('email', 'id', 'notify_applications');
                     }
                     ])
                     ->findOrFail($job_id);
 
+                    //data used to send e-mail
                     $mail_data = array (
-                        'user_email' => $job_owner_mail->user->email,
+                        'user_email' => $recruiter_mail->user->email,
                         'job_slug' => $job_slug
                     );
 
@@ -71,7 +74,7 @@ class JobApplicationController extends Controller
                 $jobApplication->save();
 
                 // send e-mail if user has set notifications to true
-                if($job_owner_mail->user->notify_applications) {
+                if($recruiter_mail->user->notify_applications) {
                     Mail::send('e-mails.job_application', ['slug' => $job_slug, 'user_slug' => Auth::user()->slug], function($msg) use ($mail_data){
                         $msg->from(Auth::user()->email, 'TheHunt');
                         $msg->subject('Job Application');
@@ -102,7 +105,7 @@ class JobApplicationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $id Id of the job application
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -110,29 +113,43 @@ class JobApplicationController extends Controller
 
         if( JobApplication::where('id', $id)->exists() )
         {
-
-
             // get the job application
             $job_application = JobApplication::findOrFail($id);
 
-            // get the owner of the job
-            $job_owner = Job::select('id','user_id')->findOrFail($job_application->job_id);
+            // get the id of the job owner from the job table based on the job application
+            $recruiter = Job::select('id','user_id')->findOrFail($job_application->job_id);
+
+            // get the applied freelancer e-mail
+            $freelancer = User::select('id','email', 'notify_application_status')->findOrFail($job_application->user_id);
+
+            // get the job slug used for e-mail
+            $job_slug = Job::select('id','slug')->findOrFail($job_application->job_id);
+
+            //get the job application state name
+            $job_application_state = JobApplicationState::select('id','state')->findOrFail($request->get('application_state_id'));
 
             // if the owner of the job is calling this action
-            if($job_owner->user_id == Auth::id()){
+            if($recruiter->user_id == Auth::id()){
 
                 $job_application_state_id = $request->get('application_state_id');
                 $job_application_state_name = ($job_application_state_id == "2") ? 'accepted' : 'rejected';
 
                 $job_application->update(['job_application_state_id' =>  (int)$job_application_state_id]);
 
+                // send e-mail if user has set notifications to true
+                if($freelancer->notify_application_status) {
+                    Mail::send('e-mails.job_application_response', ['job_slug' => $job_slug, 'job_application_state' => $job_application_state], function($msg) use ($freelancer){
+                        $msg->from(Auth::user()->email, 'TheHunt');
+                        $msg->subject('Job Application Status Change');
+                        $msg->to($freelancer['email']);
+                    });
+                }
+
                 $return = array(
                     'success' => 'You have successfully '.$job_application_state_name.' this job application',
                     'verb' => $job_application_state_name
                 );
                 return response()->json($return, 200);
-
-
 
             }
             // if the owner id does not match the currently logged in user_id
@@ -155,7 +172,7 @@ class JobApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $job_id
+     * @param  int  $job_id Id of the job
      * @return \Illuminate\Http\Response
      */
     public function destroy($job_id)
@@ -217,7 +234,8 @@ class JobApplicationController extends Controller
     }
 
     /**
-     * Method used to display manage applications by slug
+     * Method used to display manage applications page by job slug
+     * @param string $slug Job Slug
      */
     public function manageApplicationsSlug($slug) {
 

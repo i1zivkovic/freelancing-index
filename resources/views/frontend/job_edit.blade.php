@@ -136,9 +136,9 @@
                                     <label class="control-label">Uploaded File</label>
                             @if ($job->job_files)
                             <div class="form-group">
-                                <p id="file-info"> <a href="{{asset('uploads')}}/{{Auth::user()->username}}/{{$job->job_files->path}}"
+                                <p id="file-info"> <a href="{{asset('uploads')}}/{{Auth::user()->username}}/jobs/{{$job->id}}/{{$job->job_files->path}}"
                                         download>{{$job->job_files->path}}</a> <a href="#!" class="text-danger" id="delete-file"
-                                        data-id="{{$job->job_files->id}}"><i class="lni-trash"></i></a></p>
+                                data-id="{{$job->job_files->id}}"><i class="lni-trash"></i></a></p>
                             </div>
                             @else
                             <p><i>No files uploaded</i></p>

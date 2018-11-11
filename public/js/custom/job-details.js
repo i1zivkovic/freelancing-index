@@ -297,6 +297,7 @@ function deleteJob(job_id) {
         dataType: 'JSON',
         // if job is deleted, display success message and redirect user
         success: function (data) {
+            console.log(data);
             swalWithBootstrapButtons({
                 type: 'success',
                 title: 'Job deleted',
@@ -506,6 +507,8 @@ function jobApplicationHandlerAjax(application_id, application_state_id) {
             application_state_id: application_state_id
         },
         success: function (data) {
+
+            console.log(data);
             // Display success message
             swalWithBootstrapButtons({
                 type: 'success',

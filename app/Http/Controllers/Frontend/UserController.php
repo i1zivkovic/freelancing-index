@@ -36,16 +36,23 @@ class UserController extends Controller
      */
     public function profile_edit($slug) {
 
+        //get the user data
         $user = User::
         where('slug', $slug)
         ->with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
         ->firstOrFail();
+
+        //check if the user is editing self
+        if ($user->id != Auth::id()) {
+            return abort(403);
+        }
+
+        // get the additional data
         $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
         $selectedSkills = UserSkill::where('user_id', Auth::id()) ->pluck('skill_id');
         $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
 
-        /* dd($user);
- */
+        // return view with data
         return view('frontend.profile_edit', compact('user', 'profile', 'selectedSkills', 'skills'));
     }
 }

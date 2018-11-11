@@ -76,13 +76,6 @@
                         <!-- Start Post -->
                         @foreach($posts as $post)
                         <div class="blog-post" id="row_{{$post->id}}">
-                            <!-- Post thumb -->
-                            <div class="post-thumb">
-                                <a href="#"><img class="img-fulid" src="{{asset('img')}}/blog/blog1.jpg" alt=""></a>
-                                <div class="hover-wrap">
-                                </div>
-                            </div>
-                            <!-- End Post post-thumb -->
 
                             <!-- Post Content -->
                             <div class="post-content">

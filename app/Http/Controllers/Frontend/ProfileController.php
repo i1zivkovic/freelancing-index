@@ -205,7 +205,12 @@ class ProfileController extends Controller
         $user = User::findOrFail(Auth::id());
 
         // update it
-        $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() ,  'password' => Hash::make($request->get('password')), 'notify_applications' => $notify_applications ? $notify_applications : 0, 'notify_application_status' => $notify_application_status ? $notify_application_status : 0]);
+        if($request->get('password')) {
+            $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time() , 'password' => Hash::make($request['password']), 'notify_applications' => $notify_applications ? $notify_applications : 0, 'notify_application_status' => $notify_application_status ? $notify_application_status : 0]);
+        } else {
+            $user->update($request->except(['password'])+['slug'=> str_slug($request->get('username'), '-').time(), 'notify_applications' => $notify_applications ? $notify_applications : 0, 'notify_application_status' => $notify_application_status ? $notify_application_status : 0]);
+        }
+
 
         $active_tab = 'account-info';
           // redirect

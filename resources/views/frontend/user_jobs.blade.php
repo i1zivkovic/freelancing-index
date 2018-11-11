@@ -146,6 +146,9 @@
                                 <span><a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
                                         <i class="lni-trash"></i>
                                     </a></span>
+                                <span><a href="{{route('frontend.user-ratings.edit',['id' => $job->id])}}" class="">
+                                        <i class="lni-star"></i>
+                                    </a></span>
                                 @endif
                             </div>
                         </div>

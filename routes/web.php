@@ -81,7 +81,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::any('jobs-filter', 'JobController@postJobsFilter')->name('jobsFilter');
     Route::any('my-jobs-filter', 'JobController@postMyJobsFilter')->name('myJobsFilter');
     Route::get('posts/my-jobs/{slug}', 'JobController@getMyJobs')->name('myJobs');
-    Route::delete('delete-job-file/{id}', 'AjaxController@deleteJobFile')->name('deleteJobFile');
+    Route::delete('delete-job-file', 'AjaxController@deleteJobFile')->name('deleteJobFile');
     //JOB LIKES
     Route::post('job-likes/{id}', 'JobLikeController@likeUnlikeHandler')->name('jobLikeUnlike');
     //JOB COMMENTS
@@ -91,6 +91,11 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::get('user-applications', 'JobApplicationController@userApplications')->name('getUserApplications');
     Route::get('manage-applications', 'JobApplicationController@manageApplications')->name('getManageApplications');
     Route::get('manage-applications/{slug}', 'JobApplicationController@manageApplicationsSlug')->name('getManageApplicationsSlug');
+
+
+
+    //RATINGS
+    Route::resource('user-ratings','UserRatingController');
 
 
     //CONTACT
