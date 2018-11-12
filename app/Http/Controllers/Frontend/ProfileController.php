@@ -12,6 +12,7 @@ use App\Profile;
 use App\User;
 use App\UserSkill;
 use App\Social;
+use App\Location;
 use Image;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -260,11 +261,50 @@ class ProfileController extends Controller
     //method used to update user socials
     public function socials_update(Request $request) {
 
-        $socials = Social::findOrFail(Auth::id());
-        $socials->update($request->all());
+        // check for existing socials
+        $existing_socials = Social::where('user_id', Auth::id())->exists();
+
+         // if there are some socials already
+         if($existing_socials){
+            //update them
+            Social::where('user_id', Auth::id())->update($request->except('_token'));
+        } else {
+            // create row
+            Social::create($request->all()+['user_id' => Auth::id()]);
+        }
+
         $active_tab = 'socials';
           // redirect
           return redirect()->route('frontend.profileEdit', ['slug' => Auth::user()->slug])->with(array('socials_success' => 'Socials updated successfully!', 'active-tab' => $active_tab));
+    }
+
+
+
+    //method used to update user location
+    public function location_update(Request $request) {
+
+
+             // Validation rules
+             $rules = [
+                'city' => 'max:100',
+                'country' => 'max:200',
+            ];
+
+            // create validator with given rules and check request
+            $validator = Validator::make($request->all(), $rules);
+
+            // check if validation succeeds
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'location-info'));
+            }
+
+            //update or create location
+            Location::updateOrCreate(['user_id' => Auth::id()], $request->all());
+
+          $active_tab = 'location-info';
+            // redirect
+            return redirect()->route('frontend.profileEdit', ['slug' => Auth::user()->slug])->with(array('location_success' => 'Location updated successfully!', 'active-tab' => $active_tab));
+
     }
 
 

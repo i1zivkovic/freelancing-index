@@ -76,6 +76,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+
         // Validation rules
         $rules = [
             'title' => 'required|max:150|min:10',

@@ -62,6 +62,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('account-info', 'ProfileController@update_account_info')->name('accountInfo');
     Route::post('skills-info', 'ProfileController@skills_update')->name('skillsInfo');
     Route::post('socials-info', 'ProfileController@socials_update')->name('socialsInfo');
+    Route::post('location-info', 'ProfileController@location_update')->name('locationInfo');
 
     //POSTS
     Route::resource('posts', 'PostController');

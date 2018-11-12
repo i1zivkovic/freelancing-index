@@ -87,9 +87,6 @@
                                     <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
                                         <h3>{{$job->title}}</h3>
                                     </a>
-                                    <span class="company-neme">
-                                        {{$job->user->username}}
-                                    </span>
                                 </div>
 
                                 <hr>
@@ -136,6 +133,9 @@
                             <div class="col-lg-3 col-md-3 col-xs-12 text-center">
                                 <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>&nbsp;
                                     &nbsp; {{$job->job_likes_count}} <i class="lni-heart"></i></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
+                                    {{$job->job_applications_count}} <i class="lni-pencil-alt"></i>
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
                                 @if(Auth::user() && ($job->user_id == Auth::user()->id))

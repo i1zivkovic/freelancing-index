@@ -54,5 +54,8 @@ class User extends Authenticatable /* implements MustVerifyEmail */
     public function following() {
         return $this->belongsToMany('App\User', 'follows', 'follower_id', 'user_id');
     }
+    public function rating() {
+        return $this->hasMany('App\UserRating', 'freelancer_id');
+    }
 
 }

@@ -37,6 +37,11 @@
                             aria-selected="true">Profile Info</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{session()->get('active-tab') == 'location-info' ? 'active' : ''}}" id="location-info-tab"
+                            data-toggle="tab" href="#location-info" role="tab" aria-controls="location-info"
+                            aria-selected="true">Location Info</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{session()->get('active-tab') == 'skills' ? 'active' : ''}}" id="skills-tab"
                             data-toggle="tab" href="#skills" role="tab" aria-controls="skills" aria-selected="true">Skills</a>
                     </li>
@@ -134,7 +139,8 @@
                             </div>
                             <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="">
-                                    {{ Form::checkbox('notify_application_status', '1', Auth::user()->notify_application_status) }}
+                                    {{ Form::checkbox('notify_application_status', '1',
+                                    Auth::user()->notify_application_status) }}
                                     <label class="form-check-label" for="notify_applications_status">
                                         Notify me about application status change
                                     </label>
@@ -165,17 +171,17 @@
                         {!! Form::open(['method' => 'POST', 'route' => ['frontend.profileInfo'],
                         'autocomplete'
                         =>
-                        'off', 'files' => false, 'enctype' => 'multipart/form-data', 'id' => 'profineInfoForm', 'class'
+                        'off', 'files' => false, 'enctype' => 'multipart/form-data', 'id' => 'profileInfoForm', 'class'
                         =>
                         'form-ad','mb-3']) !!}
                         @csrf
-                        <input type="hidden" value="{{$profile->id}}" name="profile_id" />
+                        <input type="hidden" value="{{$user->userProfile->id}}" name="profile_id" />
                         <div class="row mb-3">
                             <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">First Name</label>
                                     <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
-                                        placeholder="" name="first_name" required value="{{$profile->first_name}}">
+                                        placeholder="" name="first_name" required value="{{$user->userProfile->first_name}}">
                                     @if ($errors->has('first_name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('first_name') }}</strong>
@@ -187,7 +193,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Last Name</label>
                                     <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
-                                        placeholder="" name="last_name" required value="{{$profile->last_name}}">
+                                        placeholder="" name="last_name" required value="{{$user->userProfile->last_name}}">
                                     @if ($errors->has('last_name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('last_name') }}</strong>
@@ -199,7 +205,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Date of birth</label>
                                     <input type="date" class="form-control {{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}"
-                                        placeholder="" name="date_of_birth" required value="{{$profile->date_of_birth}}">
+                                        placeholder="" name="date_of_birth" required value="{{$user->userProfile->date_of_birth}}">
                                     @if ($errors->has('date_of_birth'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('date_of_birth') }}</strong>
@@ -213,7 +219,7 @@
                                     <div class="search-category-container post-job">
                                         <label class="styled-select">
                                             {!! Form::select('gender', ['m' => 'Male', 'f' => 'Female'],
-                                            $profile->gender, ['class' => 'dropdown-product selectpicker']) !!}
+                                            $user->userProfile->gender, ['class' => 'dropdown-product selectpicker']) !!}
                                         </label>
                                         @if ($errors->has('gender'))
                                         <span class="invalid-feedback" role="alert">
@@ -227,7 +233,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Website URL</label>
                                     <input type="text" class="form-control {{ $errors->has('website_url') ? ' is-invalid' : '' }}"
-                                        placeholder="" name="website_url" required value="{{$profile->website_url}}">
+                                        placeholder="" name="website_url" required value="{{$user->userProfile->website_url}}">
                                     @if ($errors->has('website_url'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('website_url') }}</strong>
@@ -239,7 +245,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Contact number</label>
                                     <input type="text" class="form-control {{ $errors->has('contact_number') ? ' is-invalid' : '' }}"
-                                        placeholder="" name="contact_number" required value="{{$profile->contact_number}}">
+                                        placeholder="" name="contact_number" required value="{{$user->userProfile->contact_number}}">
                                     @if ($errors->has('contact_number'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('contact_number') }}</strong>
@@ -250,7 +256,7 @@
                             <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group">
                                     <label class="control-label">About me</label>
-                                    <textarea name="about_me" cols="30" rows="10" class="form-control {{ $errors->has('about_me') ? ' is-invalid' : '' }}">{{$profile->about_me}}</textarea>
+                                    <textarea name="about_me" cols="30" rows="10" class="form-control {{ $errors->has('about_me') ? ' is-invalid' : '' }}">{{$user->userProfile->about_me}}</textarea>
                                     @if ($errors->has('about_me'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('about_me') }}</strong>
@@ -262,7 +268,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Choose a profile image</label>
                                     <div class="custom-file mb-3">
-                                        <input type="file" class="custom-file-input" id="image_url" name="image_url" value="{{old('image_url')}}">
+                                        <input type="file" class="custom-file-input" id="image_url" name="image_url"
+                                            value="{{old('image_url')}}">
                                         <label class="custom-file-label form-control" for="file" id="image_url_label">Choose
                                             profile
                                             image...</label>
@@ -284,6 +291,61 @@
                         {!!Form::close()!!}
                     </div>
                     {{-- PROFILE INFO END --}}
+
+                    {{-- LOCATION INFO BEGIN --}}
+                    <div class="tab-pane box {{session()->get('active-tab') == 'location-info' ? 'active' : ''}}" id="location-info"
+                        role="tabpanel" aria-labelledby="location-info-tab">
+
+                        @if(session()->has('location_success'))
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session()->get('location_success')}}
+                        </div>
+                        @endif
+
+                        {!! Form::open(['method' => 'POST', 'route' => ['frontend.locationInfo'],
+                        'autocomplete'
+                        =>
+                        'off', 'files' => false, 'enctype' => 'multipart/form-data', 'id' => 'locationInfoForm',
+                        'class'
+                        =>
+                        'form-ad','mb-3']) !!}
+                        @csrf
+                        <div class="row mb-3">
+
+                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="control-label">City</label>
+                                    <input type="text" class="form-control {{ $errors->has('city') ? ' is-invalid' : '' }}"
+                                        placeholder="" name="city" value="{{$user->userLocation ? $user->userLocation->city : null }}">
+                                    @if ($errors->has('city'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="control-label">Country</label>
+                                    <input type="text" class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}"
+                                        placeholder="" name="country" value="{{$user->userLocation ? $user->userLocation->country : null }}">
+                                    @if ($errors->has('country'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('country') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-12 text-center">
+                            <button type="submit" class="btn btn-common">Update</button>
+                        </div>
+                        {!!Form::close()!!}
+                    </div>
+                    {{-- LOCATION INFO END --}}
 
 
                     {{-- SKILLS BEGIN --}}
@@ -348,11 +410,11 @@
                         'class' =>
                         'form-ad','mb-3']) !!}
                         @csrf
-                        <input type="hidden" value="{{$profile->id}}" name="profile_id" />
+                        <input type="hidden" value="{{$user->userProfile->id}}" name="profile_id" />
                         <div class="education-entry">
                             @if(empty(old('institution_name')))
-                            @if(!empty($profile->profileEducation))
-                            @foreach($profile->profileEducation as $profile_education)
+                            @if(!empty($user->userProfile->profileEducation))
+                            @foreach($user->userProfile->profileEducation as $user->userProfile_education)
                             <div>
                             </div>
                             <div class="row mb-3">
@@ -360,40 +422,40 @@
                                     <div class="form-group">
                                         <label class="control-label">Institution Name</label>
                                         <input type="text" class="form-control" placeholder="" name="institution_name[]"
-                                            required value="{{$profile_education->institution_name}}">
+                                            required value="{{$user->userProfile_education->institution_name}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Major</label>
                                         <input type="text" class="form-control" placeholder="" name="major[]" required
-                                            value="{{$profile_education->major}}">
+                                            value="{{$user->userProfile_education->major}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Degree</label>
                                         <input type="text" class="form-control" placeholder="" name="degree[]" required
-                                            value="{{$profile_education->degree}}">
+                                            value="{{$user->userProfile_education->degree}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Description</label>
-                                        <textarea name="description[]" cols="30" rows="7" class="form-control">{{$profile_education->description}}</textarea>
+                                        <textarea name="description[]" cols="30" rows="7" class="form-control">{{$user->userProfile_education->description}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control" placeholder="" name="start_date[]"
-                                            value="{{$profile_education->start_date}}">
+                                            value="{{$user->userProfile_education->start_date}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
-                                        <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$profile_education->end_date}}">
+                                        <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$user->userProfile_education->end_date}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
@@ -499,7 +561,7 @@
 
                         <div class="col-xs-12 text-center">
                             <button class="btn btn-common" type="submit" id="submit-education"
-                                {{($profile->profileEducation->count() || !empty(old('institution_name'))) ? '' : 'disabled'}}>
+                                {{($user->userProfile->profileEducation->count() || !empty(old('institution_name'))) ? '' : 'disabled'}}>
                                 Update</button>
                         </div>
                         {!!Form::close()!!}
@@ -530,11 +592,11 @@
                         'class' =>
                         'form-ad','mb-3']) !!}
                         @csrf
-                        <input type="hidden" value="{{$profile->id}}" name="profile_id" />
+                        <input type="hidden" value="{{$user->userProfile->id}}" name="profile_id" />
                         <div class="experience-entry">
                             @if(empty(old('company_name')))
-                            @if(!empty($profile->profileExperience))
-                            @foreach($profile->profileExperience as $profile_experience)
+                            @if(!empty($user->userProfile->profileExperience))
+                            @foreach($user->userProfile->profileExperience as $user->userProfile_experience)
                             <div class="row mb-3">
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12  mb-3">
                                 </div>
@@ -542,48 +604,48 @@
                                     <div class="form-group">
                                         <label class="control-label">Company Name</label>
                                         <input type="text" class="form-control" placeholder="" name="company_name[]"
-                                            required value="{{$profile_experience->company_name}}">
+                                            required value="{{$user->userProfile_experience->company_name}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Job Title</label>
                                         <input type="text" class="form-control" placeholder="" name="job_title[]"
-                                            required value="{{$profile_experience->job_title}}">
+                                            required value="{{$user->userProfile_experience->job_title}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Job Description</label>
                                         <textarea name="job_description[]" cols="30" rows="7" class="form-control"
-                                            required>{{$profile_experience->job_description}}</textarea>
+                                            required>{{$user->userProfile_experience->job_description}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Country</label>
                                         <input type="text" class="form-control" placeholder="" name="job_location_country[]"
-                                            value="{{$profile_experience->job_location_country}}">
+                                            value="{{$user->userProfile_experience->job_location_country}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">City</label>
                                         <input type="text" class="form-control" placeholder="" name="job_location_city[]"
-                                            value="{{$profile_experience->job_location_city}}">
+                                            value="{{$user->userProfile_experience->job_location_city}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control" placeholder="" name="start_date[]"
-                                            value="{{$profile_experience->start_date}}">
+                                            value="{{$user->userProfile_experience->start_date}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
-                                        <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$profile_experience->end_date}}">
+                                        <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$user->userProfile_experience->end_date}}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
@@ -704,7 +766,7 @@
 
                         <div class="col-xs-12 text-center">
                             <button class="btn btn-common" type="submit" id="submit-experience"
-                                {{($profile->profileExperience->count() || !empty(old('company_name'))) ? '' : 'disabled'}}>
+                                {{($user->userProfile->profileExperience->count() || !empty(old('company_name'))) ? '' : 'disabled'}}>
                                 Update</button>
                         </div>
 

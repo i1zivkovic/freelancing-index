@@ -114,7 +114,7 @@
                                     @endif
                                     <hr>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
 
                                     <span class="btn-open">
                                         {{$job->offer}}$
@@ -125,15 +125,18 @@
                                         @endif
                                     </span>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
                                     <div class="location">
                                         <i class="lni-map-marker"></i> {{$job->job_location_city}},
                                         {{$job->job_location_country}}
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
                                     <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>
                                         {{$job->job_likes_count}} <i class="lni-heart"></i></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                    <span class="btn-full-time">{{$job->job_applications_count}} <i class="lni-pencil-alt"></i></span>
                                 </div>
                             </div>
                         </a>

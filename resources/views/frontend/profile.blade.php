@@ -22,19 +22,19 @@
                 <div class="inner-box my-resume">
                     <div class="author-resume">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                                 <div class="thumb">
                                     <img class="img-fluid" src="{{asset('uploads')}}/{{$user->username}}/{{$user->userProfile->image_url}}"
                                         alt="PIC">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 
                                 <div class="author-info">
                                     <h3>{{$user->userProfile->first_name}} {{$user->userProfile->last_name}}</h3>
                                     <p>
-                                        @if($profile->gender)
-                                        @if($profile->gender == 'm')
+                                        @if($user->userProfile->gender)
+                                        @if($user->userProfile->gender == 'm')
                                         <i class="fas fa-mars"></i> Male
                                         @else
                                         <i class="fas fa-venus"></i> Female
@@ -45,7 +45,7 @@
                                     </p>
                                     <p>
                                         <i class="fas fa-birthday-cake"></i>
-                                        {{\Carbon\Carbon::parse($profile->date_of_birth)->format('d/m/Y')}}
+                                        {{\Carbon\Carbon::parse($user->userProfile->date_of_birth)->format('d/m/Y')}}
 
                                     </p>
                                     <p>
@@ -54,7 +54,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                                 <div class="author-info">
                                     <p>&nbsp;</p>
                                     <p><i class="lni-user"></i> {{$user->username}}</p>
@@ -68,7 +68,32 @@
                                     </p>
                                 </div>
                             </div>
+                            @if (Auth::id() != $user->id)
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 align-self-center">
+                                <div class="author-info">
+                                    <button class="btn {{$user->followers->contains('follower_id', Auth::id()) ?  'btn-danger' : 'btn-common'}} follow-unfollow"
+                                        onclick="actOnFollowUnfollow(this)" data-id="{{$user->id}}"><i class="fas {{$user->followers->contains('follower_id', Auth::id()) ?  'fa-user-minus' : 'fa-user-plus'}} follow-unfollow-icon"></i></button>
+                                </div>
+                            </div>
+                            @endif
                         </div>
+                    </div>
+                    <div class="rating item">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3 mb-4">
+                                <h3>Rating</h3>
+                                <i class="lni-star-filled"></i> {{round($user->rating->avg('rating'), 2)}} / 5
+                            </div>
+                            <div class="col-sm-12 col-md-3 mb-4">
+                                <h3>Following</h3>
+                                <i class="lni-users"></i> {{$user->following_count}}
+                            </div>
+                            <div class="col-sm-12 col-md-3 mb-4">
+                                <h3>Followers</h3>
+                                <i class="lni-users"></i> {{$user->followers_count}}
+                            </div>
+                        </div>
+
                     </div>
                     <div class="about-me item">
                         <h3>About Me</h3>
@@ -133,8 +158,8 @@
                     </div>
                     <div class="work-experence item">
                         <h3>Work Experience</h3>
-                        @if($profile->profileExperience->count() > 0)
-                        @foreach($profile->profileExperience as $experience)
+                        @if($user->userProfile->profileExperience->count() > 0)
+                        @foreach($user->userProfile->profileExperience as $experience)
                         <h4>{{$experience->job_title}}</h4>
                         <h5>{{$experience->company_name}}</h5>
                         <p>
@@ -162,8 +187,8 @@
                     <div class="education item">
 
                         <h3>Education</h3>
-                        @if($profile->profileEducation->count() > 0)
-                        @foreach($profile->profileEducation as $education)
+                        @if($user->userProfile->profileEducation->count() > 0)
+                        @foreach($user->userProfile->profileEducation as $education)
                         <h4> {{$education->institution_name}}</h4>
                         <p> {{$education->major}}</p>
                         <p>{{$education->degree}}</p>
@@ -182,10 +207,11 @@
                     </div>
                     <div class="location item">
                         <h3>Location</h3>
-                        @if( $user->userLocation['city']  ||  $user->userLocation['country'] )
+                        @if( $user->userLocation['city'] || $user->userLocation['country'] )
                         <div class="col-md-12">
                             <div id="conatiner-map">
-                                    <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q={{$user->userLocation->city}}%2{{$user->userLocation->country}}&t=&z=7&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q={{$user->userLocation->city}}%2{{$user->userLocation->country}}&t=&z=7&ie=UTF8&iwloc=&output=embed"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                             </div>
                         </div>
                         @else
@@ -207,4 +233,5 @@
 
 @section('js')
 {{-- --}}
+{!!Html::script(asset('js/custom/community.js'))!!}
 @stop

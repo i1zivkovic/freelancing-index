@@ -32,7 +32,7 @@ class JobController extends Controller
             'job_skills',
             'job_status'
         ])
-        ->withCount(['job_likes', 'job_comments'])
+        ->withCount(['job_likes', 'job_comments', 'job_applications'])
         -> orderBy('created_at','desc') -> paginate(5);
 
         // return job view with jobs data
@@ -489,7 +489,7 @@ class JobController extends Controller
 
         $jobs = Job::
         where('user_id', Auth::id())
-        ->withCount('job_comments','job_likes')
+        ->withCount('job_comments','job_likes', 'job_applications')
         ->with([
             'user',
         ]) -> orderBy('created_at','desc')-> paginate(5);

@@ -20,12 +20,13 @@ class UserController extends Controller
     public function show($slug){
         $user = User::
         where('slug', $slug)
-        ->with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
+        ->withCount('followers', 'following')
+        ->with(['userProfile.profileEducation', 'userProfile.profileExperience', 'userSocial', 'userLocation', 'userSkills', 'rating', 'followers'])
         ->firstOrFail();
-        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
 
+        /* dd($user); */
 
-        return view('frontend.profile', compact('user','profile'));
+        return view('frontend.profile', compact('user'));
     }
 
 
@@ -39,7 +40,7 @@ class UserController extends Controller
         //get the user data
         $user = User::
         where('slug', $slug)
-        ->with(['userProfile', 'userSocial', 'userLocation', 'userSkills'])
+        ->with(['userProfile.profileEducation', 'userProfile.profileExperience', 'userSocial', 'userLocation', 'userSkills'])
         ->firstOrFail();
 
         //check if the user is editing self
@@ -47,12 +48,11 @@ class UserController extends Controller
             return abort(403);
         }
 
-        // get the additional data
-        $profile =  Profile::with(['profileEducation','profileExperience']) -> findOrFail($user->id);
+        //get additional data for select 2
         $selectedSkills = UserSkill::where('user_id', Auth::id()) ->pluck('skill_id');
         $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
 
         // return view with data
-        return view('frontend.profile_edit', compact('user', 'profile', 'selectedSkills', 'skills'));
+        return view('frontend.profile_edit', compact('user', 'selectedSkills', 'skills'));
     }
 }

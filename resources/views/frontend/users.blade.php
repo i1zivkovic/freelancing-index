@@ -105,7 +105,7 @@
                                 <div class="resume-skills">
                                     <div class="float-right">
                                         <a href="#!" class="btn {{$user->followers->contains('follower_id', Auth::id()) ?  'btn-danger' : 'btn-common'}} btn-xs follow-unfollow"
-                                            data-id="{{$user->id}}" onclick="actOnFollowUnfollow(this)"><i class="fas {{$user->followers->contains('follower_id', Auth::id()) ?  'fa-user-minus' : 'fa-user-plus'}} follow-unfollow-icon"></i></i></a>
+                                            data-id="{{$user->id}}" onclick="actOnFollowUnfollow(this)"><i class="fas {{$user->followers->contains('follower_id', Auth::id()) ?  'fa-user-minus' : 'fa-user-plus'}} follow-unfollow-icon"></i></a>
                                     </div>
                                 </div>
                                 @endif
