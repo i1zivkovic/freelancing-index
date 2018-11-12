@@ -102,6 +102,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     //CONTACT
     Route::get('contact', 'ContactController@index')->name('contact');
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
+    Route::post('contact-user/{id}', 'ProfileController@contact_user')->name('contactUser');
 
 
     // PASSWORD CHANGE

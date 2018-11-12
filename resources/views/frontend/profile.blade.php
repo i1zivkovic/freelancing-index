@@ -218,6 +218,77 @@
                         <i>No location addded</i>
                         @endif
                     </div>
+                    <div class="location item">
+                        <h3>Contact User</h3>
+
+                        @if(session()->has('success_email'))
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session()->get('success_email')}}
+                        </div>
+                        @endif
+
+                        {!! Form::open(['method' => 'POST', 'route' => ['frontend.contactUser', $user->id], 'autocomplete' =>
+                        'on','id' => 'sendMailForm', 'class' => 'form-ad']) !!}
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                        id="name" name="name" placeholder="Name" required value="{{old('name')}}">
+                                    @if ($errors->has('name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input placeholder="Email" id="email" type="email" class="form-control"
+                                        {{ $errors->has('email') ? ' is-invalid' : '' }} name="email" required value="{{old('email')}}">
+                                    @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Subject" name="subject" id="msg_subject"
+                                        {{ $errors->has('subject') ? ' is-invalid' : '' }} class="form-control"
+                                        required value="{{old('message')}}">
+                                    @if ($errors->has('subject'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('subject') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="message" name="message" placeholder="Your Message"
+                                        {{ $errors->has('message') ? ' is-invalid' : '' }} rows="5" required>{{old('message')}}</textarea>
+                                    @if ($errors->has('message'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('message') }}</strong>
+                                    </span>
+                                    @endif
+
+                                </div>
+                                <div class="submit-button">
+                                    <button class="btn btn-common" id="submit" type="submit">Send Message</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        {!!Form::close()!!}
+                    </div>
                 </div>
             </div>
         </div>

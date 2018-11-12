@@ -15,6 +15,7 @@ use App\Social;
 use App\Location;
 use Image;
 use Carbon\Carbon;
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -330,6 +331,48 @@ class ProfileController extends Controller
         $image->save($destinationPath . $file_name);
 
         return $file_name;
+    }
+
+    //method used to contact user
+    public function contact_user(Request $request, $id){
+
+        $user_email = User::select('email')->findOrFail($id);
+
+        // Validation rules
+        $rules = [
+            'name' => 'required|min:5',
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required',
+        ];
+
+        // make validator
+        $validator = Validator::make($request->all(), $rules);
+
+        // check if validation success
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // if validation succeeds, send e-mail
+        $data = $request->all();
+
+        // get email data
+        $emailData = array(
+            'requestData' => $data,
+            'userEmail' => $user_email
+        );
+
+        /* dd($emailData); */
+
+           Mail::send('e-mails.contact', ['data' => $data], function($msg) use ($emailData){
+               $msg->from($emailData['requestData']['email']);
+               $msg->subject($emailData['requestData']['subject']);
+               $msg->to($emailData['userEmail']['email']);
+           });
+
+           //return message to view
+           return back()->with('success_email', 'Thanks for contacting us!');
     }
 
 
