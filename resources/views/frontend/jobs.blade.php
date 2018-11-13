@@ -77,7 +77,8 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
-                                        <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}" alt="PIC">
+                                        <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}"
+                                            alt="PIC">
                                     </div>
                                     <div class="job-details">
                                         <h3>{{$job->title}}</h3>
@@ -114,7 +115,7 @@
                                     @endif
                                     <hr>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
 
                                     <span class="btn-open">
                                         {{$job->offer}}$
@@ -125,18 +126,29 @@
                                         @endif
                                     </span>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                     <div class="location">
                                         <i class="lni-map-marker"></i> {{$job->job_location_city}},
                                         {{$job->job_location_country}}
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                     <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>
                                         {{$job->job_likes_count}} <i class="lni-heart"></i></span>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                     <span class="btn-full-time">{{$job->job_applications_count}} <i class="lni-pencil-alt"></i></span>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                    @if ($job->job_status->id == 3)
+                                    <span class="btn-full-time text-danger"> {{$job->job_status->name}} </span>
+                                    @elseif ($job->job_status->id == 1)
+                                    <span class="btn-full-time text-primary"> {{$job->job_status->name}} </span>
+                                    @elseif ($job->job_status->id == 4)
+                                    <span class="btn-full-time text-info"> {{$job->job_status->name}} </span>
+                                    @else
+                                    <span class="btn-full-time"> {{$job->job_status->name}} </span>
+                                    @endif
                                 </div>
                             </div>
                         </a>

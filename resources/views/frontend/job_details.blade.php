@@ -45,6 +45,10 @@
                         <div class="month-price">
                             <div class="price">{{$job->job_status->name}}</div>
                         </div>
+                        @elseif($job->job_status_id == 4)
+                        <div class="month-price bg-info">
+                            <div class="price">{{$job->job_status->name}}</div>
+                        </div>
                         @else
                         <div class="month-price bg-danger">
                             <div class="price">{{$job->job_status->name}}</div>
@@ -134,7 +138,7 @@
                                     <button type="submit" class="btn btn-common">Cancel Application</button>
                                     {!!Form::close()!!}
                                     @endif
-                                    @if(Auth::user() && ($job->user_id == Auth::user()->id))
+                                    @if(Auth::user() && ($job->user_id == Auth::user()->id) && ($job->job_status->id != 2))
                                     <hr>
                                     <a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
                                         <i class="lni-pencil"></i>
@@ -145,6 +149,15 @@
                                     </a>
                                     @endif
                             </div>
+
+                            @if(session()->has('edit_error'))
+                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                {{session()->get('edit_error')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
 
                             @if(session()->has('successRemove'))
                             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">

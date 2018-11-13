@@ -21,8 +21,9 @@
                         <div class="contents text-center">
                             <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
                             <p>Are you a freelancer looking for a job or you want to earn some money by
-                                doing something you're good at? <br>Maybe you're a recuriter that needs the right people to
-                               do a job for you? <br>We got you covered!</p>
+                                doing something you're good at? <br>Maybe you're a recuriter that needs the right
+                                people to
+                                do a job for you? <br>We got you covered!</p>
                         </div>
                     </div>
                 </div>
@@ -68,6 +69,40 @@
             </div>
             <!-- Apply Us Section End -->
         </header>
+
+
+        <!-- Browse Catagories Section Start -->
+        <section class="browse-catagories section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Categories</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                            <a href="#!" class="img-box">
+                                <div class="img-box-content">
+                                    <h4>Programming</h4>
+                                </div>
+                                <div class="img-box-background">
+                                    <img class="img-fluid" src="{{asset('img/categories/programming.jpg')}}" alt="">
+                                </div>
+                            </a>
+
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-xs-12">
+                        <a href="#!" class="img-box">
+                            <div class="img-box-content">
+                                <h4>Gprahic Design</h4>
+                            </div>
+                            <div class="img-box-background">
+                                <img class="img-fluid" src="{{asset('img/categories/design.jpg')}}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Browse Catagories Section End -->
 
 
         <!-- How It Work Section Start -->
@@ -193,7 +228,8 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     <div class="job-company-logo">
-                                        <img class="img-fluid" src="{{asset('uploads')}}/{{$recentJob->user->username}}/{{$recentJob->user->userProfile->image_url}}" alt="PIC">
+                                        <img class="img-fluid" src="{{asset('uploads')}}/{{$recentJob->user->username}}/{{$recentJob->user->userProfile->image_url}}"
+                                            alt="PIC">
                                     </div>
                                     <div class="job-details">
                                         <h3>{{$recentJob->title}}</h3>
@@ -321,7 +357,8 @@
                                 <div class="download-text">
                                     <h4>Mobile apps coming soon!</h4>
                                     <p>We are currently in process of developing Android, iOS and Winows Phone apps.<br>
-                                        Every user registered will receive an e-mail once they go live so be sure to check you mailbox.</p>
+                                        Every user registered will receive an e-mail once they go live so be sure to
+                                        check you mailbox.</p>
                                 </div>
                             </div>
                         </div>

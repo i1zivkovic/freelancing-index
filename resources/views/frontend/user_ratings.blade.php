@@ -34,12 +34,21 @@
                         @foreach($ratings as $rating)
                             <div class="manager-resumes-item">
                                 <div class="manager-content">
+                                    @if($rating->recruiter)
                                     <a href="{{route('frontend.user.show',['slug' => $rating->recruiter->slug])}}"><img class="resume-thumb img-fluid" alt="PIC" src="{{asset('uploads')}}/{{$rating->recruiter->username}}/{{$rating->recruiter->userProfile->image_url}}"></a>
+                                    @else
+
+                                    @endif
                                     <div class="manager-info">
                                         <div class="manager-name">
+                                                @if($rating->recruiter)
                                             <h4><a href="{{route('frontend.user.show',['slug' => $rating->recruiter->slug])}}">{{$rating->recruiter->userProfile->first_name}}
                                                     {{$rating->recruiter->userProfile->last_name}}</a></h4>
                                             <h5><i class="lni-user"></i> {{$rating->recruiter->username}}</h5>
+                                            @else
+
+                                            <h4><a href="#!">Deleted user</a></h4>
+                                             @endif
                                         </div>
                                         <div class="manager-meta">
                                             <span class="location">{{$rating->rating}} <i class="lni-star-filled"></i></span>
@@ -52,7 +61,11 @@
                                         <p>"{{$rating->comment}}"</p>
                                     </div>
                                     <div class="resume-skills">
+                                        @if($rating->job)
                                         Job: <a href="{{route('frontend.jobs.show',['id' => $rating->job->slug])}}">{{$rating->job->title}}</a>
+                                        @else
+                                        Job: <i>Deleted job</i>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

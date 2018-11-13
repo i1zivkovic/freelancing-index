@@ -138,7 +138,7 @@ class JobApplicationController extends Controller
 
                 // send e-mail if user has set notifications to true
                 if($freelancer->notify_application_status) {
-                    Mail::send('e-mails.job_application_response', ['job_slug' => $job_slug, 'job_application_state' => $job_application_state], function($msg) use ($freelancer){
+                    Mail::send('e-mails.job_application_response', ['job_slug' => $job_slug->slug, 'job_application_state' => $job_application_state->state], function($msg) use ($freelancer){
                         $msg->from(Auth::user()->email, 'TheHunt');
                         $msg->subject('Job Application Status Change');
                         $msg->to($freelancer['email']);

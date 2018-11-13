@@ -61,9 +61,6 @@ class AjaxController extends Controller
                 );
                 return response()->json($return, 403);
             }
-
-            //delete file
-            unlink(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job_file->job_id.'/'.$job_file->path);
             //delete folder
             File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job_file->job_id);
             // delete from DB

@@ -80,8 +80,9 @@
                     <div class="job-listings">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-xs-12">
-                               {{--  <div class="job-company-logo">
-                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}" alt="PIC">
+                                {{-- <div class="job-company-logo">
+                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}"
+                                        alt="PIC">
                                 </div> --}}
                                 <div class="job-details">
                                     <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
@@ -113,7 +114,7 @@
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                            <div class="col-lg-3 col-md-4 col-xs-12 text-center">
 
                                 <span class="btn-open">
                                     {{$job->offer}}€
@@ -124,34 +125,50 @@
                                     @endif
                                 </span>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                            <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                 <div class="location">
                                     <i class="lni-map-marker"></i> {{$job->job_location_city}},
                                     {{$job->job_location_country}}
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 text-center">
+                            <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                 <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>&nbsp;
                                     &nbsp; {{$job->job_likes_count}} <i class="lni-heart"></i></span>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
-                                    {{$job->job_applications_count}} <i class="lni-pencil-alt"></i>
+                            <div class="col-lg-1 col-md-4 col-xs-12 text-center">
+                                    <span class="btn-full-time">{{$job->job_applications_count}} <i class="lni-pencil-alt"></i></span>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12 text-center align-self-center">
-                                @if(Auth::user() && ($job->user_id == Auth::user()->id))
-                                <span><a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
+                            <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                    @if ($job->job_status->id == 3)
+                                    <span class="btn-full-time text-danger"> {{$job->job_status->name}} </span>
+                                    @elseif ($job->job_status->id == 1)
+                                    <span class="btn-full-time text-primary"> {{$job->job_status->name}} </span>
+                                    @elseif ($job->job_status->id == 4)
+                                    <span class="btn-full-time text-info"> {{$job->job_status->name}} </span>
+                                    @else
+                                    <span class="btn-full-time text-success"> {{$job->job_status->name}} </span>
+                                    @endif
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                @if(Auth::user() && ($job->user_id == Auth::user()->id) && ($job->job_status_id != 2))
+                                <span class="btn-full-time"><a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
                                         <i class="lni-pencil"></i>
                                     </a></span>
                                 &nbsp;
-                                <span><a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
+                                <span class="btn-full-time"><a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
                                         <i class="lni-trash"></i>
-                                    </a></span>
-                                <span><a href="{{route('frontend.user-ratings.edit',['id' => $job->id])}}" class="">
-                                        <i class="lni-star"></i>
                                     </a></span>
                                 @endif
                             </div>
                         </div>
+                        @if(session()->has('edit_error'))
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                            {{session()->get('edit_error')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
                     </div>
                     @endforeach
 

@@ -270,10 +270,10 @@
                                     <div class="custom-file mb-3">
                                         <input type="file" class="custom-file-input" id="image_url" name="image_url"
                                             value="{{old('image_url')}}">
-                                        <label class="custom-file-label form-control" for="file" id="image_url_label">Choose
+                                        <label class="custom-file-label form-control {{ $errors->has('image_url') ? ' is-invalid' : '' }}" for="file" id="image_url_label">Choose
                                             profile
                                             image...</label>
-                                        @if ($errors->has('image_url'))
+                                        @if($errors->has('image_url'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('image_url') }}</strong>
                                         </span>

@@ -208,8 +208,6 @@ class PostController extends Controller
                         // get the path
                         $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id.'/'.$post->post_files->path;
                     if( file_exists($fileCheck) ) {
-                        //delete file
-                        unlink($fileCheck);
                         //delete folder
                         File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id);
                     }
@@ -270,8 +268,6 @@ class PostController extends Controller
 
                  // check for file  and delete folder/file if exists
                  if( file_exists($filePath)) {
-                     //delete file
-                     unlink($filePath);
                      //delete folder
                       File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/posts/'.$post->id);
                  }

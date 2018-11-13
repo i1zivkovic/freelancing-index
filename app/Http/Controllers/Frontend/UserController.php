@@ -21,7 +21,7 @@ class UserController extends Controller
         $user = User::
         where('slug', $slug)
         ->withCount('followers', 'following')
-        ->with(['userProfile.profileEducation', 'userProfile.profileExperience', 'userSocial', 'userLocation', 'userSkills', 'rating', 'followers'])
+        ->with(['userProfile.profileEducation', 'userProfile.profileExperience', 'userSocial', 'userLocation', 'userSkills', 'rating.recruiter.userProfile', 'followers'])
         ->firstOrFail();
 
         /* dd($user); */

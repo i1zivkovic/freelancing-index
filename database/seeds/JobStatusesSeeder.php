@@ -23,5 +23,9 @@ class JobStatusesSeeder extends Seeder
           JobStatus::create([
             'name' => 'Unavailable',
         ]);
+        // job is in process
+          JobStatus::create([
+            'name' => 'In process',
+        ]);
     }
 }

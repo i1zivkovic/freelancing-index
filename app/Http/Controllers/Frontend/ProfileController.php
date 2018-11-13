@@ -142,11 +142,21 @@ class ProfileController extends Controller
                 'contact_number' => 'max:20'
             ];
 
+            $customMessages = [
+                'image' => 'The file must be an image (jpeg,jpg or png).'
+            ];
+
+            if(!empty($request->file('image_url'))){
+                $rules['image_url'] = 'image|mimes:jpeg,jpg,png';
+
+            }
+
             // create validator with given rules and check request
-            $validator = Validator::make($request->all(), $rules);
+            $validator = Validator::make($request->all(), $rules, $customMessages);
 
             // check if validation succeeds
             if ($validator->fails()) {
+
                 return back()->withErrors($validator)->withInput()->with(array('active-tab' => 'profile-info'));
 
             }
@@ -159,7 +169,7 @@ class ProfileController extends Controller
                 if($profile->image_url) {
                  $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/'.$profile->image_url;
                  if( file_exists($fileCheck) ) {
-                unlink($fileCheck);
+                    unlink($fileCheck);
                   }
                  }
             $file = $this->uploadImage($request->file('image_url'), Auth::user()->username);
@@ -372,7 +382,7 @@ class ProfileController extends Controller
            });
 
            //return message to view
-           return back()->with('success_email', 'Thanks for contacting us!');
+           return back()->with('success_email', 'You have successfully contacted this user!');
     }
 
 

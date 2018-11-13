@@ -5,6 +5,7 @@
 
 @section('css')
 {{-- --}}
+
 @stop
 
 @section('content')
@@ -82,7 +83,12 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-3 mb-4">
                                 <h3>Rating</h3>
+
+                                @if($user->rating->count() != 0)
                                 <i class="lni-star-filled"></i> {{round($user->rating->avg('rating'), 2)}} / 5
+                                @else
+                                <i class="lni-star-filled"></i> <i>Not rated yet.</i>
+                                @endif
                             </div>
                             <div class="col-sm-12 col-md-3 mb-4">
                                 <h3>Following</h3>
@@ -228,14 +234,15 @@
                         </div>
                         @endif
 
-                        {!! Form::open(['method' => 'POST', 'route' => ['frontend.contactUser', $user->id], 'autocomplete' =>
+                        {!! Form::open(['method' => 'POST', 'route' => ['frontend.contactUser', $user->id],
+                        'autocomplete' =>
                         'on','id' => 'sendMailForm', 'class' => 'form-ad']) !!}
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="text" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                        id="name" name="name" placeholder="Name" required value="{{old('name')}}">
+                                        id="contact_name" name="name" placeholder="Name" required value="{{old('name')}}">
                                     @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -246,7 +253,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input placeholder="Email" id="email" type="email" class="form-control"
+                                    <input placeholder="Email" id="contact_email" type="email" class="form-control"
                                         {{ $errors->has('email') ? ' is-invalid' : '' }} name="email" required value="{{old('email')}}">
                                     @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -258,7 +265,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Subject" name="subject" id="msg_subject"
+                                    <input type="text" placeholder="Subject" name="subject" id="contact_subject"
                                         {{ $errors->has('subject') ? ' is-invalid' : '' }} class="form-control"
                                         required value="{{old('message')}}">
                                     @if ($errors->has('subject'))
@@ -271,7 +278,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea class="form-control" id="message" name="message" placeholder="Your Message"
+                                    <textarea class="form-control" id="contact_message" name="message" placeholder="Your Message"
                                         {{ $errors->has('message') ? ' is-invalid' : '' }} rows="5" required>{{old('message')}}</textarea>
                                     @if ($errors->has('message'))
                                     <span class="invalid-feedback" role="alert">
@@ -291,8 +298,75 @@
                     </div>
                 </div>
             </div>
+            {{-- MAIN CONTENT --}}
+
+
+
+
+
+
+            @if($user->rating->count() > 0)
+            <div class="col-sm-12 mt-5">
+                <!-- Testimonial Section Start -->
+                <section id="testimonial" class="section box">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2 class="section-title">Recent Ratings</h2>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div id="testimonials" class="touch-slider owl-carousel">
+                                    @foreach ($user->rating as $rating)
+                                    @if($loop->index < 3) <div class="item">
+                                        <div class="testimonial-item">
+                                            <div class="author">
+                                                <div class="img-thumb">
+                                                    @if($rating->recruiter)
+                                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$rating->recruiter->username}}/{{$rating->recruiter->userProfile->image_url}}" alt="">
+                                                    @else
+
+                                                    @endif
+                                                </div>
+
+                                            </div>
+                                                <div class="author-info">
+                                                        @if($rating->recruiter)
+                                                    <h6><a href="{{route('frontend.user.show',['slug' => $rating->recruiter->slug])}}">{{$rating->recruiter->userProfile->first_name}} {{$rating->recruiter->userProfile->first_name}}</a></h6>
+                                                    @else
+                                                    <h6><a href="#!"><i>Deleted user</i></a></h6>
+                                                    @endif
+                                                </div>
+                                            <div class="content-inner">
+                                                <p class="description">{{$rating->comment}}</p>
+                                            <p class="rating"><i class="lni-star-filled"></i>{{$rating->rating}} / 5</p>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </section>
+            <!-- Testimonial Section End -->
         </div>
+        @endif
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
+</div>
 </div>
 <!-- End Content -->
 
@@ -304,5 +378,7 @@
 
 @section('js')
 {{-- --}}
+{!!Html::script(asset('js/custom/profile.js'))!!}
 {!!Html::script(asset('js/custom/community.js'))!!}
+
 @stop

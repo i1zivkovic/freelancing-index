@@ -12,8 +12,11 @@ use App\JobSkill;
 use App\JobComment;
 use App\JobLike;
 use App\JobFile;
+use App\JobApplication;
 use Carbon\Carbon;
 use App\Skill;
+use App\User;
+use Mail;
 use File;
 use Validator;
 class JobController extends Controller
@@ -195,12 +198,17 @@ class JobController extends Controller
                 return abort(403);
             }
 
+            if($job->job_status_id == 2) {
+                return back()->with("edit_error", "You can't edit this job for it is in 'Done' state.");
+            }
+
             // get the stored data used for select 2 autocomplete
              $selectedCategories = JobBusinessCategory::where('job_id', $id) ->pluck('business_category_id');
              $businessCategories = BusinessCategory::pluck('name','id');
 
             $selectedSkills = JobSkill::where('job_id', $id) ->pluck('skill_id');
             $skills = Skill::whereIn( 'id' ,$selectedSkills)->pluck('name','id');
+
 
             // return edit view with data
             return view('frontend.job_edit', compact('job','businessCategories', 'selectedCategories', 'selectedSkills', 'skills'));
@@ -260,8 +268,6 @@ class JobController extends Controller
                 if(!empty($job->job_files)) {
                     $fileCheck = public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id.'/'.$job->job_files->path;
                 if( file_exists($fileCheck) ) {
-                    //delete file
-                    unlink($fileCheck);
                     //delete folder
                     File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id);
                 }
@@ -288,11 +294,68 @@ class JobController extends Controller
             JobBusinessCategory::where('job_id', $id)->delete();
             JobBusinessCategory::insert($arrCategories);
 
+            //store job skills
             JobSkill::where('job_id', $id)->delete();
             JobSkill::insert($arrSkills);
 
-         //redirect back to job
-        return redirect()->to('jobs/'.$job->slug);
+            // if job is now in state 'Done'
+            if($job->job_status_id == 2 || $job->job_status_id == 4) {
+
+                /* Get the id of the waiting users */
+                $waiting_applications_users = JobApplication::where([['job_id', $id], ['job_application_state_id', 1]])->select('user_id')->get();
+
+                /* If there are waiting applications */
+                if (!$waiting_applications_users->isEmpty()) {
+
+                    /* Set all the waiting applications to rejected */
+                    $waiting_job_applications = JobApplication::where([['job_id', $id], ['job_application_state_id', 1]]);
+                    $waiting_job_applications->update(['job_application_state_id' => 3]);
+                   /* Get users data from users that are waiting */
+                    $waiting_users = User::whereIn('id',$waiting_applications_users)->select('id','email')->get();
+
+
+                    /* send each user an e-mail */
+                    foreach($waiting_users as $user) {
+                         Mail::send('e-mails.job_application_response', ['job_slug' => $job->slug, 'job_application_state' => 'rejected'], function($msg) use ($user){
+                        $msg->from(Auth::user()->email, 'TheHunt');
+                        $msg->subject('Job Application Status Change');
+                        $msg->to($user['email']);
+                    });
+                    }
+
+
+                }
+
+                //if job stauts is 'done'
+                if($job->job_status_id == 2) {
+
+                    //get the freelancers that are accepted
+                    $freelancers = JobApplication::where([['job_id',$id], ['job_application_state_id',2]])->get();
+
+                     // if there are freelancers that are accpeted
+                    if(!$freelancers->isEmpty()) {
+
+                        // redirect to the view used to rate those users
+                        return redirect()->route('frontend.user-ratings.edit',['id' => $job->id]);
+                    }
+                    //else redirect to edit
+                    else {
+                        return redirect()->to('jobs/'.$job->slug);
+                    }
+                }
+                //if there are no freelancers or job status is not 'in progress'
+                else {
+                    return redirect()->to('jobs/'.$job->slug);
+                }
+
+            }
+            else
+            {     //redirect back to job
+                return redirect()->to('jobs/'.$job->slug);
+
+            }
+
+
 
         // if there does not exist that job or user is wrong, return error page
         } else {
@@ -327,18 +390,23 @@ class JobController extends Controller
                     return response()->json($return, 403);
                 }
 
+                if($job->job_status_id == 2) {
+                    $return = array(
+                        'error' => "You can't delete this job for it is in 'Done' state."
+                    );
+                    return response()->json($return, 404);
+                }
+
                 // get the job file id
-                $job_file_id = JobFile::where('job_id', $id)->select('id')->firstOrFail();
+                $job_file_id = JobFile::where('job_id', $id)->select('id')->get();
 
                     // if there is file
-                    if($job_file_id) {
+                    if(!$job_file_id->isEmpty()) {
                         // get the path
                         $filePath = public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id.'/'.$job->job_files->path;
 
                         // check for file  and delete folder/file if exists
                         if( file_exists($filePath)) {
-                            //delete file
-                            unlink($filePath);
                             //delete folder
                              File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job->id);
                         }
@@ -496,6 +564,8 @@ class JobController extends Controller
 
         return view('frontend.user_jobs', compact('jobs'));
     }
+
+
 
 
 }

@@ -18,6 +18,12 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-9 col-md-12 col-xs-12">
+                            @if(session()->has('error_edit'))
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session()->get('error_edit')}}
+                        </div>
+                        @endif
                         <div class="post-job box">
                             <h3 class="job-title">Edit you job</h3>
                             {!! Form::open(['method' => 'PUT', 'route' => ['frontend.jobs.update', $job->id],
@@ -118,7 +124,7 @@
                                 <label class="control-label">Job status</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
-                                        {!! Form::select('job_status_id', [1 => 'Active', 2 => 'Done', 3 => 'Unavailable'], $job->job_status,
+                                        {!! Form::select('job_status_id', [1 => 'Active', 2 => 'Done', 3 => 'Unavailable', 4 => 'In Process'], $job->job_status_id,
                                         ['class' => 'dropdown-product selectpicker']) !!}
                                     </label>
                                 </div>
