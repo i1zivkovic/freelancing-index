@@ -47,11 +47,11 @@
                                                 name="q" value="{{!empty($request) ? $request->input('q') : null}}">
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                            <input type="text" class="form-control" placeholder="Location: City, State, Zip"
+                                            <input type="text" class="form-control" placeholder="Location: City, Country"
                                                 name="location" value="{{!empty($request) ? $request->input('location') : null}}">
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                            <input type="text" class="form-control" placeholder="Category: Food, Communications, It"
+                                            <input type="text" class="form-control" placeholder="Category: Graphic Design, Programming"
                                                 name="category" value="{{!empty($request) ? $request->input('category') : null}}">
                                         </div>
                                     </div>

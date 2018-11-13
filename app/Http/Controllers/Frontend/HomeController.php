@@ -34,10 +34,11 @@ class HomeController extends Controller
         $recentJobs = Job::with([
             'job_skills',
             'job_business_categories',
+            'job_status',
             'user' => function($query) {
                 $query->select('id','username','slug');
             }
-        ]) ->withCount(['job_likes', 'job_comments'])
+        ]) ->withCount(['job_likes', 'job_comments', 'job_applications'])
         ->orderBy('created_at','DESC')
         /* ->select('id','slug','user_id', 'title', 'description','offer', 'is_per_hour', 'job_location_city','job_location_country','is_remote')  *///
         ->take(4)->get();

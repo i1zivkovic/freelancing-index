@@ -40,17 +40,14 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::get('users', 'CommunityController@index')->name('getUsers');
     Route::get('show-followers', 'CommunityController@show_followers')->name('showFollowers');
     Route::get('show-following', 'CommunityController@show_following')->name('showFollowing');
-    //FOLLOW / UNFOLLOW
+    //FOLLOW_UNFOLLOW
     Route::post('follow-unfollow/{id}', 'CommunityController@follow_unfollow')->name('followUnfollow');
     Route::any('users-filter', 'CommunityController@users_filter')->name('usersFilter');
     Route::any('followers-filter', 'CommunityController@followers_filter')->name('followersFilter');
     Route::any('following-filter', 'CommunityController@following_filter')->name('followingFilter');
 
-
-
     //AJAX
     Route::get('skills/find', 'AjaxController@findSkill');
-
 
     //PROFILE
     Route::get('profile/{slug}', 'UserController@show')->name('user.show');
@@ -63,6 +60,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('skills-info', 'ProfileController@skills_update')->name('skillsInfo');
     Route::post('socials-info', 'ProfileController@socials_update')->name('socialsInfo');
     Route::post('location-info', 'ProfileController@location_update')->name('locationInfo');
+    //PROFILE CONTACT
+    Route::post('contact-user/{id}', 'ProfileController@contact_user')->name('contactUser');
 
     //POSTS
     Route::resource('posts', 'PostController');
@@ -93,33 +92,22 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::get('manage-applications', 'JobApplicationController@manageApplications')->name('getManageApplications');
     Route::get('manage-applications/{slug}', 'JobApplicationController@manageApplicationsSlug')->name('getManageApplicationsSlug');
 
-
-
     //RATINGS
     Route::resource('user-ratings','UserRatingController');
-
 
     //CONTACT
     Route::get('contact', 'ContactController@index')->name('contact');
     Route::post('contact', 'ContactController@sendMail')->name('sendMail');
-    Route::post('contact-user/{id}', 'ProfileController@contact_user')->name('contactUser');
-
-
-    // PASSWORD CHANGE
-    Route::get('change-password', 'PasswordController@index')->name('changePassword');
 });
 
 
-// ROUTE USED TO FILL BASE INFO WITHOUT REDIRECT
+// ROUTE USED TO FILL BASE INFO WITHOUT STEPS MIDDLEWARE
 Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', 'middleware' => ['auth']], function () {
-    //PROFILE COMPLETION STEPS
     Route::any('post-step-1', 'StepController@postStepOne')->name('postStepOne');
 });
 
 
-
-
-// BACKEND TODO
+// BACKEND TODO (admin dashboard)
 Route::group(['prefix' => 'admin', 'namespace' => 'Backend', 'as' => 'backend.', 'middleware' => ['auth']], function () {
 
 });

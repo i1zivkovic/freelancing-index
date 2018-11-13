@@ -79,14 +79,14 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-xs-12">
-                            <a href="#!" class="img-box">
-                                <div class="img-box-content">
-                                    <h4>Programming</h4>
-                                </div>
-                                <div class="img-box-background">
-                                    <img class="img-fluid" src="{{asset('img/categories/programming.jpg')}}" alt="">
-                                </div>
-                            </a>
+                        <a href="#!" class="img-box">
+                            <div class="img-box-content">
+                                <h4>Programming</h4>
+                            </div>
+                            <div class="img-box-background">
+                                <img class="img-fluid" src="{{asset('img/categories/programming.jpg')}}" alt="">
+                            </div>
+                        </a>
 
                     </div>
                     <div class="col-lg-6 col-md-12 col-xs-12">
@@ -107,13 +107,13 @@
 
         <!-- How It Work Section Start -->
         <section class="how-it-works section">
-            <div class="container">
+            <div class="">
                 <div class="section-header">
                     <h2 class="section-title">How It Works?</h2>
                     <p>Not sure where to start? Let us explain it in the easiest way.</p>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
                         <div class="work-process">
                             <span class="process-icon">
                                 <i class="lni-user"></i>
@@ -123,7 +123,7 @@
                                 users know a little more about you.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="work-process step-2">
                             <span class="process-icon">
                                 <i class="lni-search"></i>
@@ -134,7 +134,7 @@
                                 application.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="work-process step-3">
                             <span class="process-icon">
                                 <i class="lni-briefcase"></i>
@@ -144,14 +144,32 @@
                                 After that you simply wait for users to apply and choose the right ones.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="work-process step-3">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="work-process step-4">
                             <span class="process-icon">
                                 <i class="lni-users"></i>
                             </span>
                             <h4>Connect with other users</h4>
                             <p> You can follow other users using this site. That way their posts will show up on your
                                 feed and you can see all the posts they are willing to share.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="work-process step-4">
+                            <span class="process-icon">
+                                <i class="lni-star"></i>
+                            </span>
+                            <h4>Rate users</h4>
+                            <p> After the job is completed, e.g. put in 'Done' state, recuriter can rate freelancers and vice versa.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="work-process step-4">
+                            <span class="process-icon">
+                                <i class="lni-write"></i>
+                            </span>
+                            <h4>Post your projects</h4>
+                            <p> Feel free to share your projects with other users. You can add title, description and file.</p>
                         </div>
                     </div>
                 </div>
@@ -201,7 +219,7 @@
                             <div class="icon"><i class="lni-write"></i></div>
                             <div class="fact-count">
                                 <h3><span class="counter">{{$jobApplicationCount}}</span></h3>
-                                <p>Applications</p>
+                                <p>Job Applications</p>
                             </div>
                         </div>
                     </div>
@@ -268,12 +286,6 @@
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-xs-12 text-center">
-                                    <div class="location">
-                                        <i class="lni-map-marker"></i>{{$recentJob->job_location_city}},
-                                        {{$recentJob->job_location_country}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
                                     <span class="btn-open">{{$recentJob->offer}}$
                                         @if($recentJob->is_per_hour)
                                         /h
@@ -282,9 +294,29 @@
                                         @endif
                                     </span>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 text-center">
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                    <div class="location">
+                                        <i class="lni-map-marker"></i>{{$recentJob->job_location_city}},
+                                        {{$recentJob->job_location_country}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
                                     <span class="btn-full-time">{{$recentJob->job_comments_count}} <i class="lni-comments-alt"></i>
                                         {{$recentJob->job_likes_count}} <i class="lni-heart"></i></span>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                    <span class="btn-full-time">{{$recentJob->job_applications_count}} <i class="lni-pencil-alt"></i></span>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                    @if ($recentJob->job_status->id == 3)
+                                    <span class="btn-full-time text-danger"> {{$recentJob->job_status->name}} </span>
+                                    @elseif ($recentJob->job_status->id == 1)
+                                    <span class="btn-full-time text-primary"> {{$recentJob->job_status->name}} </span>
+                                    @elseif ($recentJob->job_status->id == 4)
+                                    <span class="btn-full-time text-info"> {{$recentJob->job_status->name}} </span>
+                                    @else
+                                    <span class="btn-full-time"> {{$recentJob->job_status->name}} </span>
+                                    @endif
                                 </div>
                             </div>
                         </a>
