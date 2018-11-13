@@ -4609,3 +4609,9 @@ div.job-listings .category-list span {
 .page-header .breadcrumb-wrapper .content .job-metadata > span {
     display: block !important;
 }
+
+
+.panel-default .panel-heading.delete-account {
+    background: #c82333 !important;
+    border: #c82333 !important;
+}

@@ -351,7 +351,7 @@ class JobController extends Controller
             }
             else
             {     //redirect back to job
-                return redirect()->to('jobs/'.$job->slug);
+                return redirect()->to('jobs/'.$job->slug)->with('edit_success', 'You have successfully edited your job.');
 
             }
 
@@ -563,6 +563,49 @@ class JobController extends Controller
         ]) -> orderBy('created_at','desc')-> paginate(5);
 
         return view('frontend.user_jobs', compact('jobs'));
+    }
+
+
+
+    /**
+     * Method used to delete file from job
+     * @param $request request object
+     */
+    public function deleteJobFile(Request $request) {
+
+
+        // id of the file
+        $file_id = $request['file_id'];
+
+        $job_file = JobFile::findOrFail($file_id);
+
+        $job = Job::findOrFail($job_file->job_id);
+
+        // check if file exists
+        if ($job_file->exists()) {
+
+            // if file exists but the user is not thw owner of the job
+            if($job->user_id != Auth::id()) {
+                $return = array(
+                    'error' => 'You are not allowed to execute this action!'
+                );
+                return response()->json($return, 403);
+            }
+            //delete folder
+            File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username.'/jobs/'.$job_file->job_id);
+            // delete from DB
+            $job_file->delete();
+            $return = array(
+                'success' => 'You have successfully deleted this file!'
+            );
+            return response()->json($return, 200);
+        }else {
+            $return = array(
+                'error' => 'Error deleting while file!'
+            );
+            return response()->json($return, 404);
+        }
+
     }
 
 

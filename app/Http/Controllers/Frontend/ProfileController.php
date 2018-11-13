@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use File;
 
 class ProfileController extends Controller
 {
@@ -356,6 +357,8 @@ class ProfileController extends Controller
             'message' => 'required',
         ];
 
+
+
         // make validator
         $validator = Validator::make($request->all(), $rules);
 
@@ -383,6 +386,52 @@ class ProfileController extends Controller
 
            //return message to view
            return back()->with('success_email', 'You have successfully contacted this user!');
+    }
+
+
+    /**
+     * Method used to delete account and all data for the user
+     * @param Request $request Object containing info about the user and password confirmation
+     */
+    public function account_delete(Request $request) {
+
+        // Validation rules
+        $rules = [
+            'password_confirm_delete' => 'required|confirmed',
+        ];
+
+        $customMessages = [
+            'password_confirm_delete.confirmed' => 'The password confirmation does not match.'
+        ];
+
+        // make validator
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+
+        // check if validation success
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('active-tab', 'delete-account');
+        }
+
+        // if user has provided the correct password
+        if(Hash::check($request->get('password_confirm_delete'), Auth::user()->password)) {
+
+              //delete user folder and all of his files
+              File::deleteDirectory(public_path().'/uploads/'.Auth::user()->username);
+
+              // delete user from DB
+              User::where('id', Auth::id())->delete();
+
+              // redirect to login page
+              return redirect('login')->with(array(Auth::logout(), 'delete_account_success' => 'You have successfully deleted your account.'));
+
+
+        }
+        // redirect with error
+        else {
+           return back()->with(array('active-tab' => 'delete-account', 'delete_account_error' => 'You have entered a wrong password'));
+        }
+
+
     }
 
 

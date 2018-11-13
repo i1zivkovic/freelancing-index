@@ -60,6 +60,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::post('skills-info', 'ProfileController@skills_update')->name('skillsInfo');
     Route::post('socials-info', 'ProfileController@socials_update')->name('socialsInfo');
     Route::post('location-info', 'ProfileController@location_update')->name('locationInfo');
+    Route::post('account-delete', 'ProfileController@account_delete')->name('accountDelete');
     //PROFILE CONTACT
     Route::post('contact-user/{id}', 'ProfileController@contact_user')->name('contactUser');
 
@@ -81,7 +82,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
     Route::any('jobs-filter', 'JobController@postJobsFilter')->name('jobsFilter');
     Route::any('my-jobs-filter', 'JobController@postMyJobsFilter')->name('myJobsFilter');
     Route::get('posts/my-jobs/{slug}', 'JobController@getMyJobs')->name('myJobs');
-    Route::delete('delete-job-file', 'AjaxController@deleteJobFile')->name('deleteJobFile');
+    Route::delete('delete-job-file', 'JobController@deleteJobFile')->name('deleteJobFile');
     //JOB LIKES
     Route::post('job-likes/{id}', 'JobLikeController@likeUnlikeHandler')->name('jobLikeUnlike');
     //JOB COMMENTS

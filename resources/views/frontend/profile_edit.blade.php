@@ -18,13 +18,13 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-12 col-md-12 col-xs-12 text-center">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                 <h5 class="mb-5">Edit your profile</h5>
             </div>
 
 
 
-            <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
                 <ul class="nav nav-tabs  mb-5" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link {{(session()->get('active-tab') == 'account-info' || !session()->get('active-tab')) ? 'active' : ''}}"
@@ -32,14 +32,19 @@
                             aria-selected="false">Account Info</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{(session()->get('active-tab') == 'delete-account') ? 'active' : ''}}" id="delete-account-tab"
+                            data-toggle="tab" href="#delete-account" role="tab" aria-controls="delete-account"
+                            aria-selected="false">Delete Account</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{session()->get('active-tab') == 'profile-info' ? 'active' : ''}}" id="profile-info-tab"
                             data-toggle="tab" href="#profile-info" role="tab" aria-controls="profile-info"
-                            aria-selected="true">Profile Info</a>
+                            aria-selected="true">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{session()->get('active-tab') == 'location-info' ? 'active' : ''}}" id="location-info-tab"
                             data-toggle="tab" href="#location-info" role="tab" aria-controls="location-info"
-                            aria-selected="true">Location Info</a>
+                            aria-selected="true">Location</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{session()->get('active-tab') == 'skills' ? 'active' : ''}}" id="skills-tab"
@@ -58,6 +63,7 @@
                         <a class="nav-link {{session()->get('active-tab') == 'socials' ? 'active' : ''}}" id="socials-tab"
                             data-toggle="tab" href="#socials" role="tab" aria-controls="socials" aria-selected="true">Socials</a>
                     </li>
+
 
                 </ul>
 
@@ -81,7 +87,7 @@
                         'form-ad','mb-3']) !!}
                         @csrf
                         <div class="row mb-3">
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Username</label>
                                     <input type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}"
@@ -93,7 +99,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">E-mail</label>
                                     <input type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
@@ -105,7 +111,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Password</label>
                                     <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -117,7 +123,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Confirm Password</label>
                                     <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -129,7 +135,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="">
                                     {{ Form::checkbox('notify_applications', '1', Auth::user()->notify_applications) }}
                                     <label class="form-check-label" for="notify_applications">
@@ -137,7 +143,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="">
                                     {{ Form::checkbox('notify_application_status', '1',
                                     Auth::user()->notify_application_status) }}
@@ -148,13 +154,86 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center mb-5">
                             <button type="submit" class="btn btn-common">Update</button>
                         </div>
+
+
+
                         {!!Form::close()!!}
 
                     </div>
-                    {{-- ACCOUNT INFO END --}}
+
+
+
+                    {{-- ACCOUNT MANAGEMENT END --}}
+
+                    <div class="tab-pane {{(session()->get('active-tab') == 'delete-account') ? 'active' : ''}} box" id="delete-account"
+                        role="tabpanel" aria-labelledby="delete-account-tab">
+                        {!! Form::open(['method' => 'POST', 'route' => ['frontend.accountDelete'],
+                        'autocomplete'
+                        =>
+                        'off', 'files' => false, 'enctype' => 'multipart/form-data', 'id' => 'accountDeleteForm',
+                        'class'
+                        =>
+                        'form-ad','mb-3']) !!}
+                        @csrf
+                        <div class="row mb-3">
+
+                            <div class="col-sm-12 mb-5">
+                                *IMPORTANT: All of your data will be deleted too and we won't be able to recover it
+                                once deleted. If you want to proceed, please confirm with your password.
+                            </div>
+
+                            @if(session()->has('delete_account_error'))
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    {{session()->get('delete_account_error')}}
+                                </div>
+                            </div>
+
+                            @endif
+
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="control-label">Password</label>
+                                    <input type="password" class="form-control {{ $errors->has('password_confirm_delete') ? ' is-invalid' : '' }}"
+                                        placeholder="" name="password_confirm_delete" required value="">
+                                    @if ($errors->has('password_confirm_delete'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password_confirm_delete') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label class="control-label">Confirm Password</label>
+                                    <input type="password" class="form-control {{ $errors->has('password_confirm_delete_confirmation') ? ' is-invalid' : '' }}"
+                                        placeholder="" name="password_confirm_delete_confirmation" required value="">
+                                    @if ($errors->has('password_confirm_delete_confirmation'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{
+                                            $errors->first('password_confirm_delete_confirmation')
+                                            }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 mb-5">
+                            <button type="submit" class="btn btn-danger">DELETE</button>
+                        </div>
+
+
+
+                        {!!Form::close()!!}
+
+                    </div>
+                    {{-- ACCOUNT MANAGEMENT END --}}
 
 
                     {{-- PROFILE INFO BEGIN --}}
@@ -177,7 +256,7 @@
                         @csrf
                         <input type="hidden" value="{{$user->userProfile->id}}" name="profile_id" />
                         <div class="row mb-3">
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">First Name</label>
                                     <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
@@ -189,7 +268,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Last Name</label>
                                     <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
@@ -201,7 +280,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Date of birth</label>
                                     <input type="date" class="form-control {{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}"
@@ -213,13 +292,14 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Gender</label>
                                     <div class="search-category-container post-job">
                                         <label class="styled-select">
                                             {!! Form::select('gender', ['m' => 'Male', 'f' => 'Female'],
-                                            $user->userProfile->gender, ['class' => 'dropdown-product selectpicker']) !!}
+                                            $user->userProfile->gender, ['class' => 'dropdown-product selectpicker'])
+                                            !!}
                                         </label>
                                         @if ($errors->has('gender'))
                                         <span class="invalid-feedback" role="alert">
@@ -229,7 +309,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Website URL</label>
                                     <input type="text" class="form-control {{ $errors->has('website_url') ? ' is-invalid' : '' }}"
@@ -241,7 +321,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Contact number</label>
                                     <input type="text" class="form-control {{ $errors->has('contact_number') ? ' is-invalid' : '' }}"
@@ -253,7 +333,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group">
                                     <label class="control-label">About me</label>
                                     <textarea name="about_me" cols="30" rows="10" class="form-control {{ $errors->has('about_me') ? ' is-invalid' : '' }}">{{$user->userProfile->about_me}}</textarea>
@@ -264,13 +344,14 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <div class="form-group">
                                     <label class="control-label">Choose a profile image</label>
                                     <div class="custom-file mb-3">
                                         <input type="file" class="custom-file-input" id="image_url" name="image_url"
                                             value="{{old('image_url')}}">
-                                        <label class="custom-file-label form-control {{ $errors->has('image_url') ? ' is-invalid' : '' }}" for="file" id="image_url_label">Choose
+                                        <label class="custom-file-label form-control {{ $errors->has('image_url') ? ' is-invalid' : '' }}"
+                                            for="file" id="image_url_label">Choose
                                             profile
                                             image...</label>
                                         @if($errors->has('image_url'))
@@ -285,7 +366,7 @@
 
                         </div>
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-common">Update</button>
                         </div>
                         {!!Form::close()!!}
@@ -313,7 +394,7 @@
                         @csrf
                         <div class="row mb-3">
 
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">City</label>
                                     <input type="text" class="form-control {{ $errors->has('city') ? ' is-invalid' : '' }}"
@@ -325,7 +406,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
                                     <label class="control-label">Country</label>
                                     <input type="text" class="form-control {{ $errors->has('country') ? ' is-invalid' : '' }}"
@@ -340,7 +421,7 @@
 
                         </div>
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-common">Update</button>
                         </div>
                         {!!Form::close()!!}
@@ -366,7 +447,7 @@
                             'class' => 'form-ad']) !!}
                             @csrf
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <label class="control-label">Skills</label>
                                         <label class="styled-select">
@@ -375,7 +456,7 @@
                                             'skill_list']) !!}
                                         </label>
                                     </div>
-                                    <div class="col-xs-12 text-center">
+                                    <div class="col-sm-12 text-center">
                                         <button type="submit" class="btn btn-common">Update</button>
                                     </div>
 
@@ -418,47 +499,47 @@
                             <div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Institution Name</label>
                                         <input type="text" class="form-control" placeholder="" name="institution_name[]"
                                             required value="{{$user->userProfile_education->institution_name}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Major</label>
                                         <input type="text" class="form-control" placeholder="" name="major[]" required
                                             value="{{$user->userProfile_education->major}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Degree</label>
                                         <input type="text" class="form-control" placeholder="" name="degree[]" required
                                             value="{{$user->userProfile_education->degree}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Description</label>
                                         <textarea name="description[]" cols="30" rows="7" class="form-control">{{$user->userProfile_education->description}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control" placeholder="" name="start_date[]"
                                             value="{{$user->userProfile_education->start_date}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
                                         <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$user->userProfile_education->end_date}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="add-post-btn">
                                         <a href="#!" class="btn-delete remove-education">Remove</a>
                                     </div>
@@ -470,7 +551,7 @@
                             @else
                             @foreach(old('institution_name') as $key => $institution_name)
                             <div class="row mb-3">
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Institution Name</label>
                                         <input type="text" class="form-control {{$errors->has('institution_name.'.$key) ? 'is-invalid' : ''}}"
@@ -482,7 +563,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Major</label>
                                         <input type="text" class="form-control {{$errors->has('major.'.$key) ? 'is-invalid' : ''}}"
@@ -494,7 +575,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Degree</label>
                                         <input type="text" class="form-control {{$errors->has('degree.'.$key) ? 'is-invalid' : ''}}"
@@ -506,7 +587,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Description</label>
                                         <textarea name="description[]" cols="30" rows="7" class="form-control {{$errors->has('description.'.$key) ? 'is-invalid' : ''}}">{{old('description.'.$key)}}</textarea>
@@ -517,7 +598,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control {{$errors->has('start_date.'.$key) ? 'is-invalid' : ''}}"
@@ -529,7 +610,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
                                         <input type="date" class="form-control {{$errors->has('end_date.'.$key) ? 'is-invalid' : ''}}"
@@ -541,7 +622,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="add-post-btn">
                                         <a href="#!" class="btn-delete remove-education">Remove</a>
                                     </div>
@@ -553,13 +634,13 @@
                             {{-- row mb5 --}}
                         </div>
                         {{-- educations --}}
-                        <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12 text-center mb-5">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mb-5">
                             <div class="add-post-btn">
                                 <a href="#!" class="btn-added" id="add-education">Add New Education</a>
                             </div>
                         </div>
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center">
                             <button class="btn btn-common" type="submit" id="submit-education"
                                 {{($user->userProfile->profileEducation->count() || !empty(old('institution_name'))) ? '' : 'disabled'}}>
                                 Update</button>
@@ -598,57 +679,57 @@
                             @if(!empty($user->userProfile->profileExperience))
                             @foreach($user->userProfile->profileExperience as $user->userProfile_experience)
                             <div class="row mb-3">
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12  mb-3">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  mb-3">
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Company Name</label>
                                         <input type="text" class="form-control" placeholder="" name="company_name[]"
                                             required value="{{$user->userProfile_experience->company_name}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Job Title</label>
                                         <input type="text" class="form-control" placeholder="" name="job_title[]"
                                             required value="{{$user->userProfile_experience->job_title}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Job Description</label>
                                         <textarea name="job_description[]" cols="30" rows="7" class="form-control"
                                             required>{{$user->userProfile_experience->job_description}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Country</label>
                                         <input type="text" class="form-control" placeholder="" name="job_location_country[]"
                                             value="{{$user->userProfile_experience->job_location_country}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">City</label>
                                         <input type="text" class="form-control" placeholder="" name="job_location_city[]"
                                             value="{{$user->userProfile_experience->job_location_city}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control" placeholder="" name="start_date[]"
                                             value="{{$user->userProfile_experience->start_date}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
                                         <input type="date" class="form-control" placeholder="" name="end_date[]" value="{{$user->userProfile_experience->end_date}}">
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="add-post-btn">
                                         <a href="#!" class="btn-delete remove-experience">Remove</a>
                                     </div>
@@ -660,9 +741,9 @@
                             @else
                             @foreach(old('company_name') as $key => $company_name)
                             <div class="row mb-3">
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12  mb-3">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12  mb-3">
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Company Name</label>
                                         <input type="text" class="form-control {{$errors->has('company_name.'.$key) ? 'is-invalid' : ''}}"
@@ -674,7 +755,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Job Title</label>
                                         <input type="text" class="form-control {{$errors->has('job_title.'.$key) ? 'is-invalid' : ''}}"
@@ -686,7 +767,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <label class="control-label">Job Description</label>
                                         <textarea name="job_description[]" cols="30" rows="7" class="form-control {{$errors->has('job_description.'.$key) ? 'is-invalid' : ''}}"
@@ -698,7 +779,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Country</label>
                                         <input type="text" class="form-control {{$errors->has('job_location_country.'.$key) ? 'is-invalid' : ''}}"
@@ -710,7 +791,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">City</label>
                                         <input type="text" class="form-control {{$errors->has('job_location_city.'.$key) ? 'is-invalid' : ''}}"
@@ -722,7 +803,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">Start Date</label>
                                         <input type="date" class="form-control {{$errors->has('start_date.'.$key) ? 'is-invalid' : ''}}"
@@ -734,7 +815,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label class="control-label">End Date</label>
                                         <input type="date" class="form-control {{$errors->has('end_date.'.$key) ? 'is-invalid' : ''}}"
@@ -746,7 +827,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="add-post-btn">
                                         <a href="#!" class="btn-delete remove-experience">Remove</a>
                                     </div>
@@ -758,13 +839,13 @@
                             {{-- row mb5 --}}
                         </div>
                         {{-- experiences --}}
-                        <div class="col-xs-12 col-md-12 col-lg-12 col-xl-12 text-center mb-5">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mb-5">
                             <div class="add-post-btn">
                                 <a href="#!" class="btn-added" id="add-experience">Add New Experience</a>
                             </div>
                         </div>
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center">
                             <button class="btn btn-common" type="submit" id="submit-experience"
                                 {{($user->userProfile->profileExperience->count() || !empty(old('company_name'))) ? '' : 'disabled'}}>
                                 Update</button>
@@ -796,7 +877,7 @@
                         'form-ad','mb-3']) !!}
                         @csrf
                         <div class="row mb-3">
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-instagram"></i></span>
@@ -805,7 +886,7 @@
                                         aria-label="instagram" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ?   Auth::user()->userSocial->instagram : '' }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-github"></i></span>
@@ -814,7 +895,7 @@
                                         aria-label="github" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->github : '' }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-linkedin"></i></span>
@@ -823,7 +904,7 @@
                                         aria-label="linkedin" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->linkedin : '' }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-facebook"></i></span>
@@ -832,7 +913,7 @@
                                         aria-label="facebook" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->facebook : '' }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-twitter"></i></span>
@@ -841,7 +922,7 @@
                                         aria-label="twitter" aria-describedby="basic-addon1" value="{{Auth::user()->userSocial ? Auth::user()->userSocial->twitter : '' }}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="lni-google-plus"></i></span>
@@ -853,7 +934,7 @@
                         </div>
 
 
-                        <div class="col-xs-12 text-center">
+                        <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-common">Update</button>
                         </div>
                         {!!Form::close()!!}

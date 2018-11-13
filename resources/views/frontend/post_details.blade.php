@@ -16,6 +16,18 @@
         <div id="content">
             <div class="container">
                 <div class="row">
+
+                    <div class="col-sm-12">
+                            @if(session()->has('edit_success'))
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                {{session()->get('edit_success')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                    </div>
+
                     <!-- Start Blog Posts -->
                     <div class="col-lg-8 col-md-12 col-xs-12">
                         <!-- Start Post -->
@@ -28,7 +40,10 @@
                                     <span class="meta-part"><a href="{{route('frontend.user.show',['slug' => $post->user->slug])}}"><i
                                                 class="lni-user"></i> By {{$post->user->username}}</a></span>
                                     <span class="meta-part"><i class="lni-calendar"></i>
-                                        {{$post->updated_at->format('m/d/Y')}}</span>
+                                        {{$post->updated_at->format('m/d/Y')}}
+                                        @if($post->updated_at != $post->created_at)
+                                        <small>- edited</small>
+                                    @endif</span>
                                 </div>
                                 <p>{{$post->description}}</p>
                                 <br>

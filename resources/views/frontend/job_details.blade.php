@@ -14,6 +14,9 @@
         <div class="page-header">
             <div class="container">
                 <div class="row">
+
+
+
                     <div class="col-lg-8 col-md-6 col-xs-12">
                         <div class="breadcrumb-wrapper">
                             <div class="img-wrapper">
@@ -65,7 +68,16 @@
         <div class="content">
             <section class="job-detail section">
                 <div class="container">
+                        @if(session()->has('edit_success'))
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                {{session()->get('edit_success')}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
                     <div class="row justify-content-between">
+
                         <div class="col-lg-8 col-md-12 col-xs-12 mb-4">
 
                             <div class="content-area">

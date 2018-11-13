@@ -219,7 +219,7 @@ class PostController extends Controller
                 }
 
                  //redirect back to post
-                return redirect()->to('posts/'.$post->slug);
+                return redirect()->to('posts/'.$post->slug)->with('edit_success','You have successfully edited your post.');
             }
 
          }

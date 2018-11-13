@@ -11,6 +11,18 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6 col-xs-12">
 
+                    @if(session()->has('delete_account_success'))
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    {{session()->get('delete_account_success')}}
+                                </div>
+                        </div>
+                    </div>
+
+                    @endif
+
                 <div class="page-login-form box">
                         <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mb-3">
