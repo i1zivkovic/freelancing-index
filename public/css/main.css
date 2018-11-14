@@ -3445,6 +3445,11 @@ label {
 .post-title a {
     color: #444;
 }
+.post-title a:hover {
+    color: #26ae61 !important;
+}
+
+
 
 .blog-post {
     margin-bottom: 40px;
@@ -4610,8 +4615,11 @@ div.job-listings .category-list span {
     display: block !important;
 }
 
-
+/* DELETE ACCOUNT */
 .panel-default .panel-heading.delete-account {
     background: #c82333 !important;
     border: #c82333 !important;
 }
+
+
+

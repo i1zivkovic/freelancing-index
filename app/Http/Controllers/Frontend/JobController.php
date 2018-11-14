@@ -329,11 +329,28 @@ class JobController extends Controller
                 //if job stauts is 'done'
                 if($job->job_status_id == 2) {
 
+
+
                     //get the freelancers that are accepted
-                    $freelancers = JobApplication::where([['job_id',$id], ['job_application_state_id',2]])->get();
+                    $freelancers_ids = JobApplication::where([['job_id',$id], ['job_application_state_id',2]])->select('user_id')->get();
 
                      // if there are freelancers that are accpeted
-                    if(!$freelancers->isEmpty()) {
+                    if(!$freelancers_ids->isEmpty()) {
+
+                        $freelancers_accounts = User::whereIn('id', $freelancers_ids)->get();
+                        //get the job owner
+                        $recruiter = User::with('userProfile')->findOrFail($job->user_id);
+
+
+
+                          /* send each accepted freelancer, send an e-mail */
+                    foreach($freelancers_accounts as $freelancer) {
+                        Mail::send('e-mails.rate_recruiter', ['recruiter' => $recruiter,'job' => $job], function($msg) use ($freelancer){
+                       $msg->from(Auth::user()->email, 'TheHunt');
+                       $msg->subject('Job Application Status Change');
+                       $msg->to($freelancer['email']);
+                   });
+                   }
 
                         // redirect to the view used to rate those users
                         return redirect()->route('frontend.user-ratings.edit',['id' => $job->id]);
@@ -439,8 +456,7 @@ class JobController extends Controller
     public function postJobsFilter(Request $request){
 
         $jobs = Job::
-        where('job_status_id', 1)
-        ->when($request->input('q'), function($query) use ($request) {
+       when($request->input('q'), function($query) use ($request) {
             return $query->where(function ($query) use ($request) {
             $query->where('title', 'like', '%'.$request->input('q').'%');
             $keywords = explode(' ', $request->input('q'));
@@ -449,6 +465,19 @@ class JobController extends Controller
                         $query->join('skills', 'job_skills.skill_id', 'skills.id');
                         $query->select('skills.id', 'name', 'job_id');
                         $query->where('name', 'like', '%'.$keyword.'%');
+                    });
+                }
+            });
+        })
+        ->when($request->input('user'), function($query) use ($request) {
+            return $query->where(function ($query) use ($request) {
+            $user_data = explode(' ', $request->input('user'));
+                foreach ($user_data as $user_d) {
+                    $query->orWhereHas('user.userProfile', function ($query) use ($user_d){
+                        $query->select('*');
+                        $query->where('username', 'like', '%'.$user_d.'%');
+                        $query->orWhere('first_name', 'like', '%'.$user_d.'%');
+                        $query->orWhere('last_name', 'like', '%'.$user_d.'%');
                     });
                 }
             });

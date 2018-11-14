@@ -23,7 +23,7 @@
                         <hr>
                 @else
                 <p>About <b>{{$job_applications->total()}}</b>
-                    {{$job_applications->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                    {{$job_applications->total() % 10 == 1 && $job_applications->total() % 11 != 0 ? 'result' :
                     'results'}}
                 </p>
                 <hr>

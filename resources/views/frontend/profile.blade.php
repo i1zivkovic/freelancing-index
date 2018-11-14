@@ -19,7 +19,7 @@
             </div>
 
 
-            <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 mb-5">
                 <div class="inner-box my-resume">
                     <div class="author-resume">
                         <div class="row">
@@ -303,70 +303,210 @@
 
 
 
-
-
-            @if($user->rating->count() > 0)
+            @if(!$user_posts->isEmpty())
             <div class="col-sm-12 mt-5">
-                <!-- Testimonial Section Start -->
-                <section id="testimonial" class="section box">
-                    <div class="container">
-                        <div class="section-header">
-                            <h2 class="section-title">Recent Ratings</h2>
+
+
+
+                <ul class="nav nav-tabs  mb-5" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+                            aria-controls="posts" aria-selected="false">Posts ({{$user_posts->total()}})</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="jobs-tab" data-toggle="tab" href="#jobs" role="tab" aria-controls="jobs"
+                            aria-selected="false">Jobs ({{$user_jobs->total()}})</a>
+                    </li>
+                </ul>
+
+                {{-- ACCOUNT INFO BEGIN --}}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                        <div class="row mb-5">
+                            <div class="col-sm-12 text-center">
+                                <h3>Recent Posts</h3>
+                            </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div id="testimonials" class="touch-slider owl-carousel">
-                                    @foreach ($user->rating as $rating)
-                                    @if($loop->index < 3) <div class="item">
-                                        <div class="testimonial-item">
-                                            <div class="author">
-                                                <div class="img-thumb">
-                                                    @if($rating->recruiter)
-                                                    <img class="img-fluid" src="{{asset('uploads')}}/{{$rating->recruiter->username}}/{{$rating->recruiter->userProfile->image_url}}" alt="">
-                                                    @else
 
-                                                    @endif
-                                                </div>
-
+                        <div class="infinite-scroll">
+                            @foreach($user_posts as $post)
+                            <div class="row mb-3">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 blog-item">
+                                    <div class="blog-post">
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <h3 class="post-title"><a href="{{route('frontend.posts.show',['slug' => $post->slug])}}">{{$post->title}}</a></h3>
+                                            <div class="meta">
+                                                <span class="meta-part"><i class="lni-comments-alt"></i>
+                                                    {{$post->post_comments_count}} Comments</span>
+                                                <span class="meta-part"><i class="lni-heart-filled"></i>
+                                                    {{$post->post_likes_count}} Likes</span>
+                                                <span class="meta-part"><i class="lni-calendar"></i>{{$post->created_at->format('d/m/Y')}}</span>
                                             </div>
-                                                <div class="author-info">
-                                                        @if($rating->recruiter)
-                                                    <h6><a href="{{route('frontend.user.show',['slug' => $rating->recruiter->slug])}}">{{$rating->recruiter->userProfile->first_name}} {{$rating->recruiter->userProfile->first_name}}</a></h6>
-                                                    @else
-                                                    <h6><a href="#!"><i>Deleted user</i></a></h6>
-                                                    @endif
-                                                </div>
-                                            <div class="content-inner">
-                                                <p class="description">{{$rating->comment}}</p>
-                                            <p class="rating"><i class="lni-star-filled"></i>{{$rating->rating}} / 5</p>
-                                            </div>
+                                            <p>{{ str_limit($post->description, $limit = 300, $end = '...') }}</p>
+                                            {{-- <a href="posts/{{$recentPost->slug}}" class="btn btn-common">Read More</a>
+                                            --}}
                                         </div>
+                                        <!-- Post Content -->
+                                    </div>
                                 </div>
 
-                                @endif
-                                @endforeach
+                            </div>
+                            @endforeach
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {!! Form::open(['route' => ['frontend.postExploreFilter'], 'role' => 'form',
+                                    'autocomplete' => 'off',
+                                    'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                            <input type="hidden" class="form-control" placeholder="" name="user"
+                                                value="{{$user->username}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <button type="submit" class="btn btn-common btn-block">See All</button>
+                                        </div>
+                                    </div>
+                                    {!!Form::close()!!}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
+                        <div class="row mb-5">
+                            <div class="col-sm-12 text-center">
+                                <h3>Recent Jobs</h3>
+                            </div>
+                        </div>
+
+                        <div class="infinite-scroll2">
+                            @foreach($user_jobs as $job)
+                            <div class="job-listings mb-5">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        {{-- <div class="job-company-logo">
+                                            <img class="img-fluid" src="{{asset('uploads')}}/{{$job->user->username}}/{{$job->user->userProfile->image_url}}"
+                                                alt="PIC">
+                                        </div> --}}
+                                        <div class="job-details">
+                                            <a href="{{route('frontend.jobs.show',['id' => $job->slug])}}">
+                                                <h3>{{$job->title}}</h3>
+                                            </a>
+                                        </div>
+
+                                        <hr>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 text-left">
+                                        <p>
+                                            {{$job->description}}
+                                        </p>
+                                        <br>
+                                        <div class="tag-list">
+                                            @foreach($job->job_skills as $jobSkill)
+                                            <span>{{$jobSkill->name}}</span>
+                                            @endforeach
+                                        </div>
+                                        <br>
+                                        <div class="category-list">
+                                            @foreach($job->job_business_categories as $jobCategory)
+                                            @if($loop->last)
+                                            <span>{{$jobCategory->name}}</span>
+                                            @else
+                                            <span>{{$jobCategory->name}} - </span>
+                                            @endif
+                                            @endforeach
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-xs-12 text-center">
+
+                                        <span class="btn-open">
+                                            {{$job->offer}}€
+                                            @if($job->is_per_hour)
+                                            /h
+                                            @else
+                                            /project
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                        <div class="location">
+                                            <i class="lni-map-marker"></i> {{$job->job_location_city}},
+                                            {{$job->job_location_country}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                        <span class="btn-full-time">{{$job->job_comments_count}} <i class="lni-comments-alt"></i>&nbsp;
+                                            &nbsp; {{$job->job_likes_count}} <i class="lni-heart"></i></span>
+                                    </div>
+                                    <div class="col-lg-1 col-md-4 col-xs-12 text-center">
+                                        <span class="btn-full-time">{{$job->job_applications_count}} <i class="lni-pencil-alt"></i></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                        @if ($job->job_status->id == 3)
+                                        <span class="btn-full-time text-danger"> {{$job->job_status->name}} </span>
+                                        @elseif ($job->job_status->id == 1)
+                                        <span class="btn-full-time text-primary"> {{$job->job_status->name}} </span>
+                                        @elseif ($job->job_status->id == 4)
+                                        <span class="btn-full-time text-info"> {{$job->job_status->name}} </span>
+                                        @else
+                                        <span class="btn-full-time text-success"> {{$job->job_status->name}} </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-xs-12 text-center">
+                                        @if(Auth::user() && ($job->user_id == Auth::user()->id) && ($job->job_status_id
+                                        != 2))
+                                        <span class="btn-full-time"><a href="{{route('frontend.jobs.edit',['id' => $job->id])}}">
+                                                <i class="lni-pencil"></i>
+                                            </a></span>
+                                        &nbsp;
+                                        <span class="btn-full-time"><a href="#" class="delete-job text-danger" data-id="{{$job->id}}">
+                                                <i class="lni-trash"></i>
+                                            </a></span>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if(session()->has('edit_error'))
+                                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                    {{session()->get('edit_error')}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @endif
+                            </div>
+                            @endforeach
+                            <div class="row">
+                                    <div class="col-sm-12">
+                                        {!! Form::open(['route' => ['frontend.jobsFilter'], 'role' => 'form',
+                                        'autocomplete' => 'off',
+                                        'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                    <input type="hidden" class="form-control" placeholder=""
+                                            name="user" value="{{$user->username}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <button type="submit" class="btn btn-common btn-block">See All</button>
+                                            </div>
+                                        </div>
+                                        {!!Form::close()!!}
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </section>
-            <!-- Testimonial Section End -->
+            @endif
+
+
+
         </div>
-        @endif
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
-</div>
 </div>
 <!-- End Content -->
 
@@ -378,7 +518,10 @@
 
 @section('js')
 {{-- --}}
-{!!Html::script(asset('js/custom/profile.js'))!!}
+
 {!!Html::script(asset('js/custom/community.js'))!!}
+{!!Html::script(asset('js/custom/profile.js'))!!}
+
+
 
 @stop

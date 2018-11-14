@@ -35,6 +35,10 @@
                                         'files' => false, 'method' => 'get', 'id' => 'search-form']) !!}
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
+                                                <input type="text" class="form-control" placeholder="User: Username, First/Last Name"
+                                                    name="user" value="{{!empty($request) ? $request->input('user') : null}}">
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
                                                 <input type="text" class="form-control" placeholder="Keyword: Title, Skill"
                                                     name="q" value="{{!empty($request) ? $request->input('q') : null}}">
                                             </div>
@@ -66,7 +70,7 @@
                         <hr>
                         @else
                         <p>About <b>{{$jobs->total()}}</b>
-                            {{$jobs->total() % 10 == 1 && $followers->total() % 11 != 0 ? 'result' :
+                            {{$jobs->total() % 10 == 1 && $jobs->total() % 11 != 0 ? 'result' :
                             'results'}}
                         </p>
                         <hr>
@@ -185,6 +189,7 @@
             });
 
         </script>
+
         @stop
     </div>
 </div>

@@ -95,6 +95,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'as' => 'frontend.', '
 
     //RATINGS
     Route::resource('user-ratings','UserRatingController');
+    Route::get('recruiter-rating/{job_id}/{recruiter_id}','UserRatingController@edit_recruiter')->name('editRecruiter');
+    Route::post('recruiter-rating','UserRatingController@store_recruiter')->name('storeRecruiter');
 
     //CONTACT
     Route::get('contact', 'ContactController@index')->name('contact');

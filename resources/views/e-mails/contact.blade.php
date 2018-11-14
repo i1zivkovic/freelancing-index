@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Contact Form</title>
+	<title>Contact E-mail</title>
 </head>
 <body>
 <p><b>Name: </b>{{$data['name']}}</p>

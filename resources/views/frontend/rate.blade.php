@@ -25,6 +25,15 @@
                             'off', 'enctype' => 'multipart/form-data', 'id' => 'userRatingForm', 'class' =>
                             'form-ad']) !!}
                             @csrf
+
+                            @if(session()->has('rating_error'))
+                            <div class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{session()->get('rating_error')}}
+                            </div>
+                            @endif
+
+
                             <input type="hidden" name="job_id" value="{{$job_id}}">
                             @if(empty(old('comment')))
                             @foreach($freelancers as $freelancer)

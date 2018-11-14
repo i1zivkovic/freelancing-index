@@ -8,6 +8,8 @@ use App\User;
 use App\Profile;
 use App\UserSkill;
 use App\Skill;
+use App\Post;
+use App\Job;
 use Auth;
 
 class UserController extends Controller
@@ -24,9 +26,19 @@ class UserController extends Controller
         ->with(['userProfile.profileEducation', 'userProfile.profileExperience', 'userSocial', 'userLocation', 'userSkills', 'rating.recruiter.userProfile', 'followers'])
         ->firstOrFail();
 
-        /* dd($user); */
+        $user_posts = Post::where('user_id', $user->id)
+         ->withCount('post_likes','post_comments')
+         ->orderBy('updated_at','DESC')
+         ->paginate(3);
 
-        return view('frontend.profile', compact('user'));
+         $user_jobs = Job::
+         where('user_id',$user->id)
+         ->withCount('job_comments','job_likes', 'job_applications')
+         ->with([
+             'user',
+         ]) -> orderBy('updated_at','desc')-> paginate(3);
+
+        return view('frontend.profile', compact('user', 'user_posts', 'user_jobs'));
     }
 
 

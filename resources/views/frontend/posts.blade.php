@@ -41,8 +41,8 @@
                                                     name="q" value="{{!empty($request) ? $request->input('q') : null}}">
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-xs-12 mb-3">
-                                                <input type="text" class="form-control" placeholder="Username" name="username"
-                                                    value="{{!empty($request) ? $request->input('username') : null}}">
+                                                <input type="text" class="form-control" placeholder="User: Username, First/Last name" name="user"
+                                                    value="{{!empty($request) ? $request->input('user') : null}}">
                                             </div>
                                         </div>
                                         <div class="row">
