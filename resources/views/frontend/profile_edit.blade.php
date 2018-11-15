@@ -89,7 +89,7 @@
                         <div class="row mb-3">
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                    <label class="control-label">Username</label>
+                                    <label class="control-label">*Username</label>
                                     <input type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}"
                                         placeholder="" name="username" required value="{{Auth::user()->username}}">
                                     @if ($errors->has('username'))
@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                    <label class="control-label">E-mail</label>
+                                    <label class="control-label">*E-mail</label>
                                     <input type="text" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                         placeholder="" name="email" required value="{{Auth::user()->email}}">
                                     @if ($errors->has('email'))

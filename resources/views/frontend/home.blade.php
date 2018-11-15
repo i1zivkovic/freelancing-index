@@ -37,8 +37,8 @@
                         <div class="col-lg-6 col-md-12 col-xs-12 no-padding">
                             <div class="recruiter item-box">
                                 <div class="content-inner">
-                                    <h5>I'm</h5>
-                                    <h3>Recruiter</h3>
+                                    <h5>I'm a</h5>
+                                    <h3>Recruiter!</h3>
                                     <p>Post a job and tell us about your project. We'll quickly match you with <br> the
                                         right freelancers and you can choose the ones that suit you best.</p>
                                     <a href="{{route('frontend.jobs.create')}}" class="btn btn-border-filled">Post a
@@ -52,7 +52,7 @@
                         <div class="col-lg-6 col-md-12 col-xs-12 no-padding">
                             <div class="jobseeker item-box">
                                 <div class="content-inner">
-                                    <h5>I'm</h5>
+                                    <h5>I'm a</h5>
                                     <h3>Freelancer!</h3>
                                     <p>Search through {{$jobCount}} jobs and apply to ones that suit your needs.<br>
                                         Click on the button to start searching.</p>
