@@ -32,7 +32,7 @@ class CommunityController extends Controller
         $followers = User::whereIn('id', $followers_ids)->with(['userProfile', 'userLocation', 'userSkills', 'followers'])->paginate(10);
 
         return view('frontend.user_followers', compact('followers'));
-       
+
     }
 
     public function show_following (){
@@ -43,7 +43,7 @@ class CommunityController extends Controller
          $following = User::whereIn('id', $following_ids)->with(['userProfile', 'userLocation', 'userSkills', 'followers'])->paginate(10);
 
         return view('frontend.user_following', compact('following'));
-     
+
     }
 
 
@@ -85,8 +85,6 @@ class CommunityController extends Controller
                 return response()->json($return, 200);
                 break;
             }
-
-
             //  CASE UNLIKE
             case 'Unfollow':
             // if there exists this follow

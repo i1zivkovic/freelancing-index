@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center mb-5">
-                <h3>My Job Applications</h3>
+                <h3>My Applications</h3>
             </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
 

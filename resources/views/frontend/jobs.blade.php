@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Jobs')
+@section('title', 'Find a job')
 @section('description', "")
 
 @section('css')
@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-center mb-5">
-                        <h3>Jobs</h3>
+                        <h3>Find a job</h3>
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12 mb-2">
                         <div class="panel-group" id="accordion">

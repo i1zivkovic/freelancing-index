@@ -216,7 +216,7 @@ class JobApplicationController extends Controller
      */
     public function manageApplications() {
 
-        $job_ids = Job::where([['user_id', Auth::id()], ['job_status_id', 1]])->select('id')->get();
+        $job_ids = Job::where([['user_id', Auth::id()]])->select('id')->get();
 
         $job_applications = JobApplication::whereIn('job_id',$job_ids)
             ->with([
@@ -239,7 +239,7 @@ class JobApplicationController extends Controller
      */
     public function manageApplicationsSlug($slug) {
 
-        $selected_job = Job::where([['slug', $slug], ['job_status_id', 1]])->select('id')->firstOrFail();
+        $selected_job = Job::where([['slug', $slug]])->select('id')->firstOrFail();
 
         $job_applications = JobApplication::where('job_id',$selected_job->id)
             ->with([

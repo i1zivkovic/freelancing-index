@@ -27,7 +27,7 @@
                             'form-ad']) !!}
                             @csrf
                             <div class="form-group">
-                                <label class="control-label">Title</label>
+                                <label class="control-label">*Title</label>
                                 <input type="text" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
                                     placeholder="" name="title" required>
                                 @if ($errors->has('title'))
@@ -37,7 +37,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Description</label>
+                                <label class="control-label">*Description</label>
                                 <textarea class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}"
                                     placeholder="" name="description" rows="7" required></textarea>
                                 @if ($errors->has('description'))
@@ -47,7 +47,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Upload File</label>
+                                <label class="control-label">*Upload File</label>
                                 <div class="custom-file mb-3">
                                     <input type="file" class="custom-file-input" id="file" name="file" required>
                                     <label class="custom-file-label form-control {{ $errors->has('file') ? ' is-invalid' : '' }}"

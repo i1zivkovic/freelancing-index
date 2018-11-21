@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Rate Recruiter')
+@section('title', 'Rate User/s')
 @section('description', "")
 
 @section('css')
@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-12 col-lg-9 col-md-12 col-xs-12 text-center mb-5">
-                        <h3>Rate Recruiter</h3>
+                        <h3>Rate User/s</h3>
                     </div>
                     <div class="col-lg-9 col-md-12 col-xs-12">
                         <div class="post-job box">

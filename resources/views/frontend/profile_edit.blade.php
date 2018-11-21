@@ -148,7 +148,7 @@
                                     {{ Form::checkbox('notify_application_status', '1',
                                     Auth::user()->notify_application_status) }}
                                     <label class="form-check-label" for="notify_applications_status">
-                                        Notify me about application status change
+                                        Notify me about application status change (e-mail)
                                     </label>
                                 </div>
                             </div>

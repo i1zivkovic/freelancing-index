@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Rate Freelancers')
+@section('title', 'Rate User/s')
 @section('description', "")
 
 @section('css')
@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-12 col-lg-9 col-md-12 col-xs-12 text-center mb-5">
-                        <h3>Rate User</h3>
+                        <h3>Rate User/s</h3>
                     </div>
                     <div class="col-lg-9 col-md-12 col-xs-12">
                         <div class="post-job box">
@@ -46,7 +46,7 @@
                                 </div>
                                 <input type="hidden" name="freelancer_id[]" value="{{$freelancer->id}}">
                                 <div class="form-group">
-                                    <label for="rating">Rating</label>
+                                    <label for="rating">*Rating</label>
                                     <select class="form-control" id="rating" name="rating[]">
                                         <option value=""></option>
                                         <option value="1">1</option>
@@ -57,7 +57,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">*Comment</label>
                                     <textarea class="form-control" id="comment" rows="3" name="comment[]"></textarea>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                 </div>
                                 <input type="hidden" name="freelancer_id[]" value="{{$freelancers[$key]->id}}">
                                 <div class="form-group">
-                                    <label for="rating">Rating</label>
+                                    <label for="rating">*Rating</label>
                                     <select class="form-control {{$errors->has('rating.'.$key) ? 'is-invalid' : ''}}"
                                         id="rating" name="rating[]">
                                         <option value=""></option>
@@ -91,7 +91,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">*Comment</label>
                                     <textarea class="form-control {{$errors->has('comment.'.$key) ? 'is-invalid' : ''}}"
                                         id="comment" rows="3" name="comment[]"></textarea>
                                     @if ($errors->has('comment.'.$key))

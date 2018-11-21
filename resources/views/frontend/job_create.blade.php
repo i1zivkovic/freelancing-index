@@ -28,7 +28,7 @@
                             'form-ad']) !!}
                             @csrf
                             <div class="form-group">
-                                <label class="control-label">Job Title</label>
+                                <label class="control-label">*Job Title</label>
                             <input type="text" class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}" placeholder="" name="title" required value="{{old('title')}}">
                                 @if ($errors->has('title'))
                                 <span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Description</label>
+                                <label class="control-label">*Description</label>
                                 <textarea class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="" name="description" value="" rows="7"
                                     required>{{old('description')}}</textarea>
                                     @if ($errors->has('description'))
@@ -94,7 +94,7 @@
                                     @endif
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Offer ($)</label>
+                                <label class="control-label">*Offer ($)</label>
                                 <input type="text" class="form-control {{ $errors->has('offer') ? ' is-invalid' : '' }}" placeholder="" name="offer" required value="{{old('offer')}}">
                                 @if ($errors->has('offer'))
                                 <span class="invalid-feedback" role="alert">
@@ -104,7 +104,7 @@
                             </div>
                             <div class="
                                         form-group">
-                                <label class="control-label">Offer type</label>
+                                <label class="control-label">*Offer type</label>
                                 <div class="search-category-container">
                                     <label class="styled-select">
                                         <select class="dropdown-product selectpicker" name="is_per_hour">

@@ -41,14 +41,11 @@ var actOnFollowUnfollow = function (event) {
 
 // Ajax call to the backend
 function followUnfollowAjax(user_id, action, event) {
-
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $("input[name=_token]").val()
         }
     });
-
     $.ajax({
         url: '/follow-unfollow/' + user_id,
         type: 'POST',
@@ -70,9 +67,7 @@ function followUnfollowAjax(user_id, action, event) {
                 title: 'Oops...',
                 text:  error.responseJSON.error ? error.responseJSON.error : 'An error has occured. Please contact our administrator (ivanzivkovic1601@gmail.com).'
             });
-
             console.log(action);
-
             // If error happens, reverse stats and icon
             switch (action) {
                 case 'Follow':

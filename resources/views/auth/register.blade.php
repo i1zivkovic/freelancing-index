@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <div class="input-icon">
                                 <i class="lni-user"></i>
-                                <input placeholder="Username" id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                                <input placeholder="*Username" id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
                                     name="username" value="{{ old('username') }}" required>
 
                                 @if ($errors->has('username'))
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <div class="input-icon">
                                 <i class="lni-envelope"></i>
-                                <input placeholder="Email" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                <input placeholder="*Email" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <div class="input-icon">
                                 <i class="lni-lock"></i>
-                                <input placeholder="Password" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                <input placeholder="*Password" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                     name="password" required>
 
                                 @if ($errors->has('password'))
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <div class="input-icon">
                                 <i class="lni-unlock"></i>
-                                <input placeholder="Confirm password" id="password-confirm" type="password" class="form-control"
+                                <input placeholder="*Confirm password" id="password-confirm" type="password" class="form-control"
                                     name="password_confirmation" required>
                                 @if ($errors->has('password_confirmation'))
                                 <span class="invalid-feedback" role="alert">
@@ -71,7 +71,7 @@
                                 @endif
                             </div>
                         </div>
-                        <button class="btn btn-common log-btn mt-3">Sign Up</button>
+                        <button class="btn btn-common log-btn mt-3">Register</button>
                         <p class="text-center">Already have an account?<a href="{{route('login')}}"> Log In</a></p>
                     </form>
                 </div>

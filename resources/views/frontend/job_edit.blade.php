@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Update job')
+@section('title', 'Job Edit')
 @section('description', "")
 
 @section('css')
@@ -24,8 +24,12 @@
                             {{session()->get('error_edit')}}
                         </div>
                         @endif
+
+                        <div class="col-sm-12 mb-5 text-center">
+                            <h3 class="job-title">Edit your job</h3>
+                        </div>
+
                         <div class="post-job box">
-                            <h3 class="job-title">Edit you job</h3>
                             {!! Form::open(['method' => 'PUT', 'route' => ['frontend.jobs.update', $job->id],
                             'autocomplete' =>
                             'off',

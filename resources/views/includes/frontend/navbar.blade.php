@@ -58,7 +58,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <i class="fas fa-handshake mr-2"></i> Recruit
+                                <i class="fas fa-handshake mr-2"></i> Employ
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{route('frontend.jobs.create')}}">Post A Job Ad</a></li>
@@ -96,7 +96,7 @@
                             <a class="nav-link" href="{{route('login')}}">Log In</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('register')}}">Sign Up</a>
+                            <a class="nav-link" href="{{route('register')}}">Register</a>
                         </li>
                         @else
                         <li class="nav-item dropdown">

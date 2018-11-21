@@ -21,7 +21,7 @@
                         <div class="contents text-center">
                             <h1 class="head-title">Welcome to <span>THE</span><span>HUNT</span>!</h1>
                             <p>Are you a freelancer looking for a job or you want to earn some money by
-                                doing something you're good at? <br>Maybe you're a recuriter that needs the right
+                                doing something you're good at? <br>Maybe you're a employer that needs the right
                                 people to
                                 do a job for you? <br>We got you covered!</p>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="recruiter item-box">
                                 <div class="content-inner">
                                     <h5>I'm a</h5>
-                                    <h3>Recruiter!</h3>
+                                    <h3>Employer!</h3>
                                     <p>Post a job and tell us about your project. We'll quickly match you with <br> the
                                         right freelancers and you can choose the ones that suit you best.</p>
                                     <a href="{{route('frontend.jobs.create')}}" class="btn btn-border-filled">Post a

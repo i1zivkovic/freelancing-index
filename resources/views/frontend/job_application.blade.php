@@ -39,7 +39,7 @@
                             @csrf
                             <input type="hidden" name="job_id" value="{{$job->id}}">
                             <div class="form-group">
-                                <label class="control-label">Comment</label>
+                                <label class="control-label">*Comment</label>
                                 <textarea class="form-control {{ $errors->has('comment') ? ' is-invalid' : '' }}"
                                     placeholder="" name="comment" value="" rows="7" required>{{old('comment')}}</textarea>
                                 @if ($errors->has('comment'))
